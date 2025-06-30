@@ -1,0 +1,42 @@
+export const mockRoutes = [
+   {
+      title: "Lumpini Park Loop",
+      distance: 2.5,
+      time: 900,
+      laps: 1,
+      location: "Lumpini Park, Bangkok",
+      note: "Flat, shaded, popular in early morning",
+   },
+   {
+      title: "Benjakitti Outer Circle",
+      distance: 1.8,
+      time: 720,
+      laps: 1,
+      location: "Benjakitti Park, Bangkok",
+      note: "Nice view of skyline, evening breeze",
+   },
+   {
+      title: "Suan Rot Fai Figure 8",
+      distance: 3.3,
+      time: 1200,
+      laps: 1,
+      location: "Wachirabenchathat Park, Bangkok",
+      note: "Good for tempo runs",
+   },
+   {
+      title: "Suan Luang Full Loop",
+      distance: 4.0,
+      time: 1500,
+      laps: 1,
+      location: "Suan Luang Rama IX, Bangkok",
+      note: "Peaceful, lots of trees",
+   },
+   {
+      title: "Doi Suthep Trail Climb",
+      distance: 7.0,
+      time: 3600,
+      laps: null,
+      location: "Doi Suthep, Chiang Mai",
+      note: "Steep and challenging",
+   },
+];

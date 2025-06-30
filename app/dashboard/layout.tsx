@@ -1,15 +1,12 @@
+// layout.tsx (server)
 import RunningManLogo from "@/components/icons/RunningManLogo";
-import { cn } from "@/lib/utils";
+import DayBar from "@/components/main-layout/DayBar";
+import OutdoorStatsCard from "@/components/main-layout/OutdoorStatsCard";
 import Link from "next/link";
 import React from "react";
+import Nav from "@/components/main-layout/Nav";
 
-const layout = ({
-   children,
-}: Readonly<{
-   children: React.ReactNode;
-}>) => {
-   const currentPage: string = "runs";
-
+const Layout = ({ children }: { children: React.ReactNode }) => {
    return (
       <div className="w-screen h-screen bg-theme-speed flex justify-center">
          <main className="w-[1440px] h-full flex items-center gap-4 p-4">
@@ -19,37 +16,12 @@ const layout = ({
                      <RunningManLogo className="text-background" />
                   </div>
                </div>
-               <div className="flex-1 w-full bg-foreground rounded-[23px]" />
+               <div className="flex-1 w-full bg-foreground rounded-[23px]">
+                  <OutdoorStatsSection />
+               </div>
             </section>
             <section className="flex flex-col w-1/2 h-full bg-foreground rounded-[23px] text-primary">
-               <nav className="flex items-center pl-7 pr-5 h-24 font-headline text-xl text-primary justify-between">
-                  <ul className="flex gap-6">
-                     <Link
-                        href="/dashboard/runs"
-                        className={cn(currentPage === "runs" && "font-bold")}
-                     >
-                        RUN
-                     </Link>
-                     <Link
-                        href="/dashboard/routes"
-                        className={cn(currentPage === "routes" && "font-bold")}
-                     >
-                        ROUTES
-                     </Link>
-                     <Link
-                        href="/dashboard/schedules"
-                        className={cn(
-                           currentPage === "schedule" && "font-bold"
-                        )}
-                     >
-                        SCHEDULE
-                     </Link>
-                  </ul>
-                  <Link
-                     href="/dashboard/settings"
-                     className="w-[60px] h-[60px] bg-primary rounded-full"
-                  ></Link>
-               </nav>
+               <Nav />
                {children}
             </section>
          </main>
@@ -57,4 +29,14 @@ const layout = ({
    );
 };
 
-export default layout;
+const OutdoorStatsSection = () => (
+   <div className="flex flex-col gap-3 w-full p-[12px] overflow-hidden">
+      <DayBar />
+      <div className="flex gap-2 w-full">
+         <OutdoorStatsCard />
+         <OutdoorStatsCard />
+      </div>
+   </div>
+);
+
+export default Layout;

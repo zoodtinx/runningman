@@ -1,0 +1,79 @@
+export const mockRuns = [
+  {
+    title: "Morning Tempo at Lumpini",
+    distance: 5.2,
+    time: 1620, // 27 min
+    laps: 2,
+    location: "Lumpini Park, Bangkok",
+    runType: "Tempo",
+    mood: "Good",
+    gear: "Nike Pegasus 40",
+    note: "Felt strong, weather was humid but manageable",
+  },
+  {
+    title: "Recovery jog at Suan Rot Fai",
+    distance: 3.1,
+    time: 1140, // 19 min
+    laps: 1,
+    location: "Wachirabenchathat Park (Suan Rot Fai), Bangkok",
+    runType: "Recovery",
+    mood: "Tired",
+    gear: "ASICS Gel-Nimbus 25",
+    note: "Legs a bit sore from intervals yesterday",
+  },
+  {
+    title: "Long Run at Chatuchak",
+    distance: 12.5,
+    time: 4320, // 72 min
+    laps: 4,
+    location: "Chatuchak Park, Bangkok",
+    runType: "Long Run",
+    mood: "Great",
+    gear: "Hoka Clifton 9",
+    note: "Kept steady pace, great weather, low crowd",
+  },
+  {
+    title: "Evening Fartlek at Suan Luang Rama IX",
+    distance: 6.8,
+    time: 2040, // 34 min
+    laps: 2,
+    location: "Suan Luang Rama IX, Bangkok",
+    runType: "Fartlek",
+    mood: "Energetic",
+    gear: "Adidas Adizero SL",
+    note: "Fun workout! Alternated 1min fast / 2min easy",
+  },
+  {
+    title: "Speed work at Thammasat track",
+    distance: 4.0,
+    time: 1080, // 18 min
+    laps: 10,
+    location: "Thammasat Rangsit Stadium, Pathum Thani",
+    runType: "Speed Work",
+    mood: "Okay",
+    gear: "Nike ZoomX Vaporfly 3",
+    note: "200m repeats, wind was annoying",
+  },
+  {
+    title: "Daily Miles at Benjakitti",
+    distance: 6.0,
+    time: 1980, // 33 min
+    laps: 2,
+    location: "Benjakitti Park, Bangkok",
+    runType: "Daily Miles",
+    mood: "Low",
+    gear: "New Balance Fresh Foam X 1080v13",
+    note: "Mentally not in it today",
+  },
+  {
+    title: "Hill Training at Doi Suthep Trail",
+    distance: 7.4,
+    time: 3420, // 57 min
+    laps: null,
+    location: "Doi Suthep, Chiang Mai",
+    runType: "Hill Training",
+    mood: "Terrible",
+    gear: "Salomon Sense Ride 5",
+    note: "Too steep, overheated, had to walk some parts",
+  },
+];
