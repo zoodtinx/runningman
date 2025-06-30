@@ -7,8 +7,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       signIn: "/login",
    },
    callbacks: {
-      authorized: async ({ auth }) => {
-         return !!auth;
+      async redirect({ url, baseUrl }) {
+         console.log("url", url);
+         // Redirect to dashboard if sign-in came from login page
+         if (url && url.includes("/login")) {
+            return `${baseUrl}/dashboard`;
+         }
+         return url.startsWith(baseUrl) ? url : baseUrl;
       },
    },
 });
