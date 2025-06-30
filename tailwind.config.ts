@@ -8,6 +8,9 @@ module.exports = {
             background: "var(--color-background)",
             foreground: "var(--color-foreground)",
             primary: "var(--color-primary)",
+            theme: {
+               speed: "var(--color-theme-speed)",
+            },
          },
       },
       screens: {

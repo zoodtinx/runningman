@@ -15,6 +15,7 @@
    --color-background: #0d0d0d;
    --color-foreground: #2d2d2d;
    --color-primary: #ffffff;
+   --color-theme-speed: #ffc665;
    --font-sans: var(--font-geist-sans);
    --font-headline: var(--font-swiss-721-extended);
 }
