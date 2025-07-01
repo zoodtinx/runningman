@@ -52,31 +52,32 @@ export const OutdoorStatsCard = ({ statData }: { statData: OutdoorStat }) => {
 };
 
 const StatIcon = ({ statType }: { statType: string }) => {
+   const iconClass = "stroke-[1.7px]";
    switch (statType) {
       case "temperature":
-         return <TemperatureHigh className="stroke-[2px]" />;
+         return <TemperatureHigh className={iconClass} />;
       case "humidity":
-         return <Droplet className="stroke-[2px]" />;
+         return <Droplet className={iconClass} />;
       case "precipitation":
-         return <Rain className="stroke-[2px]" />;
+         return <Rain className={iconClass} />;
       case "wind":
-         return <Wind className="stroke-[2px]" />;
+         return <Wind className={iconClass} />;
       case "air":
-         return <AirplaneHelix className="stroke-[2px]" />;
+         return <AirplaneHelix className={iconClass} />;
       case "visibility":
-         return <Tree className="stroke-[2px]" />;
+         return <Tree className={iconClass} />;
       case "sun":
-         return <SunLight className="stroke-[2px]" />;
+         return <SunLight className={iconClass} />;
       case "cloud":
-         return <Cloud className="stroke-[2px]" />;
+         return <Cloud className={iconClass} />;
       case "alerts":
-         return <WarningTriangle className="stroke-[2px]" />;
+         return <WarningTriangle className={iconClass} />;
       case "comfort":
-         return <Shirt className="stroke-[2px]" />;
+         return <Shirt className={iconClass} />;
       case "hydration":
-         return <FillColor className="stroke-[2px]" />;
+         return <FillColor className={iconClass} />;
       default:
-         return <Ruler className="stroke-[2px]" />;
+         return <Ruler className={iconClass} />;
    }
 };
 
