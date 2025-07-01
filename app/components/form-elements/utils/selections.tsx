@@ -65,3 +65,17 @@ export const moodOptions = [
       ),
    },
 ];
+
+export const runTypeOptions = [
+   { value: "easy", label: "Easy" },
+   { value: "recovery", label: "Recovery" },
+   { value: "tempo", label: "Tempo" },
+   { value: "interval", label: "Interval" },
+   { value: "fartlek", label: "Fartlek" },
+   { value: "long-run", label: "Long Run" },
+   { value: "hill-training", label: "Hill Training" },
+   { value: "speed-work", label: "Speed Work" },
+   { value: "progression", label: "Progression" },
+   { value: "race", label: "Race" },
+   { value: "daily-miles", label: "Daily Miles" },
+];

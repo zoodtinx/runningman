@@ -1,4 +1,4 @@
-import TriangleDown from "@/components/icons/TriangleDown";
+import React from "react";
 import { cn } from "@/lib/utils";
 import {
    Select,
@@ -7,30 +7,36 @@ import {
    SelectContent,
    SelectItem,
 } from "./Select";
+import { Controller, Control, FieldValues, Path } from "react-hook-form";
 
 interface SelectWithLabelProps {
    className?: string;
    label?: string;
-   variant?: "base" | "md";
+   variant?: "light" | "dark" | "white";
+   inputSize?: "base" | "md" | "2xl";
    options: { value: string; label: React.ReactNode }[];
+   value?: string;
+   onValueChange?: (value: string) => void;
 }
 
-export const SelectWithLabel: React.FC<SelectWithLabelProps> = ({
-   className,
-   label,
-   variant,
-   options,
-   ...props
-}) => {
+export const SelectWithLabel = React.forwardRef<
+   HTMLButtonElement,
+   SelectWithLabelProps
+>(({ className, label, variant, inputSize, options, ...props }, ref) => {
    return (
-      <div className="w-fit group min-w-[100px]">
-         {label && <p className="text-sm opacity-30">{label}</p>}
+      <div className="group w-full">
+         {label && <p className={cn("text-sm text-secondary")}>{label}</p>}
          <div className="flex w-full items-end">
             <Select {...props}>
                <SelectTrigger
+                  ref={ref}
                   className={cn(
                      "focus:outline-none text-base font-medium grow p-0 h-auto flex items-center justify-between",
-                     variant === "md" && "text-md",
+                     variant === "light" && "text-primary",
+                     variant === "dark" && "text-background",
+                     variant === "white" && "text-primary bg-white",
+                     inputSize === "md" && "text-md",
+                     inputSize === "2xl" && "font-headline text-2xl leading-0",
                      className
                   )}
                >
@@ -45,7 +51,59 @@ export const SelectWithLabel: React.FC<SelectWithLabelProps> = ({
                </SelectContent>
             </Select>
          </div>
-         <div className="border-b opacity-30 pt-[1px]" />
+         <div
+            className={cn(
+               "border-b pt-[1px]",
+               variant === "light" &&
+                  "border-secondary group-focus-within:border-primary",
+               variant === "dark" &&
+                  "border-tertiary group-focus-within:border-background",
+               variant === "white" &&
+                  "border-secondary group-focus-within:border-primary"
+            )}
+         />
       </div>
    );
-};
+});
+
+SelectWithLabel.displayName = "SelectWithLabel";
+
+type ControlledSelectProps<T extends FieldValues> = {
+   filedName: Path<T>;
+   control: Control<T>;
+   required?: boolean | string;
+   errorMessage?: string;
+} & Omit<SelectWithLabelProps, "name" | "value" | "onValueChange">;
+
+export function ControlledSelect<T extends FieldValues>({
+   filedName,
+   control,
+   required,
+   errorMessage,
+   ...rest
+}: ControlledSelectProps<T>) {
+   return (
+      <Controller
+         name={filedName}
+         control={control}
+         rules={required ? { required } : undefined}
+         render={({ field, fieldState }) => (
+            <div>
+               <SelectWithLabel
+                  {...rest}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  aria-invalid={!!fieldState.error}
+               />
+               {fieldState.error && (
+                  <p className="text-xs text-red-500 mt-1 font-medium">
+                     {errorMessage ||
+                        fieldState.error.message ||
+                        "This field is required"}
+                  </p>
+               )}
+            </div>
+         )}
+      />
+   );
+}

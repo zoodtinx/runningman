@@ -19,7 +19,7 @@ export const OutdoorStatsCard = ({ statData }: { statData: OutdoorStat }) => {
    return (
       <div
          className={cn(
-            "flex basis-1/2 w-1/2 h-[100px] rounded-[12px] p-2 justify-between",
+            "flex basis-1/2 w-1/2 h-[100px] rounded-base p-2 justify-between",
             statData.range === "good" &&
                "bg-[linear-gradient(to_bottom,_#dcfffe_0%,_#b4f0ef_100%)]",
             statData.range === "okay" &&
