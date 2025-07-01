@@ -15,12 +15,17 @@
    --color-background: #0d0d0d;
    --color-foreground: #2d2d2d;
    --color-primary: #ffffff;
+   --color-secondary: #767676;
    --color-theme-speed: #ffc665;
+   --color-stat-good: linear-gradient(to bottom, #dcfffe, #b4f0ef);
+   --color-stat-okay: linear-gradient(to bottom, #fdffda, #f5f9aa);
+   --color-stat-bad: linear-gradient(to bottom, #ffd4d4, #ffbebe);
    --font-sans: var(--font-geist-sans);
    --font-headline: var(--font-swiss-721-extended);
    --text-sm: 13px;
    --text-base: 16px;
    --text-md: 20px;
+   --text-2xl: 57px;
 }
 
 /* @media (prefers-color-scheme: dark) {

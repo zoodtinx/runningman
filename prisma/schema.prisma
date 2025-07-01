@@ -63,8 +63,10 @@ model Route {
 model OutdoorStat {
   id      String  @id @default(uuid())
   type    String
-  title   String
-  value   Float
+  label   String
+  valueType String
+  value   String
+  range   String
   detail  String?
   user    User    @relation("UserOutdoorStats", fields: [userId], references: [id], onDelete: Cascade)
   userId  String

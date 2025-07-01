@@ -1,32 +1,47 @@
 export const mockOutdoorStats = [
    {
       type: "temperature",
-      title: "Temperature",
-      value: 29.5,
+      label: "Temperature",
+      valueType: "number",
+      value: "29.5",
+
+      range: "good",
       detail: "Feels like 33°C, partly cloudy",
    },
    {
       type: "humidity",
-      title: "Humidity",
-      value: 78,
+      label: "Humidity",
+      valueType: "number",
+      value: "78",
+
+      range: "bad",
       detail: "High humidity, hydrate well",
    },
    {
       type: "aqi",
-      title: "AQI",
-      value: 45,
+      label: "AQI",
+      valueType: "text",
+      value: "Good",
+
+      range: "good",
       detail: "Good air quality",
    },
    {
       type: "sunrise",
-      title: "Sunrise",
-      value: 5.57,
+      label: "Sunrise",
+      valueType: "number",
+      value: "5:34",
+
+      range: "good",
       detail: "Sun rises at 5:34 AM",
    },
    {
       type: "sunset",
-      title: "Sunset",
-      value: 18.23,
+      label: "Sunset",
+      valueType: "text",
+      value: "18:14",
+
+      range: "good",
       detail: "Sun sets at 6:14 PM",
    },
 ];
