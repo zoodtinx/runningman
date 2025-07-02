@@ -34,8 +34,6 @@ export const InputWithLabel = React.forwardRef<
                <input
                   {...props}
                   ref={ref}
-                  type={mode === "number" ? "text" : props.type || "text"}
-                  inputMode={mode === "number" ? "decimal" : undefined}
                   pattern={mode === "number" ? "[0-9]*[.,]?[0-9]*" : undefined}
                   onChange={
                      mode === "number" ? handleNumberInput : props.onChange

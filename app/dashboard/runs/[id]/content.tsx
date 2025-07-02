@@ -1,17 +1,42 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-
-import { EditRunDto } from "@/lib/zod/runs.zod.schema";
-import { RunFindOneResponse } from "@/lib/zod/runs.zod.schema";
-import { useSession } from "next-auth/react";
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
+import { EditRunDto, RunFindOneResponse } from "@/lib/zod/runs.zod.schema";
+
+import {
+   Breadcrumb,
+   BreadcrumbItem,
+   BreadcrumbLink,
+   BreadcrumbList,
+   BreadcrumbPage,
+   BreadcrumbSeparator,
+} from "@/components/primitives/Breadcrumb";
+import { toast } from "sonner";
+
+import { ControlledInput } from "@/components/primitives/InputWithLabel";
+import { ControlledSelect } from "@/components/primitives/SelectWithLabel";
+import { Button } from "@/components/primitives/Button";
+
+import {
+   moodOptions,
+   runTypeOptions,
+} from "@/components/form-elements/utils/selections";
+
+import { NavArrowLeft, ShareAndroid, UnionAlt } from "iconoir-react";
+
+import { editRun, deleteRun } from "@/dashboard/runs/actions";
+import { cn } from "@/lib/utils";
 
 type EditRunDtoWithPace = Partial<EditRunDto> & { pace?: string };
 
 const RunPageContent = ({ runData }: { runData: RunFindOneResponse }) => {
+   const router = useRouter();
    const { data: session } = useSession();
-   const { control, handleSubmit, watch, setValue, reset, getValues } =
+   const { control, handleSubmit, watch, setValue, getValues } =
       useForm<EditRunDtoWithPace>({
          defaultValues: { ...runData, userId: session?.user?.id },
       });
@@ -42,9 +67,214 @@ const RunPageContent = ({ runData }: { runData: RunFindOneResponse }) => {
       return () => subscription.unsubscribe();
    }, [watch, setValue, getValues]);
 
-   console.log('watch("pace")', watch("pace"));
+   const pace = watch("pace");
 
-   return <div className="text-primary">{watch("pace")}</div>;
+   const handleDelete = async (e: React.MouseEvent) => {
+      e.preventDefault();
+      try {
+         await deleteRun(runData.id);
+         router.push("/dashboard/runs");
+      } catch {
+         toast.error("Unexpected error. Please try again.");
+      }
+   };
+
+   const handleBack = (e: React.MouseEvent) => {
+      e.preventDefault();
+      router.push("/dashboard/runs");
+   };
+
+   const handleShare = (e: React.MouseEvent) => {
+      e.preventDefault();
+      router.push(`/dashboard/runs/${runData.id}/export`);
+   };
+
+   const onSubmit = async (data: EditRunDtoWithPace) => {
+      if (data.distance !== undefined) data.distance = Number(data.distance);
+      if (data.duration !== undefined) data.duration = Number(data.duration);
+      if (data.laps !== undefined) data.laps = Number(data.laps);
+
+      try {
+         await editRun(runData.id, data as EditRunDto);
+         toast.success("Run updated!");
+         router.push("/dashboard/runs");
+      } catch {
+         toast.error("Failed to save run. Please try again.");
+      }
+   };
+
+   return (
+      <div className="flex flex-col text-primary w-full h-full">
+         <RunPageBreadCrumb runData={runData} />
+         <form
+            className="flex flex-col grow justify-between"
+            onSubmit={handleSubmit(onSubmit)}
+         >
+            <div className="flex flex-col">
+               <div className="flex gap-[18px] pt-4 ">
+                  <div
+                     onClick={handleShare}
+                     className={cn(
+                        "flex flex-col items-center justify-center h-[290px] w-[290px] bg-foreground shrink-0 gap-3 cursor-pointer",
+                        "hover:bg-primary hover:text-background transition-colors ease-in-out"
+                     )}
+                  >
+                     <UnionAlt className="size-11" />
+                     <div className="font-headline font-bold">
+                        EXPORT FOR SOCIAL
+                     </div>
+                  </div>
+                  <div className="flex flex-col gap-3 grow">
+                     <ControlledInput
+                        fieldName="distance"
+                        control={control}
+                        label="Distance"
+                        variant="light"
+                        inputSize="2xl"
+                        className="font-bold"
+                        unit="km"
+                        mode="number"
+                     />
+                     <ControlledInput
+                        fieldName="duration"
+                        control={control}
+                        label="Duration"
+                        variant="light"
+                        inputSize="2xl"
+                        unit="min"
+                        mode="number"
+                     />
+                     <div className="flex justify-between">
+                        <div className="w-[50px]">
+                           <ControlledInput
+                              fieldName="laps"
+                              control={control}
+                              label="Laps"
+                              variant="light"
+                              inputSize="2xl"
+                              mode="number"
+                           />
+                        </div>
+                        <div className="w-fit flex flex-col">
+                           <p className="text-sm text-secondary">Pace</p>
+                           <p className="font-headline text-2xl leading-16 text-secondary h-[110px]">
+                              {pace}
+                           </p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div className="flex flex-col gap-4">
+                  <ControlledInput
+                     fieldName="title"
+                     control={control}
+                     label="Title"
+                     variant="light"
+                     className="w-full"
+                     inputSize="md"
+                     required={true}
+                     placeholder="Name your run"
+                     errorMessage="Please enter run title"
+                  />
+                  <ControlledInput
+                     fieldName="location"
+                     control={control}
+                     label="Location"
+                     variant="light"
+                     className="font-bold"
+                     placeholder="Where did you run?"
+                  />
+                  <div className="flex gap-5">
+                     <div className="flex-1">
+                        <ControlledSelect
+                           fieldName="runType"
+                           control={control}
+                           options={runTypeOptions}
+                           label="Run Type"
+                           variant="light"
+                           className="font-bold"
+                           placeholder="Run Type"
+                           required={true}
+                           errorMessage="Please specify run type"
+                        />
+                     </div>
+                     <div className="flex-1">
+                        <ControlledSelect
+                           fieldName="mood"
+                           control={control}
+                           options={moodOptions}
+                           label="Mood"
+                           variant="light"
+                           className="font-bold"
+                           placeholder="How do you feel?"
+                        />
+                     </div>
+                     <div className="flex-1">
+                        <ControlledSelect
+                           fieldName="gear"
+                           control={control}
+                           options={runTypeOptions}
+                           label="Gear"
+                           variant="light"
+                           className="font-bold"
+                           placeholder="Running shoes"
+                        />
+                     </div>
+                  </div>
+                  <ControlledInput
+                     fieldName="note"
+                     control={control}
+                     label="Note"
+                     variant="light"
+                     placeholder="Something to remember"
+                  />
+               </div>
+            </div>
+            <div className="flex justify-between">
+               <div className="flex items-center gap-2">
+                  <Button onClick={handleBack} className="" type="button">
+                     <NavArrowLeft className="size-5 w-[20px]" />
+                  </Button>
+                  <Button
+                     onClick={handleDelete}
+                     className="w-[90px]"
+                     type="button"
+                  >
+                     Delete
+                  </Button>
+               </div>
+               <div className="flex items-center gap-2">
+                  <Button className="w-[90px]" type="submit">
+                     Save
+                  </Button>
+                  <Button onClick={handleShare} className="" type="button">
+                     <ShareAndroid className="size-4 w-[20px]" />
+                  </Button>
+               </div>
+            </div>
+         </form>
+      </div>
+   );
+};
+
+export const RunPageBreadCrumb = ({
+   runData,
+}: {
+   runData: RunFindOneResponse;
+}) => {
+   return (
+      <Breadcrumb>
+         <BreadcrumbList>
+            <BreadcrumbItem>
+               <BreadcrumbLink href="/dashboard/runs">Runs</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+               <BreadcrumbPage>{runData.title}</BreadcrumbPage>
+            </BreadcrumbItem>
+         </BreadcrumbList>
+      </Breadcrumb>
+   );
 };
 
 export default RunPageContent;

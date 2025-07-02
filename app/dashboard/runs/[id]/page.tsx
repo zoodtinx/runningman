@@ -22,9 +22,8 @@ const RunPageLayout = async ({ params }: PageProps) => {
    }
 
    return (
-      <div className="grow overflow-hidden px-[12px] ">
-         <div className="rounded-base h-full w-full bg-background p-[25px]">
-            <div className="h-[280px] w-[280px] bg-foreground"></div>
+      <div className="grow overflow-hidden px-[12px] pb-[12px] ">
+         <div className="rounded-base h-full w-full bg-background p-[20px]">
             <SessionProvider>
                <RunPageContent runData={runData} />
             </SessionProvider>

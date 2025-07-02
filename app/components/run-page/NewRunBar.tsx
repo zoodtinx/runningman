@@ -116,6 +116,10 @@ const NewRunBar = () => {
    const pace = watch("pace");
 
    const onSubmit: SubmitHandler<CreateRunDto> = async (data) => {
+      if (data.distance !== undefined) data.distance = Number(data.distance);
+      if (data.duration !== undefined) data.duration = Number(data.duration);
+      if (data.laps !== undefined) data.laps = Number(data.laps);
+
       if (!data.userId && session?.user?.id) {
          data.userId = session.user.id;
       }

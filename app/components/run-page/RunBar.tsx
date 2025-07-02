@@ -2,7 +2,6 @@ import { toSentenceCase } from "@/components/form-elements/utils/helper";
 import { cn } from "@/lib/utils";
 import { Run } from "@prisma/client";
 import { format } from "date-fns";
-import { MapPin } from "iconoir-react";
 
 const RunBar = ({ runData }: { runData: Run }) => {
    const distance = runData.laps
@@ -30,7 +29,7 @@ const RunBar = ({ runData }: { runData: Run }) => {
       <div
          className={cn(
             "flex flex-col justify-between h-[84px] rounded-base bg-background p-[10px]",
-            "border border-transparent hover:border-primary transition-colors"
+            "border border-transparent hover:border-primary transition-colors cursor-default"
          )}
       >
          <div className="flex justify-between w-full items-baseline font-headline px-1">

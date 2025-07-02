@@ -17,8 +17,10 @@ export const runSchema = z.object({
    userId: z.string().uuid(),
 });
 
-export const runCreateDto = runSchema.omit({ id: true });
-export const runEditDto = runSchema.partial().extend({ id: z.string().uuid() });
+export const createRunSchema = runSchema.omit({ id: true });
+export const editRunSchema = runSchema
+   .partial()
+   .extend({ id: z.string().uuid() });
 
 export const runFindOneResponse = runSchema;
 export const runFindManyResponse = z.object({
@@ -27,7 +29,7 @@ export const runFindManyResponse = z.object({
 });
 
 export type Run = z.infer<typeof runSchema>;
-export type CreateRunDto = z.infer<typeof runCreateDto>;
-export type EditRunDto = z.infer<typeof runEditDto>;
+export type CreateRunDto = z.infer<typeof createRunSchema>;
+export type EditRunDto = z.infer<typeof editRunSchema>;
 export type RunFindOneResponse = z.infer<typeof runFindOneResponse>;
 export type RunFindManyResponse = z.infer<typeof runFindManyResponse>;
