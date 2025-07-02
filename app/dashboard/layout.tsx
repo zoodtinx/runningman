@@ -126,7 +126,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   <OutdoorStatsSection />
                </div>
             </section>
-            <section className="flex flex-col w-1/2 h-full bg-foreground rounded-[23px] text-primary">
+            <section className="flex flex-col w-1/2 h-full bg-foreground rounded-[23px] text-primary relative overflow-clip">
                <Nav />
                {children}
             </section>
