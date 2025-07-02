@@ -17,54 +17,69 @@ interface SelectWithLabelProps {
    options: { value: string; label: React.ReactNode }[];
    value?: string;
    onValueChange?: (value: string) => void;
+   placeholder?: string;
 }
 
 export const SelectWithLabel = React.forwardRef<
    HTMLButtonElement,
    SelectWithLabelProps
->(({ className, label, variant, inputSize, options, ...props }, ref) => {
-   return (
-      <div className="group w-full z-20">
-         {label && <p className={cn("text-sm text-secondary")}>{label}</p>}
-         <div className="flex w-full items-end">
-            <Select {...props}>
-               <SelectTrigger
-                  ref={ref}
-                  className={cn(
-                     "focus:outline-none text-base font-medium grow p-0 h-auto flex items-center justify-between",
-                     variant === "light" && "text-primary",
-                     variant === "dark" && "text-background",
-                     variant === "white" && "text-primary bg-white",
-                     inputSize === "md" && "text-md",
-                     inputSize === "2xl" && "font-headline text-2xl leading-0",
-                     className
-                  )}
-               >
-                  <SelectValue placeholder="Select" />
-               </SelectTrigger>
-               <SelectContent>
-                  {options.map((opt) => (
-                     <SelectItem key={opt.value} value={opt.value}>
-                        {opt.label}
-                     </SelectItem>
-                  ))}
-               </SelectContent>
-            </Select>
+>(
+   (
+      {
+         className,
+         label,
+         variant,
+         inputSize,
+         options,
+         placeholder = "Select",
+         ...props
+      },
+      ref
+   ) => {
+      return (
+         <div className="group w-full z-20">
+            {label && <p className={cn("text-sm text-secondary")}>{label}</p>}
+            <div className="flex w-full items-end">
+               <Select {...props}>
+                  <SelectTrigger
+                     ref={ref}
+                     className={cn(
+                        "focus:outline-none text-base font-medium grow p-0 h-auto flex items-center justify-between",
+                        variant === "light" && "text-primary",
+                        variant === "dark" && "text-background",
+                        variant === "white" && "text-primary bg-white",
+                        inputSize === "md" && "text-md",
+                        inputSize === "2xl" &&
+                           "font-headline text-2xl leading-0",
+                        className
+                     )}
+                  >
+                     <SelectValue placeholder={placeholder} />
+                  </SelectTrigger>
+                  <SelectContent>
+                     {options.map((opt) => (
+                        <SelectItem key={opt.value} value={opt.value}>
+                           {opt.label}
+                        </SelectItem>
+                     ))}
+                  </SelectContent>
+               </Select>
+            </div>
+            <div
+               className={cn(
+                  "border-b pt-[1px]",
+                  variant === "light" &&
+                     "border-secondary group-focus-within:border-primary",
+                  variant === "dark" &&
+                     "border-tertiary group-focus-within:border-background",
+                  variant === "white" &&
+                     "border-secondary group-focus-within:border-primary"
+               )}
+            />
          </div>
-         <div
-            className={cn(
-               "border-b pt-[1px]",
-               variant === "light" &&
-                  "border-secondary group-focus-within:border-primary",
-               variant === "dark" &&
-                  "border-tertiary group-focus-within:border-background",
-               variant === "white" &&
-                  "border-secondary group-focus-within:border-primary"
-            )}
-         />
-      </div>
-   );
-});
+      );
+   }
+);
 
 SelectWithLabel.displayName = "SelectWithLabel";
 
@@ -73,6 +88,7 @@ type ControlledSelectProps<T extends FieldValues> = {
    control: Control<T>;
    required?: boolean | string;
    errorMessage?: string;
+   placeholder?: string;
 } & Omit<SelectWithLabelProps, "name" | "value" | "onValueChange">;
 
 export function ControlledSelect<T extends FieldValues>({
@@ -80,6 +96,7 @@ export function ControlledSelect<T extends FieldValues>({
    control,
    required,
    errorMessage,
+   placeholder,
    ...rest
 }: ControlledSelectProps<T>) {
    return (
@@ -94,6 +111,7 @@ export function ControlledSelect<T extends FieldValues>({
                   value={field.value}
                   onValueChange={field.onChange}
                   aria-invalid={!!fieldState.error}
+                  placeholder={placeholder}
                />
                {fieldState.error && (
                   <p className="text-xs text-red-500 mt-1 font-medium">

@@ -41,7 +41,7 @@ export const InputWithLabel = React.forwardRef<
                      mode === "number" ? handleNumberInput : props.onChange
                   }
                   className={cn(
-                     "focus:outline-none text-base font-medium inline-block grow w-full",
+                     "focus:outline-none text-base font-medium inline-block grow w-full placeholder:font-normal placeholder:text-tertiary",
                      variant === "light" && "text-primary",
                      variant === "dark" && "text-background",
                      variant === "white" && "text-primary bg-white",
