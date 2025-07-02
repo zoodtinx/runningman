@@ -1,3 +1,4 @@
+import { toSentenceCase } from "@/components/form-elements/utils/helper";
 import { cn } from "@/lib/utils";
 import { Run } from "@prisma/client";
 import { format } from "date-fns";
@@ -20,12 +21,18 @@ const RunBar = ({ runData }: { runData: Run }) => {
       return `${minutes}'${seconds.toString().padStart(2, "0")}"`;
    };
 
-   const pace = runData.duration / 60 / distance;
+   const pace = runData.duration / distance;
    const formattedPace = formatPace(pace);
-   const formattedDuration = Math.floor(runData.duration / 60);
+
+   console.log("runData", runData);
 
    return (
-      <div className="flex flex-col justify-between h-[84px] rounded-base bg-background p-[10px]">
+      <div
+         className={cn(
+            "flex flex-col justify-between h-[84px] rounded-base bg-background p-[10px]",
+            "border border-transparent hover:border-primary transition-colors"
+         )}
+      >
          <div className="flex justify-between w-full items-baseline font-headline px-1">
             <div className="flex items-baseline gap-2 leading-9">
                <p className="text-[36px] font-bold">{runData.distance}</p>
@@ -34,7 +41,7 @@ const RunBar = ({ runData }: { runData: Run }) => {
             <div className="flex gap-5">
                <span className="text-[30px]">{formattedPace}</span>
                <span className="flex gap-2 items-baseline">
-                  <p className="text-[30px]">{formattedDuration}</p>
+                  <p className="text-[30px]">{runData.duration}</p>
                   <p className="text-[22px]">min</p>
                </span>
             </div>
@@ -42,15 +49,17 @@ const RunBar = ({ runData }: { runData: Run }) => {
          <div className="flex justify-between items-center">
             <RunTypeBar runType={runData.runType} />
             <div className="flex gap-3 opacity-30">
+               {/* <span className="flex gap-[2px] items-center text-sm">
+                  <MapPin className="size-3" />
+                  <p className="line-clamp-1 max-w-[200px]">
+                     {runData.location}
+                  </p>
+               </span> */}
                <span className="text-sm">
                   {format(
                      new Date(runData.dateTime),
                      "EEEE, MMMM d 'at' h.mmaa"
                   )}
-               </span>
-               <span className="flex gap-[2px] items-center text-sm">
-                  <MapPin className="size-3" />
-                  <p>{runData.location}</p>
                </span>
             </div>
          </div>
@@ -63,31 +72,31 @@ const RunTypeBar = ({ runType }: { runType: string }) => {
       <div
          className={cn(
             "text-sm font-semibold rounded-full text-background px-2 w-1/3",
-            runType === "Easy" &&
+            runType === "easy" &&
                "bg-[linear-gradient(to_right,_#B2F2BB,_transparent_100%)]",
-            runType === "Recovery" &&
+            runType === "recovery" &&
                "bg-[linear-gradient(to_right,_#D3F9D8,_transparent_100%)]",
-            runType === "Tempo" &&
+            runType === "tempo" &&
                "bg-[linear-gradient(to_right,_#FFE8A1,_transparent_100%)]",
-            runType === "Progression" &&
+            runType === "progression" &&
                "bg-[linear-gradient(to_right,_#FFD6A5,_transparent_100%)]",
-            runType === "Interval" &&
+            runType === "interval" &&
                "bg-[linear-gradient(to_right,_#FFADAD,_transparent_100%)]",
-            runType === "Speed Work" &&
+            runType === "speed-work" &&
                "bg-[linear-gradient(to_right,_#FF85C1,_transparent_100%)]",
-            runType === "Race" &&
+            runType === "race" &&
                "bg-[linear-gradient(to_right,_#F783AC,_transparent_100%)]",
-            runType === "Fartlek" &&
+            runType === "fartlek" &&
                "bg-[linear-gradient(to_right,_#A0C4FF,_transparent_100%)]",
-            runType === "Hill Training" &&
+            runType === "hill-training" &&
                "bg-[linear-gradient(to_right,_#99E9F2,_transparent_100%)]",
-            runType === "Long Run" &&
+            runType === "long-run" &&
                "bg-[linear-gradient(to_right,_#D0BFFF,_transparent_100%)]",
-            runType === "Daily Miles" &&
+            runType === "daily-miles" &&
                "bg-[linear-gradient(to_right,_#BDB2FF,_transparent_100%)]"
          )}
       >
-         {runType}
+         {toSentenceCase(runType)}
       </div>
    );
 };

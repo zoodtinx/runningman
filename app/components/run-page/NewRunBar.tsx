@@ -10,47 +10,67 @@ import { PlusSquare } from "iconoir-react";
 import React, { useEffect, useState } from "react";
 import { ControlledSelect } from "@/components/primitives/SelectWithLabel";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { createRun } from "@/dashboard/runs/actions";
 import { cn } from "@/lib/utils";
+
+import { useSession } from "next-auth/react";
+import { ControlledDatePicker } from "@/components/primitives/DatePicker";
+import { ControlledTimePicker } from "@/components/primitives/TimePicker";
 
 type NewRunFormValues = {
    title: string;
-   distanceKm: string;
-   distanceMin: string;
+   distance: string;
+   duration: string;
    laps: string;
    pace: string;
    location: string;
    runType: string;
+   routeId: "";
    mood: string;
    gear: string;
    note: string;
+   userId: string;
+   dateTime: string;
 };
 
 const NewRunBar = () => {
-   // Toggle between "base" and "add"
    const [mode, setMode] = useState<"base" | "add">("base");
+
+   const { data: session } = useSession();
+
+   console.log("session", session);
 
    const { control, handleSubmit, watch, setValue, reset } =
       useForm<NewRunFormValues>({
          defaultValues: {
             title: "",
-            distanceKm: "",
-            distanceMin: "",
+            distance: "",
+            duration: "",
             laps: "1",
             pace: "",
             location: "",
+            routeId: "",
             runType: "",
             mood: "",
             gear: "",
+            dateTime: new Date().toISOString(),
             note: "",
+            userId: "",
          },
       });
 
    useEffect(() => {
+      if (session?.user?.id) {
+         setValue("userId", session.user.id);
+      }
+   }, [session, setValue]);
+
+   useEffect(() => {
       const subscription = watch((values) => {
-         const distance = parseFloat(values.distanceKm || "0");
+         const distance = parseFloat(values.distance || "0");
          const laps = parseFloat(values.laps || "1");
          const totalDistance = distance * (laps > 0 ? laps : 1);
-         const duration = parseFloat(values.distanceMin || "0");
+         const duration = parseFloat(values.duration || "0");
 
          if (totalDistance > 0 && duration > 0) {
             const pace = duration / totalDistance;
@@ -68,37 +88,77 @@ const NewRunBar = () => {
       return () => subscription.unsubscribe();
    }, [watch, setValue]);
 
+   useEffect(() => {
+      const handleKeyDown = (e: KeyboardEvent) => {
+         if (e.key === "Escape") {
+            setMode("base");
+         }
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+         window.removeEventListener("keydown", handleKeyDown);
+      };
+   }, []);
+
    const pace = watch("pace");
 
-   const onSubmit: SubmitHandler<NewRunFormValues> = (data) => {
+   const onSubmit: SubmitHandler<NewRunFormValues> = async (data) => {
+      if (!data.userId && session?.user?.id) {
+         data.userId = session.user.id;
+      }
       console.log(data);
-      // After submit, return to base mode and reset form
-      setMode("base");
-      reset();
+
+      // Only keep the allowed fields for the Run model
+      const {
+         title,
+         distance,
+         duration,
+         laps,
+         location,
+         runType,
+         mood,
+         gear,
+         note,
+         dateTime,
+         userId,
+      } = data;
+
+      const runData = {
+         title,
+         distance,
+         duration,
+         laps,
+         location,
+         runType,
+         mood,
+         gear,
+         note,
+         dateTime,
+         userId,
+      };
+
+      try {
+         await createRun(runData);
+      } catch (error) {
+         console.error(error);
+      }
+
+      // setMode("base");
+      // reset();
    };
 
-   // if (mode === "base") {
-   //    return (
-   //       <div
-   //          className="flex gap-2 items-center justify-center font-headline text-[25px] font-bold h-[84px] rounded-base bg-background cursor-pointer"
-   //          onClick={() => setMode("add")}
-   //       >
-   //          <span>NEW RUN</span>
-   //          <PlusSquare className="size-6" />
-   //       </div>
-   //    );
-   // }
-
    const handleDestructive = () => {
-      // On discard, return to base mode and reset form
       setMode("base");
       reset();
    };
 
    return (
-      <div className="relative h-fit flex w-full">
+      <div className="relative h-fit flex w-full ">
          <div
-            className="flex gap-2 items-center justify-center font-headline text-[25px] font-bold h-[84px] rounded-base bg-background cursor-pointer w-full"
+            className={cn(
+               "flex gap-2 items-center justify-center font-headline text-[25px] font-bold h-[84px] rounded-base bg-background cursor-pointer w-full",
+               "border border-transparent hover:bg-primary hover:text-background transition-colors"
+            )}
             onClick={() => setMode("add")}
          >
             <span>NEW RUN</span>
@@ -107,22 +167,35 @@ const NewRunBar = () => {
          <form
             onSubmit={handleSubmit(onSubmit)}
             className={cn(
-               "flex absolute w-full flex-col justify-between rounded-base bg-primary p-[15px] box-border overflow-hidden origin-top transition-all duration-300 ease-in-out",
+               "flex absolute w-full flex-col justify-between rounded-base bg-primary p-[15px] box-border overflow-hidden origin-top",
+               "transition-all duration-170 ease-in-out z-10",
                mode === "add"
                   ? "scale-y-100 opacity-100"
                   : "scale-y-0 opacity-0"
             )}
          >
             <div>
-               <div className="flex gap-[4px] text-background h-fit items-center">
-                  <PlusSquare className="size-6" />
-                  <span className="font-headline font-semibold text-[26px]">
-                     NEW RUN
-                  </span>
+               <div className="flex justify-between">
+                  <div className="flex gap-[4px] text-background h-fit items-center">
+                     <PlusSquare className="size-6" />
+                     <span className="font-headline font-semibold text-[26px]">
+                        NEW RUN
+                     </span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                     <ControlledDatePicker
+                        fieldName="dateTime"
+                        control={control}
+                     />
+                     <ControlledTimePicker
+                        control={control}
+                        fieldName="dateTime"
+                     />
+                  </div>
                </div>
                <div className="flex flex-col gap-3">
                   <ControlledInput
-                     filedName="title"
+                     fieldName="title"
                      control={control}
                      label="Title"
                      variant="dark"
@@ -134,19 +207,20 @@ const NewRunBar = () => {
                   <div className="flex justify-between">
                      <div className="w-[245px]">
                         <ControlledInput
-                           filedName="distanceKm"
+                           fieldName="distance"
                            control={control}
                            label="Distance"
                            variant="dark"
                            inputSize="2xl"
                            className="font-bold"
                            unit="km"
+                           mode="number"
                         />
                      </div>
                      <div className="flex gap-5">
                         <div className="w-[245px]">
                            <ControlledInput
-                              filedName="distanceMin"
+                              fieldName="duration"
                               control={control}
                               label="Duration"
                               variant="dark"
@@ -156,7 +230,7 @@ const NewRunBar = () => {
                         </div>
                         <div className="w-[50px]">
                            <ControlledInput
-                              filedName="laps"
+                              fieldName="laps"
                               control={control}
                               label="Laps"
                               variant="dark"
@@ -167,7 +241,7 @@ const NewRunBar = () => {
                   </div>
                   <div className="w-[245px] flex flex-col">
                      <p className="text-sm text-secondary">Pace</p>
-                     <p className="font-headline text-2xl leading-16 text-secondary">
+                     <p className="font-headline text-2xl leading-16 text-secondary h-[110px]">
                         {pace}
                      </p>
                   </div>
@@ -176,7 +250,7 @@ const NewRunBar = () => {
             <div className="flex flex-col gap-5 text-background">
                <div className="flex-1">
                   <ControlledInput
-                     filedName="location"
+                     fieldName="location"
                      control={control}
                      label="Location"
                      variant="dark"
@@ -186,7 +260,7 @@ const NewRunBar = () => {
                <div className="flex gap-5">
                   <div className="flex-1">
                      <ControlledSelect
-                        filedName="runType"
+                        fieldName="runType"
                         control={control}
                         options={runTypeOptions}
                         label="Run Type"
@@ -196,7 +270,7 @@ const NewRunBar = () => {
                   </div>
                   <div className="flex-1">
                      <ControlledSelect
-                        filedName="mood"
+                        fieldName="mood"
                         control={control}
                         options={moodOptions}
                         label="Mood"
@@ -206,7 +280,7 @@ const NewRunBar = () => {
                   </div>
                   <div className="flex-1">
                      <ControlledSelect
-                        filedName="gear"
+                        fieldName="gear"
                         control={control}
                         options={runTypeOptions}
                         label="Gear"
@@ -217,7 +291,7 @@ const NewRunBar = () => {
                </div>
                <div className="flex-1">
                   <ControlledInput
-                     filedName="note"
+                     fieldName="note"
                      control={control}
                      label="Note"
                      variant="dark"
