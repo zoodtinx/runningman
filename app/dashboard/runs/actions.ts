@@ -1,22 +1,10 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { CreateRunDto } from "@/lib/zod/runs.zod.schema";
 import { revalidatePath } from "next/cache";
 
-export async function createRun(input: {
-   title: string;
-   userId: string;
-   dateTime: string;
-   distance: string;
-   duration: string;
-   laps: string;
-   location: string;
-   runType: string;
-   mood: string;
-   gear: string;
-   routeId: string;
-   note: string;
-}) {
+export async function createRun(input: CreateRunDto) {
    console.log("input", input);
 
    const distance = Number(input.distance);
@@ -36,5 +24,5 @@ export async function createRun(input: {
       },
    });
 
-   revalidatePath("/dashboard");
+   revalidatePath("/dashboard/runs");
 }

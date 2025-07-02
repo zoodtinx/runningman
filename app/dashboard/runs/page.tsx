@@ -4,19 +4,24 @@ import NewRunBar from "@/components/run-page/NewRunBar";
 import RunBar from "@/components/run-page/RunBar";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
+import Link from "next/link";
 
 const RunsPage = async () => {
    const session = await auth();
+   if (!session?.user) {
+      return;
+   }
    const runsData = await prisma.run.findMany({
       where: {
          userId: session.user.id,
       },
-      orderBy: {
-         dateTime: "desc",
-      },
+      orderBy: [{ dateTime: "desc" }],
    });
-
-   const runBars = runsData.map((run) => <RunBar runData={run} key={run.id} />);
+   const runBars = runsData.map((run) => (
+      <Link href={`/dashboard/runs/${run.id}`} key={run.id}>
+         <RunBar runData={run} key={run.id} />
+      </Link>
+   ));
 
    return (
       <div className="grow overflow-hidden">

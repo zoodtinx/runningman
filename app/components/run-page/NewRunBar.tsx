@@ -16,41 +16,25 @@ import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import { ControlledDatePicker } from "@/components/primitives/DatePicker";
 import { ControlledTimePicker } from "@/components/primitives/TimePicker";
+import { CreateRunDto } from "@/lib/zod/runs.zod.schema";
 
-type NewRunFormValues = {
-   title: string;
-   distance: string;
-   duration: string;
-   laps: string;
-   pace: string;
-   location: string;
-   runType: string;
-   routeId: "";
-   mood: string;
-   gear: string;
-   note: string;
-   userId: string;
-   dateTime: string;
-};
+type CreateRunDtoWithPace = CreateRunDto & { pace?: string };
 
 const NewRunBar = () => {
    const [mode, setMode] = useState<"base" | "add">("base");
-
    const { data: session } = useSession();
 
-   console.log("session", session);
-
-   const { control, handleSubmit, watch, setValue, reset } =
-      useForm<NewRunFormValues>({
+   const { control, handleSubmit, watch, setValue, reset, getValues } =
+      useForm<CreateRunDtoWithPace>({
          defaultValues: {
             title: "",
-            distance: "",
-            duration: "",
-            laps: "1",
-            pace: "",
+            distance: 1,
+            duration: 1,
+            laps: 1,
             location: "",
             routeId: "",
-            runType: "",
+            runType: "daily-miles",
+            pace: "",
             mood: "",
             gear: "",
             dateTime: new Date().toISOString(),
@@ -67,10 +51,10 @@ const NewRunBar = () => {
 
    useEffect(() => {
       const subscription = watch((values) => {
-         const distance = parseFloat(values.distance || "0");
-         const laps = parseFloat(values.laps || "1");
+         const distance = values.distance ?? 0;
+         const laps = values.laps ?? 1;
          const totalDistance = distance * (laps > 0 ? laps : 1);
-         const duration = parseFloat(values.duration || "0");
+         const duration = values.duration ?? 0;
 
          if (totalDistance > 0 && duration > 0) {
             const pace = duration / totalDistance;
@@ -85,8 +69,37 @@ const NewRunBar = () => {
          }
       });
 
+      const values = getValues();
+
+      const dateTime = values.dateTime ? new Date(values.dateTime) : new Date();
+      const days = [
+         "Sunday",
+         "Monday",
+         "Tuesday",
+         "Wednesday",
+         "Thursday",
+         "Friday",
+         "Saturday",
+      ];
+      const dayName = days[dateTime.getDay()];
+      const hour = dateTime.getHours();
+      let timeOfDay = "Morning";
+      if (hour >= 12 && hour < 17) {
+         timeOfDay = "Afternoon";
+      } else if (hour >= 17 || hour < 5) {
+         timeOfDay = "Evening";
+      }
+      const autoTitle = `${dayName} ${timeOfDay} Run`;
+      if (
+         !values.title ||
+         values.title === "" ||
+         values.title.endsWith("Run")
+      ) {
+         setValue("title", autoTitle);
+      }
+
       return () => subscription.unsubscribe();
-   }, [watch, setValue]);
+   }, [watch, setValue, getValues]);
 
    useEffect(() => {
       const handleKeyDown = (e: KeyboardEvent) => {
@@ -102,49 +115,19 @@ const NewRunBar = () => {
 
    const pace = watch("pace");
 
-   const onSubmit: SubmitHandler<NewRunFormValues> = async (data) => {
+   const onSubmit: SubmitHandler<CreateRunDto> = async (data) => {
       if (!data.userId && session?.user?.id) {
          data.userId = session.user.id;
       }
-      console.log(data);
-
-      // Only keep the allowed fields for the Run model
-      const {
-         title,
-         distance,
-         duration,
-         laps,
-         location,
-         runType,
-         mood,
-         gear,
-         note,
-         dateTime,
-         userId,
-      } = data;
-
-      const runData = {
-         title,
-         distance,
-         duration,
-         laps,
-         location,
-         runType,
-         mood,
-         gear,
-         note,
-         dateTime,
-         userId,
-      };
 
       try {
-         await createRun(runData);
+         await createRun(data);
       } catch (error) {
          console.error(error);
       }
 
-      // setMode("base");
-      // reset();
+      setMode("base");
+      reset();
    };
 
    const handleDestructive = () => {
@@ -202,10 +185,11 @@ const NewRunBar = () => {
                      className="w-full"
                      inputSize="md"
                      required={true}
+                     placeholder="Name your run"
                      errorMessage="Please enter run title"
                   />
                   <div className="flex justify-between">
-                     <div className="w-[245px]">
+                     <div className="w-[200px]">
                         <ControlledInput
                            fieldName="distance"
                            control={control}
@@ -218,7 +202,7 @@ const NewRunBar = () => {
                         />
                      </div>
                      <div className="flex gap-5">
-                        <div className="w-[245px]">
+                        <div className="w-[200px]">
                            <ControlledInput
                               fieldName="duration"
                               control={control}
@@ -226,6 +210,7 @@ const NewRunBar = () => {
                               variant="dark"
                               inputSize="2xl"
                               unit="min"
+                              mode="number"
                            />
                         </div>
                         <div className="w-[50px]">
@@ -235,6 +220,7 @@ const NewRunBar = () => {
                               label="Laps"
                               variant="dark"
                               inputSize="2xl"
+                              mode="number"
                            />
                         </div>
                      </div>
@@ -255,6 +241,7 @@ const NewRunBar = () => {
                      label="Location"
                      variant="dark"
                      className="font-bold"
+                     placeholder="Where did you run?"
                   />
                </div>
                <div className="flex gap-5">
@@ -266,6 +253,9 @@ const NewRunBar = () => {
                         label="Run Type"
                         variant="dark"
                         className="font-bold"
+                        placeholder="Run Type"
+                        required={true}
+                        errorMessage="Please specify run type"
                      />
                   </div>
                   <div className="flex-1">
@@ -276,6 +266,7 @@ const NewRunBar = () => {
                         label="Mood"
                         variant="dark"
                         className="font-bold"
+                        placeholder="How do you feel?"
                      />
                   </div>
                   <div className="flex-1">
@@ -286,6 +277,7 @@ const NewRunBar = () => {
                         label="Gear"
                         variant="dark"
                         className="font-bold"
+                        placeholder="Running shoes"
                      />
                   </div>
                </div>
@@ -295,6 +287,7 @@ const NewRunBar = () => {
                      control={control}
                      label="Note"
                      variant="dark"
+                     placeholder="Something to remember"
                   />
                </div>
                <FormFooter handleDestructive={handleDestructive} />

@@ -19,7 +19,7 @@ model User {
   name                 String?
   theme                String         @default("speed")
   preferredUnits       String         // validate in app: "km" | "mi"
-  location         String?
+  location             String?
   notificationEnabled  Boolean
   createdAt            DateTime       @default(now())
   updatedAt            DateTime       @updatedAt
@@ -34,7 +34,7 @@ model Run {
   title     String
   distance  Float
   duration  Int
-  laps      Int?
+  laps      Int
   location  String?
   runType   String
   mood      String?
@@ -45,32 +45,38 @@ model Run {
   route     Route?   @relation(fields: [routeId], references: [id])
   user      User     @relation("UserRuns", fields: [userId], references: [id], onDelete: Cascade)
   userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Route {
-  id       String         @id @default(uuid())
-  title    String
-  distance Float?
-  time     Int?
-  laps     Int?
-  location String?
-  note     String?
-  user     User           @relation("UserRoutes", fields: [userId], references: [id], onDelete: Cascade)
-  userId   String
-  run Run[]
-  schedules ScheduleItem[]
+  id         String         @id @default(uuid())
+  title      String
+  distance   Float?
+  time       Int?
+  laps       Int?
+  location   String?
+  note       String?
+  user       User           @relation("UserRoutes", fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  run        Run[]
+  schedules  ScheduleItem[]
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
 }
 
 model OutdoorStat {
-  id      String  @id @default(uuid())
-  type    String
-  label   String
+  id        String  @id @default(uuid())
+  type      String
+  label     String
   valueType String
-  value   String
-  range   String
-  detail  String?
-  user    User    @relation("UserOutdoorStats", fields: [userId], references: [id], onDelete: Cascade)
-  userId  String
+  value     String
+  range     String
+  detail    String?
+  user      User    @relation("UserOutdoorStats", fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model ScheduleItem {
@@ -83,4 +89,6 @@ model ScheduleItem {
   runType   String?
   user      User     @relation("UserScheduleItems", fields: [userId], references: [id], onDelete: Cascade)
   userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
