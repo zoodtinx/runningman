@@ -24,7 +24,7 @@ export const SelectWithLabel = React.forwardRef<
    SelectWithLabelProps
 >(({ className, label, variant, inputSize, options, ...props }, ref) => {
    return (
-      <div className="group w-full">
+      <div className="group w-full z-20">
          {label && <p className={cn("text-sm text-secondary")}>{label}</p>}
          <div className="flex w-full items-end">
             <Select {...props}>
@@ -69,14 +69,14 @@ export const SelectWithLabel = React.forwardRef<
 SelectWithLabel.displayName = "SelectWithLabel";
 
 type ControlledSelectProps<T extends FieldValues> = {
-   filedName: Path<T>;
+   fieldName: Path<T>;
    control: Control<T>;
    required?: boolean | string;
    errorMessage?: string;
 } & Omit<SelectWithLabelProps, "name" | "value" | "onValueChange">;
 
 export function ControlledSelect<T extends FieldValues>({
-   filedName,
+   fieldName,
    control,
    required,
    errorMessage,
@@ -84,7 +84,7 @@ export function ControlledSelect<T extends FieldValues>({
 }: ControlledSelectProps<T>) {
    return (
       <Controller
-         name={filedName}
+         name={fieldName}
          control={control}
          rules={required ? { required } : undefined}
          render={({ field, fieldState }) => (
