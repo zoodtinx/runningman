@@ -40,7 +40,11 @@ export const SelectWithLabel = React.forwardRef<
          <div className="group w-full z-20">
             {label && <p className={cn("text-sm text-secondary")}>{label}</p>}
             <div className="flex w-full items-end">
-               <Select {...props}>
+               <Select
+                  {...props}
+                  value={props.value === null ? "" : props.value}
+                  onValueChange={props.onValueChange}
+               >
                   <SelectTrigger
                      ref={ref}
                      className={cn(
@@ -57,6 +61,12 @@ export const SelectWithLabel = React.forwardRef<
                      <SelectValue placeholder={placeholder} />
                   </SelectTrigger>
                   <SelectContent>
+                     {/* Add a placeholder option if value is undefined */}
+                     {props.value === undefined && (
+                        <SelectItem value="" disabled>
+                           {placeholder}
+                        </SelectItem>
+                     )}
                      {options.map((opt) => (
                         <SelectItem key={opt.value} value={opt.value}>
                            {opt.label}

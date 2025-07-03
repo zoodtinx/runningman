@@ -1,7 +1,6 @@
 import { toSentenceCase } from "@/components/form-elements/utils/helper";
 import { cn } from "@/lib/utils";
 import { Run } from "@prisma/client";
-import { format } from "date-fns";
 import { MapPin } from "iconoir-react";
 
 const RouteBar = ({ routeData }: { routeData: Run }) => {

@@ -6,7 +6,7 @@ export const routeSchema = z.object({
    title: z.string(),
    distance: nullableNumberField(),
    duration: nullableNumberField(),
-   laps: z.number().int().optional(),
+   laps: nullableNumberField(),
    location: nullableStringField(),
    note: nullableStringField(),
    runType: z.string(),
@@ -21,6 +21,7 @@ export const createRouteSchema = routeSchema.omit({
    updatedAt: true,
 });
 export const editRouteSchema = routeSchema
+   .omit({ createdAt: true, updatedAt: true })
    .partial()
    .extend({ id: z.string().uuid() });
 

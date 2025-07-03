@@ -17,6 +17,7 @@ type CreateRouteDtoWithPace = CreateRouteDto & { pace?: string };
 
 const NewRouteBar = () => {
    const [mode, setMode] = useState<"base" | "add">("base");
+   const [inputMode, setInputMode] = useState<"distance" | "time">("distance");
    const { data: session } = useSession();
 
    const { control, handleSubmit, setValue, reset } =
@@ -24,7 +25,7 @@ const NewRouteBar = () => {
          defaultValues: {
             title: "",
             distance: 1,
-            duration: 1,
+            duration: null,
             laps: 1,
             location: "",
             routeId: "",
@@ -56,14 +57,25 @@ const NewRouteBar = () => {
       };
    }, []);
 
-   const onSubmit: SubmitHandler<CreateRouteDto> = async (data) => {
-      if (data.distance !== undefined) data.distance = Number(data.distance);
-      if (data.duration !== undefined) data.duration = Number(data.duration);
-      if (data.laps !== undefined) data.laps = Number(data.laps);
+   useEffect(() => {
+      if (inputMode === "distance") {
+         setValue("distance", 1);
+         setValue("duration", null);
+      } else {
+         setValue("duration", 1);
+         setValue("distance", null);
+         setValue("laps", 1);
+      }
+   }, [inputMode, setValue]);
 
+   const onSubmit: SubmitHandler<CreateRouteDto> = async (data) => {
       if (!data.userId && session?.user?.id) {
          data.userId = session.user.id;
       }
+      if (data.distance !== undefined) data.distance = Number(data.distance);
+      if (data.duration !== undefined) data.duration = Number(data.duration);
+      if (data.laps !== undefined) data.laps = Number(data.laps);
+      if (inputMode === "time") data.laps = null;
 
       try {
          await createRoute(data);
@@ -80,8 +92,16 @@ const NewRouteBar = () => {
       reset();
    };
 
+   const handleToggle = (
+      e: React.MouseEvent,
+      selected: "distance" | "time"
+   ) => {
+      e.preventDefault();
+      setInputMode(selected);
+   };
+
    return (
-      <div className="relative h-fit flex w-full ">
+      <div className="relative h-fit flex w-full">
          <div
             className={cn(
                "flex gap-2 items-center justify-center font-headline text-[25px] font-bold h-[84px] rounded-base bg-background cursor-pointer w-full",
@@ -103,7 +123,7 @@ const NewRouteBar = () => {
             )}
          >
             <div>
-               <div className="flex justify-between">
+               <div className="flex justify-between mb-3">
                   <div className="flex gap-[4px] text-background h-fit items-center">
                      <PlusSquare className="size-6" />
                      <span className="font-headline font-semibold text-[26px]">
@@ -111,6 +131,7 @@ const NewRouteBar = () => {
                      </span>
                   </div>
                </div>
+
                <div className="flex flex-col gap-3">
                   <ControlledInput
                      fieldName="title"
@@ -123,46 +144,91 @@ const NewRouteBar = () => {
                      placeholder="Name your route"
                      errorMessage="Please enter run title"
                   />
-                  <div className="flex justify-between">
-                     <div className="w-[250px]">
-                        <ControlledInput
-                           fieldName="distance"
-                           control={control}
-                           label="Distance"
-                           variant="dark"
-                           inputSize="2xl"
-                           className="font-bold"
-                           unit="km"
-                           mode="number"
-                        />
-                     </div>
-                     <div className="flex gap-5">
-                        <div className="w-[80px]">
-                           <ControlledInput
-                              fieldName="laps"
-                              control={control}
-                              label="Laps"
-                              variant="dark"
-                              inputSize="2xl"
-                              mode="number"
-                           />
+
+                  {/* Toggle */}
+                  <div className="flex gap-3 pt-1">
+                     <div className="pl-0 p-1 w-[130px]">
+                        <div className="h-full bg-tertiary rounded-base p-2 cursor-default flex flex-col transition-colors duration-200">
+                           <button
+                              type="button"
+                              className={`flex items-center px-2 font-medium h-1/2 w-full rounded-sm transition-colors duration-200 ${
+                                 inputMode === "distance"
+                                    ? "bg-primary text-background"
+                                    : "bg-transparent text-secondary hover:text-background"
+                              }`}
+                              onClick={(e) => handleToggle(e, "distance")}
+                           >
+                              Distance
+                           </button>
+                           <button
+                              type="button"
+                              className={`flex items-center px-2 font-medium h-1/2 w-full rounded-sm transition-colors duration-200 ${
+                                 inputMode === "time"
+                                    ? "bg-primary text-background"
+                                    : "bg-transparent text-secondary hover:text-background"
+                              }`}
+                              onClick={(e) => handleToggle(e, "time")}
+                           >
+                              Time
+                           </button>
                         </div>
                      </div>
+
+                     {/* Input Fields */}
+                     <div className="flex justify-between gap-3 grow">
+                        {inputMode === "distance" ? (
+                           <>
+                              <div className="w-[250px]">
+                                 <ControlledInput
+                                    fieldName="distance"
+                                    control={control}
+                                    label="Distance"
+                                    variant="dark"
+                                    inputSize="2xl"
+                                    className="font-bold"
+                                    unit="km"
+                                    mode="number"
+                                 />
+                              </div>
+                              <div className="w-[80px]">
+                                 <ControlledInput
+                                    fieldName="laps"
+                                    control={control}
+                                    label="Laps"
+                                    variant="dark"
+                                    inputSize="2xl"
+                                    mode="number"
+                                 />
+                              </div>
+                           </>
+                        ) : (
+                           <div className="w-[250px]">
+                              <ControlledInput
+                                 fieldName="duration"
+                                 control={control}
+                                 label="Duration"
+                                 variant="dark"
+                                 inputSize="2xl"
+                                 className="font-bold"
+                                 unit="min"
+                                 mode="number"
+                              />
+                           </div>
+                        )}
+                     </div>
                   </div>
-                  <div className="h-[40px]"></div>
                </div>
             </div>
-            <div className="flex flex-col gap-5 text-background">
-               <div className="flex-1">
-                  <ControlledInput
-                     fieldName="location"
-                     control={control}
-                     label="Location"
-                     variant="dark"
-                     className="font-bold"
-                     placeholder="Where did you run?"
-                  />
-               </div>
+
+            <div className="flex flex-col gap-5 text-background mt-5">
+               <ControlledInput
+                  fieldName="location"
+                  control={control}
+                  label="Location"
+                  variant="dark"
+                  className="font-bold"
+                  placeholder="Where did you run?"
+               />
                <div className="flex gap-5">
                   <div className="flex-1">
                      <ControlledSelect

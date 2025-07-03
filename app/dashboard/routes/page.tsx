@@ -1,7 +1,5 @@
 import { SessionProvider } from "next-auth/react";
 import { ScrollArea } from "@/components/primitives/ScrollArea";
-import NewRunBar from "@/components/run-page/NewRunBar";
-import RunBar from "@/components/run-page/RunBar";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import Link from "next/link";
@@ -21,7 +19,7 @@ const RoutesPage = async () => {
       orderBy: [{ createdAt: "desc" }],
    });
    const routeBars = runsData.map((run) => (
-      <Link href={`/dashboard/runs/${run.id}`} key={run.id}>
+      <Link href={`/dashboard/routes/${run.id}`} key={run.id}>
          <RouteBar routeData={run} key={run.id} />
       </Link>
    ));
