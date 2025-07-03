@@ -53,10 +53,11 @@ model Route {
   id         String         @id @default(uuid())
   title      String
   distance   Float?
-  time       Int?
+  duration   Float?
   laps       Int?
   location   String?
   note       String?
+  runType   String
   user       User           @relation("UserRoutes", fields: [userId], references: [id], onDelete: Cascade)
   userId     String
   run        Run[]

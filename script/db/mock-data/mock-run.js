@@ -75,7 +75,7 @@ export const mockRuns = [
       title: "Hill Training at Doi Suthep Trail",
       distance: 7.4,
       duration: 3420, // 57 min
-      laps: null,
+      laps: 1,
       location: "Doi Suthep, Chiang Mai",
       runType: "Hill Training",
       mood: "Terrible",
