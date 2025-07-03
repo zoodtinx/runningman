@@ -20,7 +20,7 @@ const NewRouteBar = () => {
    const [inputMode, setInputMode] = useState<"distance" | "time">("distance");
    const { data: session } = useSession();
 
-   const { control, handleSubmit, setValue, reset } =
+   const { handleSubmit, setValue, reset, control } =
       useForm<CreateRouteDtoWithPace>({
          defaultValues: {
             title: "",
@@ -28,12 +28,7 @@ const NewRouteBar = () => {
             duration: null,
             laps: 1,
             location: "",
-            routeId: "",
             runType: "daily-miles",
-            pace: "",
-            mood: "",
-            gear: "",
-            dateTime: new Date().toISOString(),
             note: "",
             userId: "",
          },
@@ -104,7 +99,7 @@ const NewRouteBar = () => {
       <div className="relative h-fit flex w-full">
          <div
             className={cn(
-               "flex gap-2 items-center justify-center font-headline text-[25px] font-bold h-[84px] rounded-base bg-background cursor-pointer w-full",
+               "flex gap-2 items-center justify-center font-headline text-[25px] font-bold h-[100px] rounded-base bg-background cursor-pointer w-full",
                "border border-transparent hover:bg-primary hover:text-background transition-colors"
             )}
             onClick={() => setMode("add")}

@@ -48,7 +48,7 @@ export const SelectWithLabel = React.forwardRef<
                   <SelectTrigger
                      ref={ref}
                      className={cn(
-                        "focus:outline-none text-base font-medium grow p-0 h-auto flex items-center justify-between",
+                        "focus:outline-none text-base font-medium grow p-0 h-auto flex items-center justify-between truncate",
                         variant === "light" && "text-primary",
                         variant === "dark" && "text-background",
                         variant === "white" && "text-primary bg-white",
@@ -60,8 +60,7 @@ export const SelectWithLabel = React.forwardRef<
                   >
                      <SelectValue placeholder={placeholder} />
                   </SelectTrigger>
-                  <SelectContent>
-                     {/* Add a placeholder option if value is undefined */}
+                  <SelectContent className="max-h-[250px] max-w-[300px]">
                      {props.value === undefined && (
                         <SelectItem value="" disabled>
                            {placeholder}

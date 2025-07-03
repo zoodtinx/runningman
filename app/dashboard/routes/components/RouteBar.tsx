@@ -1,12 +1,13 @@
 import { toSentenceCase } from "@/components/form-elements/utils/helper";
 import { cn } from "@/lib/utils";
-import { Run } from "@prisma/client";
+import { Route } from "@/lib/zod/routes.zod.schema";
 import { MapPin } from "iconoir-react";
 
-const RouteBar = ({ routeData }: { routeData: Run }) => {
-   const distance = routeData.laps
-      ? routeData.distance * routeData.laps
-      : routeData.distance;
+const RouteBar = ({ routeData }: { routeData: Route }) => {
+   const distance =
+      routeData.laps && routeData.distance
+         ? routeData.distance * routeData.laps
+         : routeData.distance;
 
    const userData = {
       unit: "metric",
@@ -36,9 +37,7 @@ const RouteBar = ({ routeData }: { routeData: Run }) => {
             <div className="flex items-center px-2 border-[1.5px] border-foreground h-full w-[140px] rounded-[7px] font-headline">
                <div className="flex items-baseline leading-none align-middle justify-between w-full">
                   <span className="text-[35px]">
-                     {routeData.distance
-                        ? routeData.distance
-                        : routeData.duration}
+                     {routeData.distance ? distance : routeData.duration}
                   </span>
                   <span>{routeData.distance ? unit : "min"}</span>
                </div>

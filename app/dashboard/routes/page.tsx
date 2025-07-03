@@ -11,20 +11,20 @@ const RoutesPage = async () => {
    if (!session?.user) {
       return;
    }
-   const runsData = await prisma.route.findMany({
+   const routesData = await prisma.route.findMany({
       where: {
-         // userId: "mock-user",
-         userId: session?.user.id,
+         userId: "mock-user",
+         // userId: session?.user.id,
       },
       orderBy: [{ createdAt: "desc" }],
    });
-   const routeBars = runsData.map((run) => (
-      <Link href={`/dashboard/routes/${run.id}`} key={run.id}>
-         <RouteBar routeData={run} key={run.id} />
+   const routeBars = routesData.map((route) => (
+      <Link href={`/dashboard/routes/${route.id}`} key={route.id}>
+         <RouteBar routeData={route} key={route.id} />
       </Link>
    ));
 
-   console.log("runsData", runsData);
+   console.log("routesData", routesData);
 
    return (
       <div className="grow overflow-hidden">

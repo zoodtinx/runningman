@@ -11,17 +11,12 @@ export const routeSchema = z.object({
    note: nullableStringField(),
    runType: z.string(),
    userId: z.string().uuid(),
-   createdAt: z.string(),
-   updatedAt: z.string(),
 });
 
 export const createRouteSchema = routeSchema.omit({
    id: true,
-   createdAt: true,
-   updatedAt: true,
 });
 export const editRouteSchema = routeSchema
-   .omit({ createdAt: true, updatedAt: true })
    .partial()
    .extend({ id: z.string().uuid() });
 
