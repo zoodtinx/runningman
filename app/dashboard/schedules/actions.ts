@@ -71,3 +71,24 @@ export async function addWeek(userId: string) {
 
    revalidatePath("/dashboard/schedule");
 }
+
+export async function removeWeek(userId: string) {
+   const lastWeekItems = await prisma.scheduleItem.findMany({
+      where: { userId },
+      orderBy: { dayOfWeek: "desc" },
+      take: 7,
+      select: { id: true },
+   });
+
+   if (lastWeekItems.length === 0) {
+      return;
+   }
+
+   const idsToDelete = lastWeekItems.map((item) => item.id);
+
+   await prisma.scheduleItem.deleteMany({
+      where: { id: { in: idsToDelete } },
+   });
+
+   revalidatePath("/dashboard/schedule");
+}

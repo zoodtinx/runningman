@@ -1,27 +1,35 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { DayBar } from "@/dashboard/schedules/components/DayBar";
-import { Plus } from "iconoir-react";
-import { addWeek } from "@/dashboard/schedules/actions";
+import SchedulePageNavBar from "@/dashboard/schedules/components/SchedulePageNavBar";
+import { redirect } from "next/navigation";
 
-const SchedulePage = async () => {
+const SchedulePage = async ({
+   searchParams,
+}: {
+   searchParams: { page?: string };
+}) => {
    const session = await auth();
    if (!session?.user) {
       return;
    }
-   const schedules = await prisma.scheduleItem.findMany({
-      where: {
-         userId: "mock-user",
-         // userId: session.user.id,
-      },
-      include: {
-         route: true,
-         user: true,
-      },
-      orderBy: {
-         dayOfWeek: "asc",
-      },
-   });
+
+   const page = parseInt(searchParams.page || "1");
+   if (isNaN(page) || page < 1) redirect("?page=1");
+
+   const take = 7;
+   const skip = (page - 1) * take;
+
+   const [schedules, totalCount] = await Promise.all([
+      prisma.scheduleItem.findMany({
+         where: { userId: "mock-user" },
+         include: { route: true, user: true },
+         orderBy: { dayOfWeek: "asc" },
+         take,
+         skip,
+      }),
+      prisma.scheduleItem.count({ where: { userId: "mock-user" } }),
+   ]);
 
    const routesData = await prisma.route.findMany({
       where: {
@@ -43,9 +51,11 @@ const SchedulePage = async () => {
    return (
       <div className="grow overflow-hidden">
          <div className="px-[12px] flex flex-col gap-[6px] justify-between">
-            <div className="flex items-center w-full h-[30px] bg-primary rounded-full font-headline font-bold px-4 cursor-pointer gap-2">
-               <Plus className="text-background opacity-35 hover:opacity-100 transition-opacity" />
-            </div>
+            <SchedulePageNavBar
+               totalCount={totalCount}
+               userId={"mock-user"}
+               // userId={session.user!.id!}
+            />
             {days}
          </div>
       </div>
