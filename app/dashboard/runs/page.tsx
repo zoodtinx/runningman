@@ -1,10 +1,12 @@
+import Link from "next/link";
 import { SessionProvider } from "next-auth/react";
+
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+
 import { ScrollArea } from "@/components/primitives/ScrollArea";
 import NewRunBar from "@/components/run-page/NewRunBar";
 import RunBar from "@/components/run-page/RunBar";
-import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
-import Link from "next/link";
 
 const RunsPage = async () => {
    const session = await auth();

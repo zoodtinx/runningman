@@ -45,6 +45,11 @@ export const DayBar = ({
                   onValueChange={handleRouteChange}
                />
             </div>
+            <div className="grow flex flex-col justify-between items-end p-1">
+               <div className="flex gap-[4px] leading-5 items-baseline font-headline text-primary">
+                  <span className="text-[25px] opacity-10">Rest Day</span>
+               </div>
+            </div>
          </div>
       );
    }

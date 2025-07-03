@@ -17,8 +17,11 @@ model User {
   id                   String         @id @default(uuid())
   email                String         @unique
   name                 String?
-  theme                String         @default("speed")
-  preferredUnits       String         // validate in app: "km" | "mi"
+  age                  Int?
+  height               Float?
+  gender               String?        
+  weight               Float?
+  theme                String         @default("speed")         
   location             String?
   notificationEnabled  Boolean
   createdAt            DateTime       @default(now())

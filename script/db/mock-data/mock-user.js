@@ -1,8 +1,12 @@
 export const mockUser = {
    id: "mock-user",
-   email: "alex.taylor@gmail.com",
-   name: "Alex Taylor",
+   email: "mock@example.com",
+   name: "Mocky Runner",
+   age: 28,
+   height: 175.5,
+   gender: "male",
+   weight: 68.2,
    theme: "speed",
-   preferredUnits: "km",
+   location: "Bangkok, Thailand",
    notificationEnabled: true,
 };

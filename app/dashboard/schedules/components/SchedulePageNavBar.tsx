@@ -65,10 +65,10 @@ const SchedulePageNavBar = ({
                onClick={handleRemoveWeek}
                className="flex gap-1 opacity-35 hover:opacity-100 items-center cursor-pointer"
             >
-               <Trash className="text-background transition-opacity size-4" />
                <span className="font-sans font-medium text-background text-sm">
                   Remove Week
                </span>
+               <Trash className="text-background transition-opacity size-4" />
             </div>
          )}
       </div>
