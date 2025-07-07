@@ -5,7 +5,6 @@ import {
    Droplet,
    Cloud,
    SunLight as Sun,
-   Eye,
    Wind,
    Rain,
    SeaAndSun as Sunset,
@@ -56,7 +55,7 @@ export const RunConditionCard = ({ statData }: { statData: RunCondition }) => {
 };
 
 const StatIcon = ({ statType }: { statType: string }) => {
-   const iconClass = "stroke-[1.7px]";
+   const iconClass = "stroke-[1.7px] size-6.5";
 
    switch (statType.toLowerCase()) {
       case "temperature":

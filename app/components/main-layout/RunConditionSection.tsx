@@ -1,10 +1,18 @@
-import DayBar from "@/components/main-layout/DayBar";
+import { auth } from "@/auth";
 import { RunConditionCard } from "@/components/main-layout/RunConditionCard";
 import { ScrollArea } from "@/components/primitives/ScrollArea";
 import { prisma } from "@/lib/prisma";
 import { Settings } from "iconoir-react";
 
 export const RunConditionSection = async () => {
+   const session = await auth();
+
+   if (!session?.user?.id) {
+      return <div>Not authenticated</div>;
+   }
+
+   const userId = session.user.id;
+
    const overallData = await prisma.overallCondition.findUnique({
       where: {
          userId: "master",
@@ -20,8 +28,6 @@ export const RunConditionSection = async () => {
 
    const statChunks = [];
    const statsList = overallData?.conditions;
-
-   console.log("overallData", overallData);
 
    if (!statsList) {
       return;
