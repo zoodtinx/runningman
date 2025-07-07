@@ -24,6 +24,7 @@ model User {
   theme               String            @default("speed")
   location            String?
   notificationEnabled Boolean
+  conditionPreference Json
   createdAt           DateTime          @default(now())
   updatedAt           DateTime          @updatedAt
   overallConditionId  String?           @unique
