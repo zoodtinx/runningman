@@ -21,6 +21,7 @@ export async function createUser(input: CreateUserDto) {
 }
 
 export async function editUser(id: string, input: EditUserDto) {
+   console.log("input", input);
    const parsed = editUserSchema.safeParse(input);
    if (!parsed.success) {
       throw new Error(

@@ -18,7 +18,7 @@ import {
 import RunningManLogo from "@/components/icons/RunningManLogo";
 import React, { JSX } from "react";
 import Nav from "@/components/main-layout/Nav";
-import { OutdoorStatsSection } from "@/components/main-layout/OutdoorStatsSection";
+import { RunConditionSection } from "@/components/main-layout/RunConditionSection";
 import { Calendar } from "iconoir-react";
 import { MainPageData } from "@/types/payload.types";
 import {
@@ -122,8 +122,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                      </div>
                   </div>
                </div>
-               <div className="flex-1 w-full bg-foreground rounded-[23px]">
-                  <OutdoorStatsSection />
+               <div className="h-1/2 w-full bg-foreground rounded-[23px]">
+                  <RunConditionSection />
                </div>
             </section>
             <section className="flex flex-col w-1/2 h-full bg-foreground rounded-[23px] text-primary relative overflow-clip">

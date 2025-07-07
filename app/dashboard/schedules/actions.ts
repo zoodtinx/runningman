@@ -17,6 +17,7 @@ export async function createScheduleItem(input: CreateScheduleItemDto) {
       throw new Error(
          "Invalid schedule item data: " + JSON.stringify(parsed.error.format())
       );
+      min;
    }
 
    await prisma.scheduleItem.create({
@@ -57,7 +58,7 @@ export async function addWeek(userId: string) {
       select: { dayOfWeek: true },
    });
 
-   const startDay = existingItems.length + 1;
+   const startDay = existingItems.length;
 
    const newItemsData = Array.from({ length: 7 }).map((_, i) => ({
       userId,

@@ -9,7 +9,7 @@ const SettingsPage = async () => {
    }
 
    const user = await prisma.user.findUnique({
-      where: { id: "mock-user" },
+      where: { id: session?.user.id },
    });
 
    return (

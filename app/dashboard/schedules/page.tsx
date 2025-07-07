@@ -22,19 +22,20 @@ const SchedulePage = async ({
 
    const [schedules, totalCount] = await Promise.all([
       prisma.scheduleItem.findMany({
-         where: { userId: "mock-user" },
+         where: { userId: session?.user.id },
          include: { route: true, user: true },
          orderBy: { dayOfWeek: "asc" },
          take,
          skip,
       }),
-      prisma.scheduleItem.count({ where: { userId: "mock-user" } }),
+      prisma.scheduleItem.count({ where: { userId: session?.user.id } }),
    ]);
+
+   console.log("id", session?.user.id);
 
    const routesData = await prisma.route.findMany({
       where: {
-         userId: "mock-user",
-         // userId: session?.user.id,
+         userId: session?.user.id,
       },
       orderBy: [{ createdAt: "desc" }],
    });
@@ -53,8 +54,7 @@ const SchedulePage = async ({
          <div className="px-[12px] flex flex-col gap-[6px] justify-between">
             <SchedulePageNavBar
                totalCount={totalCount}
-               userId={"mock-user"}
-               // userId={session.user!.id!}
+               userId={session.user!.id!}
             />
             {days}
          </div>

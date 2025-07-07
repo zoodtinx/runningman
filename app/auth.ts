@@ -17,15 +17,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
          console.log("user", user);
          if (!user.email) return false;
 
+         const baseSchedule = Array.from({ length: 7 }).map((_, i) => ({
+            dayOfWeek: i, // 0 = Sunday, 6 = Saturday
+            routeId: null,
+         }));
+
          const newUser = await prisma.user.upsert({
             where: { email: user.email },
             update: {},
             create: {
                email: user.email,
                name: user.name ?? "",
-               preferredUnits: "km",
                notificationEnabled: true,
                theme: "speed",
+               schedules: {
+                  createMany: {
+                     data: baseSchedule,
+                  },
+               },
             },
          });
 

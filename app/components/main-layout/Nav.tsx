@@ -13,26 +13,32 @@ export default function Nav() {
          <ul className="flex gap-6">
             <Link
                href="/dashboard/runs"
-               className={cn(currentPage === "runs" && "font-bold")}
+               className={cn("shrink-0", currentPage === "runs" && "font-bold")}
             >
                RUN
             </Link>
             <Link
                href="/dashboard/routes"
-               className={cn(currentPage === "routes" && "font-bold")}
+               className={cn(
+                  "shrink-0",
+                  currentPage === "routes" && "font-bold"
+               )}
             >
                ROUTES
             </Link>
             <Link
                href="/dashboard/schedules"
-               className={cn(currentPage === "schedules" && "font-bold")}
+               className={cn(
+                  "shrink-0",
+                  currentPage === "schedules" && "font-bold"
+               )}
             >
                SCHEDULE
             </Link>
          </ul>
          <Link
             href="/dashboard/settings"
-            className="w-[60px] h-[60px] bg-primary rounded-full"
+            className="w-[60px] h-[60px] bg-primary rounded-full shrink-0"
          />
       </nav>
    );

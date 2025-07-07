@@ -7,10 +7,16 @@ import { mockRuns } from "./mock-data/mock-run.js";
 import { mockRoutes } from "./mock-data/mock-route.js";
 import { mockOutdoorStats } from "./mock-data/mock-stats.js";
 import { mockSchedule } from "./mock-data/mock-schedule.js";
+import {
+   masterOverallData,
+   masterConditions,
+} from "./master-data/master-overall-data.js";
+import { masterUser } from "./master-data/master-user.js";
 
 const prisma = new PrismaClient();
 
 async function main() {
+   // seed demo
    await prisma.$transaction(async (tx) => {
       const user = await tx.user.create({
          data: mockUser,
@@ -44,8 +50,23 @@ async function main() {
          })),
       });
    });
-
    console.log("Seeded user, runs, routes, outdoor stats, and schedule");
+
+   // seed master
+   await prisma.$transaction(async (tx) => {
+      await tx.user.create({
+         data: masterUser,
+      });
+
+      await tx.overallCondition.create({
+         data: masterOverallData,
+      });
+
+      await tx.runCondition.createMany({
+         data: masterConditions,
+      });
+   });
+   console.log("Seeded master run conditions");
 }
 
 main()

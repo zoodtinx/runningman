@@ -29,7 +29,8 @@
       "**/*.tsx",
       ".next/types/**/*.ts",
       "script/db/seed-db.js",
-      "script/db/mock-data/mock-user.js"
+      "script/db/mock-data/mock-user.js",
+      "script/db/master-data/master-user.js"
    ],
    "exclude": ["node_modules"]
 }

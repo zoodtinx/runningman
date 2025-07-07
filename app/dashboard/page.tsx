@@ -1,7 +1,8 @@
-import React from "react";
+import { redirect } from "next/navigation";
 
 const page = () => {
-   return <div className="grow text-primary"></div>;
+   redirect("/dashboard/runs");
+   return null;
 };
 
 export default page;

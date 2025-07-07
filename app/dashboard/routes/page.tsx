@@ -13,8 +13,8 @@ const RoutesPage = async () => {
    }
    const routesData = await prisma.route.findMany({
       where: {
-         userId: "mock-user",
-         // userId: session?.user.id,
+         // userId: "mock-user",
+         userId: session?.user.id,
       },
       orderBy: [{ createdAt: "desc" }],
    });

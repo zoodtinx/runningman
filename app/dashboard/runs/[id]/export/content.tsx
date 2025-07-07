@@ -25,7 +25,12 @@ const ExportPageContent = ({ runData }: { runData: RunFindOneResponse }) => {
 };
 
 export function EmblaCarousel() {
-   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+   // Show a little bit of adjacent slide by using containScroll: "trimSnaps" and a slide size < 100%
+   const [emblaRef, emblaApi] = useEmblaCarousel({
+      loop: true,
+      containScroll: "trimSnaps",
+      align: "center",
+   });
    const [canScrollPrev, setCanScrollPrev] = useState(false);
    const [canScrollNext, setCanScrollNext] = useState(false);
 
@@ -44,36 +49,58 @@ export function EmblaCarousel() {
       emblaApi.on("select", onSelect);
    }, [emblaApi, onSelect]);
 
+   // Use slide width less than 100% to show adjacent slides
+   // e.g. w-[85%] for each slide, and embla container with px to show peeking
    return (
-      <div className="relative">
-         <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex">
-               <div className="min-w-full flex-shrink-0 px-4 py-6 bg-red-300 text-center text-white text-xl">
-                  Slide 1
-               </div>
-               <div className="min-w-full flex-shrink-0 px-4 py-6 bg-green-300 text-center text-white text-xl">
-                  Slide 2
-               </div>
-               <div className="min-w-full flex-shrink-0 px-4 py-6 bg-blue-300 text-center text-white text-xl">
-                  Slide 3
+      <div className="w-full h-full flex flex-col items-center justify-center">
+         <p className="font-headline text-[20px] font-bold">THEME</p>
+         <div className="relative w-full h-[600]">
+            <div
+               className="overflow-hidden h-full px-4"
+               ref={emblaRef}
+               // px-4 gives space for peeking slides
+            >
+               <div className="flex h-full">
+                  <div className="w-[70%] flex-shrink-0 px-4 text-center text-white text-xl rounded-lg shadow-lg mx-2">
+                     <div className="flex flex-col grow items-center">
+                        <p className="font-headline text-[30px]">
+                           Sunrise Sprint
+                        </p>
+                        <div className="w-[400px] h-[400px] bg-zinc-900 mt-7"></div>
+                     </div>
+                  </div>
+                  <div className="w-[80%] flex-shrink-0 px-4 text-center text-white text-xl rounded-lg shadow-lg mx-2">
+                     <div className="flex flex-col grow items-center">
+                        <p className="font-headline text-[30px]">
+                           Personal Best
+                        </p>
+                        <div className="w-[400px] h-[400px] bg-zinc-900 mt-7"></div>
+                     </div>
+                  </div>
+                  <div className="w-[80%] flex-shrink-0 px-4 text-center text-white text-xl rounded-lg shadow-lg mx-2">
+                     <div className="flex flex-col grow items-center">
+                        <p className="font-headline text-[30px]">Grand Run</p>
+                        <div className="w-[400px] h-[400px] bg-zinc-900 mt-7"></div>
+                     </div>
+                  </div>
                </div>
             </div>
-         </div>
 
-         <button
-            onClick={scrollPrev}
-            disabled={!canScrollPrev}
-            className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded disabled:opacity-30"
-         >
-            <NavArrowLeft />
-         </button>
-         <button
-            onClick={scrollNext}
-            disabled={!canScrollNext}
-            className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded disabled:opacity-30"
-         >
-            <NavArrowRight />
-         </button>
+            <button
+               onClick={scrollPrev}
+               disabled={!canScrollPrev}
+               className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded disabled:opacity-30 z-10"
+            >
+               <NavArrowLeft />
+            </button>
+            <button
+               onClick={scrollNext}
+               disabled={!canScrollNext}
+               className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded disabled:opacity-30 z-10"
+            >
+               <NavArrowRight />
+            </button>
+         </div>
       </div>
    );
 }

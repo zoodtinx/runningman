@@ -1,30 +1,32 @@
 import { cn } from "@/lib/utils";
-import { OutdoorStat } from "@prisma/client";
+import { RunCondition } from "@prisma/client";
 import {
    TemperatureHigh,
-   Wind,
-   SunLight,
-   WarningTriangle,
-   Ruler,
-   Rain,
    Droplet,
-   AirplaneHelix,
-   Tree,
    Cloud,
-   FillColor,
-   Shirt,
+   SunLight as Sun,
+   Eye,
+   Wind,
+   Rain,
+   SeaAndSun as Sunset,
+   SeaAndSun as Sunrise,
+   AirplaneHelix as AirQuality,
+   DotsGrid3x3 as Pm25,
+   Flower as Pollen,
+   TemperatureHigh as Thermometer,
+   Tree,
 } from "iconoir-react";
 
-export const OutdoorStatsCard = ({ statData }: { statData: OutdoorStat }) => {
+export const RunConditionCard = ({ statData }: { statData: RunCondition }) => {
    return (
       <div
          className={cn(
             "flex basis-1/2 w-1/2 h-[100px] rounded-base p-2 justify-between",
-            statData.range === "good" &&
+            statData.range === 1 &&
                "bg-[linear-gradient(to_bottom,_#dcfffe_0%,_#b4f0ef_100%)]",
-            statData.range === "okay" &&
+            statData.range === 2 &&
                "bg-[linear-gradient(to_bottom,_#fdffda_0%,_#f5f9aa_100%)]",
-            statData.range === "bad" &&
+            statData.range === 3 &&
                "bg-[linear-gradient(to_bottom,_#ffd4d4_0%,_#ffbebe_100%)]"
          )}
       >
@@ -41,9 +43,11 @@ export const OutdoorStatsCard = ({ statData }: { statData: OutdoorStat }) => {
          </div>
          <div className="flex flex-col justify-between w-1/3 items-end">
             <div className="flex flex-col gap-[2px] items-end">
-               <p className="font-semibold text-[14px]">{statData.label}</p>
+               <p className="font-semibold text-[14px] text-right">
+                  {statData.name}
+               </p>
                <p className="text-[11px] text-right leading-tight">
-                  {statData.detail}
+                  {statData.summary}
                </p>
             </div>
          </div>
@@ -53,34 +57,38 @@ export const OutdoorStatsCard = ({ statData }: { statData: OutdoorStat }) => {
 
 const StatIcon = ({ statType }: { statType: string }) => {
    const iconClass = "stroke-[1.7px]";
-   switch (statType) {
+
+   switch (statType.toLowerCase()) {
       case "temperature":
          return <TemperatureHigh className={iconClass} />;
+      case "feels-like":
+      case "heat-index":
+         return <Thermometer className={iconClass} />;
       case "humidity":
          return <Droplet className={iconClass} />;
-      case "precipitation":
-         return <Rain className={iconClass} />;
-      case "wind":
-         return <Wind className={iconClass} />;
-      case "air":
-         return <AirplaneHelix className={iconClass} />;
+      case "cloudiness":
+         return <Cloud className={iconClass} />;
+      case "uv-index":
+         return <Sun className={iconClass} />;
       case "visibility":
          return <Tree className={iconClass} />;
-      case "sun":
-         return <SunLight className={iconClass} />;
-      case "cloud":
-         return <Cloud className={iconClass} />;
-      case "alerts":
-         return <WarningTriangle className={iconClass} />;
-      case "comfort":
-         return <Shirt className={iconClass} />;
-      case "hydration":
-         return <FillColor className={iconClass} />;
+      case "wind-speed":
+         return <Wind className={iconClass} />;
+      case "rain-chance":
+         return <Rain className={iconClass} />;
+      case "sunset-time":
+         return <Sunset className={iconClass} />;
+      case "sunrise-time":
+         return <Sunrise className={iconClass} />;
+      case "aqi":
+         return <AirQuality className={iconClass} />;
+      case "pm2.5":
+         return <Pm25 className={iconClass} />;
+      case "pollen":
+         return <Pollen className={iconClass} />;
       default:
-         return <Ruler className={iconClass} />;
+         return <Thermometer className={iconClass} />;
    }
 };
 
 // const outdoorStatsConfig =
-
-export default OutdoorStatsCard;

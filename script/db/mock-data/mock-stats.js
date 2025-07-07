@@ -27,7 +27,7 @@ export const mockOutdoorStats = [
       detail: "Good air quality",
    },
    {
-      type: "sunrise",
+      type: "sunrise-time",
       label: "Sunrise",
       valueType: "number",
       value: "5:34",
@@ -36,7 +36,7 @@ export const mockOutdoorStats = [
       detail: "Sun rises at 5:34 AM",
    },
    {
-      type: "sunset",
+      type: "sunset-time",
       label: "Sunset",
       valueType: "text",
       value: "18:14",

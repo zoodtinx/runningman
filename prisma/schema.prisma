@@ -14,22 +14,25 @@ datasource db {
 }
 
 model User {
-  id                   String         @id @default(uuid())
-  email                String         @unique
-  name                 String?
-  age                  Int?
-  height               Float?
-  gender               String?        
-  weight               Float?
-  theme                String         @default("speed")         
-  location             String?
-  notificationEnabled  Boolean
-  createdAt            DateTime       @default(now())
-  updatedAt            DateTime       @updatedAt
-  runs                 Run[]          @relation("UserRuns")
-  routes               Route[]        @relation("UserRoutes")
-  stats                OutdoorStat[]  @relation("UserOutdoorStats")
-  schedules            ScheduleItem[] @relation("UserScheduleItems")
+  id                  String            @id @default(uuid())
+  email               String            @unique
+  name                String?
+  age                 Int?
+  height              Float?
+  gender              String?
+  weight              Float?
+  theme               String            @default("speed")
+  location            String?
+  notificationEnabled Boolean
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  overallConditionId  String?           @unique
+  overallCondition    OverallCondition? @relation()
+  runs                Run[]             @relation("UserRuns")
+  routes              Route[]           @relation("UserRoutes")
+  stats               OutdoorStat[]     @relation("UserOutdoorStats")
+  schedules           ScheduleItem[]    @relation("UserScheduleItems")
+  runConditions       RunCondition[]    @relation("UserRunConditions")
 }
 
 model Run {
@@ -53,31 +56,31 @@ model Run {
 }
 
 model Route {
-  id         String         @id @default(uuid())
-  title      String
-  distance   Float?
-  duration   Float?
-  laps       Int?
-  location   String?
-  note       String?
+  id        String         @id @default(uuid())
+  title     String
+  distance  Float?
+  duration  Float?
+  laps      Int?
+  location  String?
+  note      String?
   runType   String
-  user       User           @relation("UserRoutes", fields: [userId], references: [id], onDelete: Cascade)
-  userId     String
-  run        Run[]
-  schedules  ScheduleItem[]
-  createdAt  DateTime       @default(now())
-  updatedAt  DateTime       @updatedAt
+  user      User           @relation("UserRoutes", fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  run       Run[]
+  schedules ScheduleItem[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
 }
 
 model OutdoorStat {
-  id        String  @id @default(uuid())
+  id        String   @id @default(uuid())
   type      String
   label     String
   valueType String
   value     String
   range     String
   detail    String?
-  user      User    @relation("UserOutdoorStats", fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation("UserOutdoorStats", fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -92,4 +95,34 @@ model ScheduleItem {
   userId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model OverallCondition {
+  id         String         @id @default(uuid())
+  conditions RunCondition[]
+  headline   String
+  detail     String
+  range      Int
+  user       User           @relation(fields: [userId], references: [id])
+  userId     String         @unique
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+}
+
+model RunCondition {
+  id          String           @id @default(uuid())
+  name        String
+  type        String
+  value       String
+  valueType   String
+  range       Int
+  unit        String
+  summary     String
+  futureValue String?
+  userId      String
+  parentId    String
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade, name: "UserRunConditions")
+  parent      OverallCondition @relation(fields: [parentId], references: [id], onDelete: Cascade)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 }

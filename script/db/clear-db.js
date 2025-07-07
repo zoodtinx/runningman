@@ -10,6 +10,8 @@ async function main() {
    await prisma.outdoorStat.deleteMany({});
    await prisma.run.deleteMany({});
    await prisma.route.deleteMany({});
+   await prisma.overallCondition.deleteMany({});
+   await prisma.runCondition.deleteMany({});
    await prisma.user.deleteMany({});
    console.log("Cleared all data from the database");
 }

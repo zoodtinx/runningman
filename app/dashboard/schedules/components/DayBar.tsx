@@ -40,6 +40,7 @@ export const DayBar = ({
             <div className="pl-4 w-[170px]">
                <SelectWithLabel
                   options={routes}
+                  noSelectionPlaceholder="Create a route first"
                   placeholder="Select Route"
                   value={schedulesData.routeId || ""}
                   onValueChange={handleRouteChange}
@@ -78,11 +79,7 @@ export const DayBar = ({
                   <span className="text-[45px] font-semibold">
                      {route.distance ? route.distance : route.duration}
                   </span>
-                  <span className="text-[22px]">
-                     {route.distance
-                        ? schedulesData.user?.preferredUnits
-                        : "min"}
-                  </span>
+                  <span className="text-[22px]">min</span>
                </div>
                <div className="flex flex-col items-end gap-1">
                   <p className="text-sm">{route.location}</p>

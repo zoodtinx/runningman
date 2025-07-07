@@ -18,6 +18,7 @@ interface SelectWithLabelProps {
    value?: string;
    onValueChange?: (value: string) => void;
    placeholder?: string;
+   noSelectionPlaceholder?: string;
 }
 
 export const SelectWithLabel = React.forwardRef<
@@ -32,6 +33,7 @@ export const SelectWithLabel = React.forwardRef<
          inputSize,
          options,
          placeholder = "Select",
+         noSelectionPlaceholder = "No selection",
          ...props
       },
       ref
@@ -71,6 +73,9 @@ export const SelectWithLabel = React.forwardRef<
                            {opt.label}
                         </SelectItem>
                      ))}
+                     {!options.length && (
+                        <p className="text-sm px-1">{noSelectionPlaceholder}</p>
+                     )}
                   </SelectContent>
                </Select>
             </div>
