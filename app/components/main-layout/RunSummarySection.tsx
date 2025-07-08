@@ -51,18 +51,20 @@ const RunSummarySection = async () => {
       },
    });
 
-   // Parse conditionPreference, which is JSON if it's a string
-   let conditionPreference = user!.conditionPreference;
-   if (typeof conditionPreference === "string") {
+   console.log("user", user);
+
+   // Parse conditionPriority, which is JSON if it's a string
+   let conditionPriority = user!.conditionPriority;
+   if (typeof conditionPriority === "string") {
       try {
-         conditionPreference = JSON.parse(conditionPreference);
+         conditionPriority = JSON.parse(conditionPriority);
       } catch {
-         conditionPreference = {};
+         conditionPriority = {};
       }
    }
 
    const runSummary = getRunSummary(
-      conditionPreference as Record<string, number>,
+      conditionPriority as Record<string, number>,
       runConditions
    );
 

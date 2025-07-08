@@ -8,7 +8,7 @@ export const masterUser = {
    weight: 68.2,
    theme: "speed",
    location: "Bangkok, Thailand",
-   conditionPreference: {
+   conditionPriority: {
       temperature: 2,
       "feels-like": 1,
       "heat-index": 1,

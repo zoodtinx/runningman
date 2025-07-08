@@ -29,7 +29,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             create: {
                email: user.email,
                name: user.name ?? "",
-               conditionPreference: conditionPreference,
+               conditionPriority: conditionPreference,
                notificationEnabled: true,
                theme: "speed",
                schedules: {

@@ -1,17 +1,22 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ControlledInput } from "@/components/primitives/InputWithLabel";
 import { ControlledSelect } from "@/components/primitives/SelectWithLabel";
 import { Button } from "@/components/primitives/Button";
 
-// import { NavArrowLeft } from "iconoir-react";
-
-import { EditUserDto, User } from "@/lib/zod/user.zod.schema";
+import {
+   ConditionPriority,
+   EditUserDto,
+   User,
+} from "@/lib/zod/user.zod.schema";
 import { editUser, deleteUser } from "@/dashboard/settings/actions";
 import Loader from "@/components/icons/Loader";
+import DragBoard, {
+   DragBoardProps,
+} from "@/dashboard/settings/components/DNDBox";
 
 const deleteButtonTexts = [
    "Delete Account",
@@ -28,13 +33,18 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
    const [deleteStep, setDeleteStep] = useState(0);
    const [deleteLoading, setDeleteLoading] = useState(false);
 
+   const [conditionPriority, setConditionPriority] =
+      useState<ConditionPriority>(
+         userData.conditionPriority as ConditionPriority
+      );
+
    const onSubmit = async (data: EditUserDto) => {
-      // Convert age, height, and weight to numbers before submitting
-      const parsedData = {
+      const parsedData: EditUserDto = {
          ...data,
          age: data.age !== undefined ? Number(data.age) : undefined,
          height: data.height !== undefined ? Number(data.height) : undefined,
          weight: data.weight !== undefined ? Number(data.weight) : undefined,
+         conditionPriority: conditionPriority,
       };
 
       setLoading(true);
@@ -53,7 +63,6 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
          setDeleteLoading(true);
          try {
             await deleteUser("mock-user");
-            // Optionally, redirect or show a message here
          } finally {
             setDeleteLoading(false);
             setDeleteStep(0);
@@ -67,6 +76,7 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
          className="flex flex-col justify-between h-full"
       >
          <div className="flex flex-col px-[10px]">
+            <p className="text-[23px] font-semibold pb-2">User Profile</p>
             <ControlledInput
                control={control}
                fieldName="name"
@@ -122,6 +132,15 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
                   />
                </div>
             </div>
+            <div className="pt-10">
+               <p className="text-[23px] font-semibold pb-2">
+                  Run Condition Priority
+               </p>
+               <HydrationSafeBoard
+                  itemLocation={conditionPriority}
+                  setItemLocation={setConditionPriority}
+               />
+            </div>
          </div>
          <div className="flex justify-between">
             <div className="flex items-center gap-2">
@@ -153,6 +172,26 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
             </div>
          </div>
       </form>
+   );
+};
+
+const HydrationSafeBoard = ({
+   itemLocation,
+   setItemLocation,
+}: DragBoardProps) => {
+   const [hydrated, setHydrated] = useState(false);
+
+   useEffect(() => {
+      setHydrated(true);
+   }, []);
+
+   if (!hydrated) return null;
+
+   return (
+      <DragBoard
+         itemLocation={itemLocation}
+         setItemLocation={setItemLocation}
+      />
    );
 };
 
