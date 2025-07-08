@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { RunConditionCard } from "@/components/main-layout/RunConditionCard";
 import { ScrollArea } from "@/components/primitives/ScrollArea";
 import { prisma } from "@/lib/prisma";
+import { format } from "date-fns";
 import { Settings } from "iconoir-react";
 
 export const RunConditionSection = async () => {
@@ -13,21 +14,17 @@ export const RunConditionSection = async () => {
 
    const userId = session.user.id;
 
-   const overallData = await prisma.overallCondition.findUnique({
+   const conditionsData = await prisma.runCondition.findMany({
       where: {
-         userId: "master",
+         location: "bangkok",
       },
-      include: {
-         conditions: {
-            orderBy: {
-               range: "asc",
-            },
-         },
+      orderBy: {
+         range: "asc",
       },
    });
 
    const statChunks = [];
-   const statsList = overallData?.conditions;
+   const statsList = conditionsData;
 
    if (!statsList) {
       return;
@@ -37,14 +34,19 @@ export const RunConditionSection = async () => {
       statChunks.push(statsList.slice(i, i + 2));
    }
 
+   const updatedAt = format(
+      conditionsData[0].updatedAt,
+      "hh.mm a, d MMM"
+   ).toUpperCase();
+
    return (
       <div className="flex flex-col gap-3 w-full p-[12px] overflow-hidden h-full">
          <div className="flex justify-between shrink-0 text-primary px-1 items-center">
             <p className="font-headline font-bold">RUNNING CONDITIONS</p>
             <div className="flex items-center gap-2">
-               <div className="w-fit bg-background text-primary px-3 rounded-full text-sm font-medium">
-                  <span>Updated: </span>
-                  <span>2024-06-01 09:00</span>
+               <div className="w-fit text-primary rounded-full text-base font-medium">
+                  <span>Last Updated: </span>
+                  <span>{updatedAt}</span>
                </div>
                <Settings className="size-5 cursor-pointer" />
             </div>

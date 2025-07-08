@@ -14,6 +14,8 @@ import {
    Flower as Pollen,
    TemperatureHigh as Thermometer,
    Tree,
+   CircleSpark,
+   HeatingSquare,
 } from "iconoir-react";
 
 export const RunConditionCard = ({ statData }: { statData: RunCondition }) => {
@@ -21,33 +23,42 @@ export const RunConditionCard = ({ statData }: { statData: RunCondition }) => {
       <div
          className={cn(
             "flex basis-1/2 w-1/2 h-[100px] rounded-base p-2 justify-between",
-            statData.range === 1 &&
+            statData.range === 0 &&
                "bg-[linear-gradient(to_bottom,_#dcfffe_0%,_#b4f0ef_100%)]",
-            statData.range === 2 &&
+            statData.range === 1 &&
                "bg-[linear-gradient(to_bottom,_#fdffda_0%,_#f5f9aa_100%)]",
-            statData.range === 3 &&
+            statData.range === 2 &&
                "bg-[linear-gradient(to_bottom,_#ffd4d4_0%,_#ffbebe_100%)]"
          )}
       >
          <div className="flex flex-col justify-between w-1/2">
-            <StatIcon statType={statData.type} />
+            <div className="flex gap-1 items-center">
+               <StatIcon statType={statData.type} />
+               <p className="font-semibold text-[14px] text-right">
+                  {statData.name}
+               </p>
+            </div>
             <p
                className={cn(
                   "font-headline font-bold text-[24px] pl-1 leading-7",
                   statData.valueType === "number" && "text-[40px] leading-10"
                )}
             >
-               {statData.value}
+               <span className="leading-7">{statData.value}</span>
+               <span className="text-[19px] leading-7">
+                  {statData.unit ?? ""}
+               </span>
             </p>
          </div>
-         <div className="flex flex-col justify-between w-1/3 items-end">
+         <div className="flex flex-col justify-between w-1/2 items-end">
             <div className="flex flex-col gap-[2px] items-end">
-               <p className="font-semibold text-[14px] text-right">
-                  {statData.name}
-               </p>
-               <p className="text-[11px] text-right leading-tight">
+               <p className="text-[11px] text-right leading-tight pt-1 pr-1">
                   {statData.summary}
                </p>
+            </div>
+            <div className="flex gap-1 justify-end items-baseline font-medium opacity-40">
+               <span>{statData.futureValue}</span>
+               <span className="text-sm">in 1 hour</span>
             </div>
          </div>
       </div>
@@ -55,14 +66,15 @@ export const RunConditionCard = ({ statData }: { statData: RunCondition }) => {
 };
 
 const StatIcon = ({ statType }: { statType: string }) => {
-   const iconClass = "stroke-[1.7px] size-6.5";
+   const iconClass = "stroke-[1.7px] size-6";
 
    switch (statType.toLowerCase()) {
       case "temperature":
          return <TemperatureHigh className={iconClass} />;
       case "feels-like":
+         return <CircleSpark className={iconClass} />;
       case "heat-index":
-         return <Thermometer className={iconClass} />;
+         return <HeatingSquare className={iconClass} />;
       case "humidity":
          return <Droplet className={iconClass} />;
       case "cloudiness":

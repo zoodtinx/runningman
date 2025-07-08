@@ -47,6 +47,7 @@ export function getRunSummary(
    const detail = topConditions.map((c) => c.summary).join(" ");
 
    const keyCondition = weightedConditions
+      .filter((c) => c.type !== "sunset-time" && c.type !== "sunrise-time")
       .filter((c) => (readinessScore < 3 ? c.range === 1 : c.range === 3))
       .map((c) => c.type);
 

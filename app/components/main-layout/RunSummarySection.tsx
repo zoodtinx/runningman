@@ -14,6 +14,8 @@ import {
    TemperatureHigh as Thermometer,
    Tree,
    Check,
+   HeatingSquare,
+   CircleSpark,
 } from "iconoir-react";
 import RunningManLogo from "@/components/icons/RunningManLogo";
 import React, { JSX } from "react";
@@ -42,6 +44,7 @@ const RunSummarySection = async () => {
    const runConditions = await prisma.runCondition.findMany({
       where: {
          userId: "master",
+         location: "bangkok",
       },
    });
 
@@ -53,7 +56,6 @@ const RunSummarySection = async () => {
 
    console.log("user", user);
 
-   // Parse conditionPriority, which is JSON if it's a string
    let conditionPriority = user!.conditionPriority;
    if (typeof conditionPriority === "string") {
       try {
@@ -123,8 +125,8 @@ const HighlightedStats = ({ data }: { data: string[] }) => {
 
    const icon: Record<string, JSX.Element> = {
       temperature: <TemperatureHigh className={iconClass} />,
-      "feels-like": <Thermometer className={iconClass} />,
-      "heat-index": <Thermometer className={iconClass} />,
+      "feels-like": <CircleSpark className={iconClass} />,
+      "heat-index": <HeatingSquare className={iconClass} />,
       humidity: <Droplet className={iconClass} />,
       cloudiness: <Cloud className={iconClass} />,
       "uv-index": <Sun className={iconClass} />,
@@ -144,7 +146,7 @@ const HighlightedStats = ({ data }: { data: string[] }) => {
    );
 
    return (
-      <div className="flex gap-[4px]">
+      <div className="flex gap-[5px]">
          {icons}
          <Check className={iconClass} />
          {/* {isOk ? (

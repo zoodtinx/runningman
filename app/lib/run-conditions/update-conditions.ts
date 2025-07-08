@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+"use server";
 
 import { prisma } from "@/lib/prisma";
 import { CreateRunConditionDto } from "@/lib/zod/run-conditions.zod.schema";
@@ -7,14 +8,23 @@ import {
    fetchFutureWeatherData,
 } from "@/lib/run-conditions/fetch-helpers";
 
-export async function updateConditions(location: string) {
+function delay(ms: number) {
+   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export async function refreshConditions(location: string) {
    console.log("updating");
-   await prisma.runCondition.deleteMany();
+   await prisma.runCondition.deleteMany({
+      where: {
+         location: location,
+      },
+   });
 
    const newCurrentData = await fetchRealtimeWeatherData(location);
+   await delay(400); // delay between requests
    const newfutureData = await fetchFutureWeatherData(location);
 
-   const newConditions = mapWeatherToRunConditionsWithFuture({
+   const newConditions = await mapWeatherToRunConditionsWithFuture({
       currentData: newCurrentData,
       futureData: newfutureData,
       locationName: location,
@@ -27,11 +37,19 @@ export async function updateConditions(location: string) {
    return;
 }
 
-export function mapWeatherToRunConditionsWithFuture(config: {
+export async function refreshAllConditions() {
+   const locations = ["bangkok", "chiangmai", "phuket", "khonkaen", "hatyai"];
+   for (const loc of locations) {
+      await refreshConditions(loc);
+      await delay(1000); // wait 1 second before next call
+   }
+}
+
+export async function mapWeatherToRunConditionsWithFuture(config: {
    currentData: any;
    futureData: any;
    locationName: string;
-}): CreateRunConditionDto[] {
+}): Promise<CreateRunConditionDto[]> {
    const { currentData, futureData, locationName } = config;
 
    const currentValues = currentData.values;
