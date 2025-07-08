@@ -16,11 +16,12 @@ export const masterConditions = [
       unit: "°C",
       valueType: "number",
       summary: "Hot but manageable. Stay hydrated.",
-      parentId: "master",
+
       futureValue: "30",
       userId: "master",
       range: 2,
       updatedAt: new Date().toISOString(),
+      location: "bangkok",
    },
    {
       name: "Feels Like",
@@ -29,11 +30,12 @@ export const masterConditions = [
       unit: "°C",
       valueType: "number",
       summary: "Feels hotter due to humidity.",
-      parentId: "master",
+
       futureValue: "33",
       userId: "master",
       range: 2,
       updatedAt: new Date().toISOString(),
+      location: "bangkok",
    },
    {
       name: "Heat Index",
@@ -42,11 +44,12 @@ export const masterConditions = [
       unit: "°C",
       valueType: "number",
       summary: "Risk of heat stress on long runs.",
-      parentId: "master",
+
       futureValue: "34",
       userId: "master",
       range: 3,
       updatedAt: new Date().toISOString(),
+      location: "bangkok",
    },
    {
       name: "Humidity",
@@ -55,11 +58,12 @@ export const masterConditions = [
       unit: "%",
       valueType: "number",
       summary: "High humidity. Can feel muggy.",
-      parentId: "master",
+
       futureValue: "70",
       userId: "master",
       range: 2,
       updatedAt: new Date().toISOString(),
+      location: "bangkok",
    },
    {
       name: "Cloudiness",
@@ -68,11 +72,12 @@ export const masterConditions = [
       unit: "%",
       valueType: "number",
       summary: "Partly cloudy. Some sun peeking through.",
-      parentId: "master",
+
       futureValue: "60",
       userId: "master",
       range: 1,
       updatedAt: new Date().toISOString(),
+      location: "bangkok",
    },
    {
       name: "UV Index",
@@ -81,11 +86,12 @@ export const masterConditions = [
       unit: "",
       valueType: "number",
       summary: "High UV. Sunscreen recommended.",
-      parentId: "master",
+
       futureValue: "6",
       userId: "master",
       range: 3,
       updatedAt: new Date().toISOString(),
+      location: "bangkok",
    },
    {
       name: "Visibility",
@@ -94,11 +100,12 @@ export const masterConditions = [
       unit: "km",
       valueType: "number",
       summary: "Clear visibility. Good for running.",
-      parentId: "master",
+
       futureValue: "10",
       userId: "master",
       range: 1,
       updatedAt: new Date().toISOString(),
+      location: "bangkok",
    },
    {
       name: "Wind Speed",
@@ -107,11 +114,12 @@ export const masterConditions = [
       unit: "km/h",
       valueType: "number",
       summary: "Light breeze. Comfortable.",
-      parentId: "master",
+
       futureValue: "15",
       userId: "master",
       range: 1,
       updatedAt: new Date().toISOString(),
+      location: "bangkok",
    },
    {
       name: "Rain Chance",
@@ -120,11 +128,12 @@ export const masterConditions = [
       unit: "%",
       valueType: "number",
       summary: "Slight chance of rain. Be prepared.",
-      parentId: "master",
+
       futureValue: "20",
       userId: "master",
       range: 2,
       updatedAt: new Date().toISOString(),
+      location: "bangkok",
    },
    {
       name: "Sunset Time",
@@ -133,11 +142,12 @@ export const masterConditions = [
       unit: "HH:mm",
       valueType: "string",
       summary: "Sunset around early evening.",
-      parentId: "master",
+
       futureValue: "18:43",
       userId: "master",
       range: 1,
       updatedAt: new Date().toISOString(),
+      location: "bangkok",
    },
    {
       name: "Sunrise Time",
@@ -146,11 +156,12 @@ export const masterConditions = [
       unit: "HH:mm",
       valueType: "string",
       summary: "Early sunrise. Great for morning run.",
-      parentId: "master",
+
       futureValue: "06:01",
       userId: "master",
       range: 1,
       updatedAt: new Date().toISOString(),
+      location: "bangkok",
    },
    {
       name: "Air Quality Index (AQI)",
@@ -159,11 +170,12 @@ export const masterConditions = [
       unit: "",
       valueType: "string",
       summary: "Air quality’s not ideal. Consider masking up.",
-      parentId: "master",
+
       futureValue: "Moderate",
       userId: "master",
       range: 3,
       updatedAt: new Date().toISOString(),
+      location: "bangkok",
    },
    {
       name: "PM2.5",
@@ -172,11 +184,12 @@ export const masterConditions = [
       unit: "µg/m³",
       valueType: "number",
       summary: "High PM2.5 levels. Risky for outdoor activity.",
-      parentId: "master",
+
       futureValue: "55",
       userId: "master",
       range: 3,
       updatedAt: new Date().toISOString(),
+      location: "bangkok",
    },
    {
       name: "Pollen",
@@ -185,10 +198,11 @@ export const masterConditions = [
       unit: "",
       valueType: "string",
       summary: "Low pollen. No major allergy issues.",
-      parentId: "master",
+
       futureValue: "Moderate",
       userId: "master",
       range: 1,
       updatedAt: new Date().toISOString(),
+      location: "bangkok",
    },
 ];

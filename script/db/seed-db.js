@@ -36,13 +36,6 @@ async function main() {
          })),
       });
 
-      await tx.outdoorStat.createMany({
-         data: mockOutdoorStats.map((stat) => ({
-            ...stat,
-            userId: user.id,
-         })),
-      });
-
       await tx.scheduleItem.createMany({
          data: mockSchedule.map((item) => ({
             ...item,
@@ -56,10 +49,6 @@ async function main() {
    await prisma.$transaction(async (tx) => {
       await tx.user.create({
          data: masterUser,
-      });
-
-      await tx.overallCondition.create({
-         data: masterOverallData,
       });
 
       await tx.runCondition.createMany({

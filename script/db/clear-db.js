@@ -7,10 +7,8 @@ const prisma = new PrismaClient();
 async function main() {
    // Delete all records from all tables, respecting relations
    await prisma.scheduleItem.deleteMany({});
-   await prisma.outdoorStat.deleteMany({});
    await prisma.run.deleteMany({});
    await prisma.route.deleteMany({});
-   await prisma.overallCondition.deleteMany({});
    await prisma.runCondition.deleteMany({});
    await prisma.user.deleteMany({});
    console.log("Cleared all data from the database");

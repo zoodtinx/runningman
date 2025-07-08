@@ -28,7 +28,7 @@ import {
 import { cn } from "@/lib/utils";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
-import { getRunSummary } from "@/lib/run-readiness-helpers/calculate-readiness";
+import { getRunSummary } from "@/lib/run-conditions/calculate-readiness";
 
 const RunSummarySection = async () => {
    const session = await auth();
