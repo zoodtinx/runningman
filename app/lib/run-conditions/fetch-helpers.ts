@@ -10,19 +10,31 @@ export async function fetchRealtimeWeatherData(location: string) {
    const coords = locationCoords[location.toLowerCase()];
    if (!coords) throw new Error(`Unknown location: ${location}`);
 
-   const url = `https://api.tomorrow.io/v4/weather/realtime?location=${coords}&units=metric&apikey=${process.env.TOMORROWIO_API_KEY}`;
+   const fields = [
+      "temperature",
+      "temperatureApparent",
+      "humidity",
+      "cloudCover",
+      "uvIndex",
+      "visibility",
+      "windSpeed",
+      "precipitationProbability",
+      "epaAqi",
+   ].join(",");
 
-   console.log("url", url);
+   const url = `https://api.tomorrow.io/v4/weather/realtime?location=${coords}&units=metric&fields=${fields}&apikey=${process.env.TOMORROWIO_API_KEY}`;
 
    try {
       const res = await fetch(url);
       if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
       const data = await res.json();
 
-      return {
-         time: data.data.time,
-         values: data.data.values,
-      };
+      const values = data.data?.values || null;
+      const time = data.data?.time || "";
+
+      if (!values) throw new Error("No realtime data found");
+
+      return { time, values };
    } catch (error) {
       console.error("Failed to fetch realtime weather data:", error);
       return null;
@@ -33,22 +45,55 @@ export async function fetchFutureWeatherData(location: string) {
    const coords = locationCoords[location.toLowerCase()];
    if (!coords) throw new Error(`Unknown location: ${location}`);
 
-   const url = `https://api.tomorrow.io/v4/weather/forecast?location=${coords}&units=metric&timesteps=1h&apikey=${process.env.TOMORROWIO_API_KEY}`;
+   const url = `https://api.tomorrow.io/v4/weather/forecast?location=${coords}&timesteps=1h,1d&units=metric&apikey=${process.env.TOMORROWIO_API_KEY}`;
 
    try {
       const res = await fetch(url);
       if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
       const data = await res.json();
 
-      console.log("data", data);
+      const timeline = data?.timelines?.hourly?.[0];
+      if (!timeline) throw new Error("No hourly data");
 
-      const interval = data.timelines.hourly[0];
       return {
-         time: interval.startTime,
-         values: interval.values,
+         hourly: data?.timelines?.hourly?.[0],
+         daily: data?.timelines?.daily?.[0],
       };
    } catch (error) {
       console.error("Failed to fetch future weather data:", error);
+      return null;
+   }
+}
+
+export async function fetchAQI(location: string) {
+   // Map of supported locations to their coordinates (lat,lon)
+   const coords = locationCoords[location.toLowerCase()];
+   if (!coords) throw new Error(`Unknown location: ${location}`);
+
+   // IQAir API expects lat/lon as separate params
+   const [lat, lon] = coords.split(",");
+   const apiKey = process.env.IQAIR_API_KEY;
+   if (!apiKey) throw new Error("Missing IQAir API key");
+
+   // Override Bangkok coordinates for IQAir API to use the specified lat/lon
+   let latOverride = lat,
+      lonOverride = lon;
+   if (location.toLowerCase() === "bangkok") {
+      latOverride = "13.730556";
+      lonOverride = "100.541664";
+   }
+   const url = `https://api.airvisual.com/v2/nearest_city?lat=${latOverride}&lon=${lonOverride}&key=${apiKey}`;
+
+   try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
+      const result = await res.json();
+
+      // The AQI value is at result.data.current.pollution.aqius
+      const aqi = result?.data?.current?.pollution?.aqius;
+      return typeof aqi === "number" ? aqi : null;
+   } catch (error) {
+      console.error("Failed to fetch IQAir AQI data:", error);
       return null;
    }
 }

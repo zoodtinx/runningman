@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { RunCondition } from "@prisma/client";
+import { format } from "date-fns";
 import {
    TemperatureHigh,
    Droplet,
@@ -14,15 +15,38 @@ import {
    Flower as Pollen,
    TemperatureHigh as Thermometer,
    Tree,
-   CircleSpark,
    HeatingSquare,
 } from "iconoir-react";
 
 export const RunConditionCard = ({ statData }: { statData: RunCondition }) => {
+   const getValue = () => {
+      if (statData.type === "sunrise-time" || statData.type === "sunset-time") {
+         return format(statData.value, "h:mm aaa");
+      } else {
+         return statData.value;
+      }
+   };
+
+   const getFutureValue = () => {
+      const noFuture = ["sunrise-time", "sunset-time", "aqi"];
+      if (noFuture.includes(statData.type)) {
+         return;
+      } else {
+         return (
+            <>
+               <div>
+                  <span>{statData.futureValue}</span>
+               </div>
+               <span className="text-sm">in 1 hour</span>
+            </>
+         );
+      }
+   };
+
    return (
       <div
          className={cn(
-            "flex basis-1/2 w-1/2 h-[100px] rounded-base p-2 justify-between",
+            "flex flex-col basis-1/2 w-1/2 h-[100px] rounded-base p-2 justify-between",
             statData.range === 3 &&
                "bg-[linear-gradient(to_bottom,_#dcfffe_0%,_#b4f0ef_100%)]",
             statData.range === 2 &&
@@ -31,34 +55,31 @@ export const RunConditionCard = ({ statData }: { statData: RunCondition }) => {
                "bg-[linear-gradient(to_bottom,_#ffd4d4_0%,_#ffbebe_100%)]"
          )}
       >
-         <div className="flex flex-col justify-between w-1/2">
+         <div className="flex justify-between w-full">
             <div className="flex gap-1 items-center">
                <StatIcon statType={statData.type} />
                <p className="font-semibold text-[14px] text-right">
                   {statData.name}
                </p>
             </div>
+            <div className="flex flex-col gap-[2px] items-end">
+               <p className="text-[13px] text-right leading-tight pt-1 pr-1">
+                  {statData.summary}
+               </p>
+            </div>
+         </div>
+         <div className="flex justify-between w-full items-baseline">
             <p
                className={cn(
                   "font-headline font-bold text-[24px] pl-1 leading-7",
                   statData.valueType === "number" && "text-[40px] leading-10"
                )}
             >
-               <span className="leading-7">{statData.value}</span>
+               <span className="leading-7">{getValue()}</span>
                <span className="text-[19px] leading-7"> {statData.unit}</span>
             </p>
-         </div>
-         <div className="flex flex-col justify-between w-1/2 items-end">
-            <div className="flex flex-col gap-[2px] items-end">
-               <p className="text-[11px] text-right leading-tight pt-1 pr-1">
-                  {statData.summary}
-               </p>
-            </div>
             <div className="flex gap-1 justify-end items-baseline font-medium opacity-40">
-               <div>
-                  <span>{statData.futureValue}</span>
-               </div>
-               <span className="text-sm">in 1 hour</span>
+               {getFutureValue()}
             </div>
          </div>
       </div>
@@ -101,5 +122,3 @@ const StatIcon = ({ statType }: { statType: string }) => {
          return <Thermometer className={iconClass} />;
    }
 };
-
-// const outdoorStatsConfig =

@@ -16,6 +16,8 @@ import {
    Check,
    HeatingSquare,
    CircleSpark,
+   Star,
+   StarSolid,
 } from "iconoir-react";
 import RunningManLogo from "@/components/icons/RunningManLogo";
 import React, { JSX } from "react";
@@ -31,6 +33,7 @@ import { cn } from "@/lib/utils";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { getRunSummary } from "@/lib/run-conditions/calculate-readiness";
+import { format } from "date-fns";
 
 const RunSummarySection = async () => {
    const session = await auth();
@@ -52,9 +55,16 @@ const RunSummarySection = async () => {
       where: {
          id: userId,
       },
+      include: {
+         schedules: {
+            orderBy: {
+               dayOfWeek: "asc",
+            },
+         },
+      },
    });
 
-   console.log("runConditions", runConditions);
+   console.log("user", user);
 
    let conditionPriority = user!.conditionPriority;
    if (typeof conditionPriority === "string") {
@@ -70,6 +80,21 @@ const RunSummarySection = async () => {
       runConditions
    );
 
+   const scheduledRun = async () => {
+      const todayIndex = new Date().getDay();
+
+      if (!user?.schedules[todayIndex].routeId) {
+         return "No Run Scheduled";
+      }
+
+      const scheduled = await prisma.route.findUnique({
+         where: {
+            id: user!.schedules[todayIndex].routeId,
+         },
+      });
+      return scheduled?.title;
+   };
+
    return (
       <div className="h-1/2 w-full flex flex-1  flex-col justify-between">
          <div>
@@ -84,7 +109,13 @@ const RunSummarySection = async () => {
                <p className="text-[70px] text-background font-headline leading-18">
                   {runSummary.headline}
                </p>
-               <p className="text-[23px] pt-1">{runSummary.detail}</p>
+               <div className="flex gap-1 pb-2 pt-2">
+                  <StarSolid className="size-4.5" />
+                  <StarSolid className="size-4.5" />
+                  <StarSolid className="size-4.5" />
+                  <StarSolid className="size-4.5" />
+               </div>
+               <p className="text-[23px] pt-1 w-4/5">{runSummary.detail}</p>
             </div>
          </div>
          <div className="flex justify-between p-3">
@@ -94,7 +125,7 @@ const RunSummarySection = async () => {
                   <Calendar className="stroke-[1.7px]" />
                   <p>Scheduled Run:</p>
                </span>
-               <span className="font-bold">Long Run</span>
+               <span className="font-bold">{scheduledRun()}</span>
             </div>
          </div>
       </div>
@@ -158,4 +189,19 @@ const HighlightedStats = ({ data }: { data: string[] }) => {
    );
 };
 
+const getTodayScheduleIndex = () => {
+   const today = format(new Date(), "EEEE") as keyof typeof dateIndexMap;
+
+   const dateIndexMap = {
+      Sunday: 0,
+      Monday: 1,
+      Tuesday: 2,
+      Wednesday: 3,
+      Thursday: 4,
+      Friday: 5,
+      Saturday: 6,
+   };
+
+   return dateIndexMap[today];
+};
 export default RunSummarySection;

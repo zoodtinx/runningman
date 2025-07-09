@@ -8,11 +8,11 @@ type ReadinessResult = {
 };
 
 const HEADLINES = [
-   "SKIP RUNNING TODAY",
-   "MAKE IT LIGHT",
-   "GO RUN",
-   "GOOD TO RUN",
-   "PERFECT DAY TO RUN",
+   "THE VIBES SAYS REST",
+   "RUN, BUT MAKE IT LIGHT",
+   "DECENT DAY TO RUN",
+   "PERFECT RUNNING WEATHER",
+   "IT'S GLORIOUS OUT THERE",
 ];
 
 export function getRunSummary(
@@ -40,16 +40,13 @@ export function getRunSummary(
    );
 
    const topConditions = weightedConditions
-      .filter((c) => c.weight > 0)
-      .sort((a, b) => b.weight - a.weight)
-      .slice(0, 3);
-
-   const detail = topConditions.map((c) => c.summary).join(" ");
-
-   const keyCondition = weightedConditions
       .filter((c) => c.type !== "sunset-time" && c.type !== "sunrise-time")
       .filter((c) => (readinessScore < 3 ? c.range === 1 : c.range === 3))
-      .map((c) => c.type);
+      .slice(0, 3);
+
+   const keyCondition = topConditions.map((c) => c.type);
+
+   const detail = topConditions.map((c) => `${c.summary}.`).join(" ");
 
    return {
       readinessScore,
