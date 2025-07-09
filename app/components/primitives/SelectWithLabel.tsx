@@ -62,14 +62,18 @@ export const SelectWithLabel = React.forwardRef<
                   >
                      <SelectValue placeholder={placeholder} />
                   </SelectTrigger>
-                  <SelectContent className="max-h-[250px] max-w-[300px]">
+                  <SelectContent className="max-h-[250px] relative">
                      {props.value === undefined && (
                         <SelectItem value="" disabled>
                            {placeholder}
                         </SelectItem>
                      )}
                      {options.map((opt) => (
-                        <SelectItem key={opt.value} value={opt.value}>
+                        <SelectItem
+                           key={opt.value}
+                           value={opt.value}
+                           className=""
+                        >
                            {opt.label}
                         </SelectItem>
                      ))}

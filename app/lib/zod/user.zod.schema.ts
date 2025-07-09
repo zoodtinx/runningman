@@ -2,20 +2,20 @@ import { nullableStringField } from "@/lib/zod/helper";
 import { z } from "zod";
 
 const conditionPriority = z.object({
-   temperature: z.number().int().min(0).max(2),
-   "feels-like": z.number().int().min(0).max(2),
-   "heat-index": z.number().int().min(0).max(2),
-   humidity: z.number().int().min(0).max(2),
-   cloudiness: z.number().int().min(0).max(2),
-   "uv-index": z.number().int().min(0).max(2),
-   visibility: z.number().int().min(0).max(2),
-   "wind-speed": z.number().int().min(0).max(2),
-   "rain-chance": z.number().int().min(0).max(2),
-   "sunset-time": z.number().int().min(0).max(2),
-   "sunrise-time": z.number().int().min(0).max(2),
-   aqi: z.number().int().min(0).max(2),
-   "pm2.5": z.number().int().min(0).max(2),
-   pollen: z.number().int().min(0).max(2),
+   temperature: z.number().int().min(0).max(3),
+   "feels-like": z.number().int().min(0).max(3),
+   "heat-index": z.number().int().min(0).max(3),
+   humidity: z.number().int().min(0).max(3),
+   cloudiness: z.number().int().min(0).max(3),
+   "uv-index": z.number().int().min(0).max(3),
+   visibility: z.number().int().min(0).max(3),
+   "wind-speed": z.number().int().min(0).max(3),
+   "rain-chance": z.number().int().min(0).max(3),
+   "sunset-time": z.number().int().min(0).max(3),
+   "sunrise-time": z.number().int().min(0).max(3),
+   aqi: z.number().int().min(0).max(3),
+   "pm2.5": z.number().int().min(0).max(3),
+   pollen: z.number().int().min(0).max(3),
 });
 
 export const userSchema = z.object({

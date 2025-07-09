@@ -31,6 +31,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                name: user.name ?? "",
                conditionPriority: conditionPreference,
                notificationEnabled: true,
+               location: "bangkok",
                theme: "speed",
                schedules: {
                   createMany: {

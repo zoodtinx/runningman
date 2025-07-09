@@ -42,16 +42,14 @@ const items: Item[] = [
    { id: "wind-speed", label: "Wind Speed", icon: Wind },
    { id: "rain-chance", label: "Rain Chance", icon: Rain },
    { id: "aqi", label: "AQI", icon: AirplaneHelix },
-   { id: "pm2.5", label: "PM2.5", icon: DotsGrid3x3 },
-   { id: "pollen", label: "Pollen", icon: Flower },
 ];
 
 type ItemKey = keyof ConditionPriority;
 
 const sectionValues: Record<string, number> = {
-   low: 0,
-   medium: 1,
-   high: 2,
+   low: 1,
+   medium: 2,
+   high: 3,
 };
 
 export interface DragBoardProps {
@@ -91,7 +89,7 @@ export default function DragBoard({
                "flex flex-col gap-2 w-full border border-secondary py-2 px-3 pb-3 rounded-xl"
             )}
          >
-            {[2, 1, 0].map((value) => (
+            {[3, 2, 1].map((value) => (
                <Section key={value} id={value}>
                   {items
                      .filter(
@@ -124,7 +122,11 @@ export default function DragBoard({
 }
 
 function Section({ id, children }: { id: number; children: React.ReactNode }) {
-   const labels = ["low", "medium", "high"];
+   const labels: Record<number, string> = {
+      1: "low",
+      2: "medium",
+      3: "high",
+   };
    const label = labels[id] || "unknown";
 
    const { setNodeRef, isOver } = useDroppable({ id: label });

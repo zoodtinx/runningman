@@ -21,7 +21,14 @@ export function getRunSummary(
 ): ReadinessResult {
    const weightedConditions = conditions.map((condition) => {
       const weight = importanceWeights[condition.type] ?? 0;
-      const weightedScore = condition.range * weight;
+
+      // Ignore very low weight + bad condition
+      const shouldIgnore = weight < 0.2 && condition.range === 1;
+      if (shouldIgnore) return { ...condition, weight: 0, weightedScore: 0 };
+
+      // Boost perfect scores
+      const boost = condition.range === 3 ? 1.2 : 1;
+      const weightedScore = condition.range * weight * boost;
 
       return { ...condition, weight, weightedScore };
    });
@@ -34,10 +41,9 @@ export function getRunSummary(
 
    const averageScore =
       totalWeight === 0 ? 0 : totalWeightedScore / totalWeight;
-   const readinessScore = Math.max(
-      1,
-      Math.min(5, Math.round((averageScore / 3) * 5))
-   );
+
+   // More generous mapping
+   const readinessScore = mapScore(averageScore);
 
    const topConditions = weightedConditions
       .filter((c) => c.type !== "sunset-time" && c.type !== "sunrise-time")
@@ -45,7 +51,6 @@ export function getRunSummary(
       .slice(0, 3);
 
    const keyCondition = topConditions.map((c) => c.type);
-
    const detail = topConditions.map((c) => `${c.summary}.`).join(" ");
 
    return {
@@ -54,4 +59,12 @@ export function getRunSummary(
       detail,
       keyCondition,
    };
+}
+
+function mapScore(avg: number) {
+   if (avg < 1) return 1; // clearly bad
+   if (avg < 1.5) return 2; // low
+   if (avg < 2.3) return 3; // medium
+   if (avg < 2.7) return 4; // good
+   return 5; // great
 }

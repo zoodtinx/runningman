@@ -16,24 +16,14 @@ import {
    Check,
    HeatingSquare,
    CircleSpark,
-   Star,
-   StarSolid,
 } from "iconoir-react";
 import RunningManLogo from "@/components/icons/RunningManLogo";
 import React, { JSX } from "react";
 import { Calendar } from "iconoir-react";
-import {
-   Select,
-   SelectTrigger,
-   SelectContent,
-   SelectItem,
-   SelectValue,
-} from "@/components/primitives/Select";
-import { cn } from "@/lib/utils";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { getRunSummary } from "@/lib/run-conditions/calculate-readiness";
-import { format } from "date-fns";
+import { LocationSelect } from "@/components/main-layout/LocationSelect";
 
 const RunSummarySection = async () => {
    const session = await auth();
@@ -43,13 +33,6 @@ const RunSummarySection = async () => {
    }
 
    const userId = session.user.id;
-
-   const runConditions = await prisma.runCondition.findMany({
-      where: {
-         userId: "master",
-         location: "bangkok",
-      },
-   });
 
    const user = await prisma.user.findUnique({
       where: {
@@ -64,7 +47,16 @@ const RunSummarySection = async () => {
       },
    });
 
-   console.log("user", user);
+   if (!user) {
+      return <div className="text-red-500 p-4">User not found.</div>;
+   }
+
+   const runConditions = await prisma.runCondition.findMany({
+      where: {
+         userId: "master",
+         location: user.location || "bangkok",
+      },
+   });
 
    let conditionPriority = user!.conditionPriority;
    if (typeof conditionPriority === "string") {
@@ -100,21 +92,12 @@ const RunSummarySection = async () => {
          <div>
             <div className="flex justify-between p-3 items-center">
                <RunningManLogo className="text-background" />
-               <div className="flex gap-2 items-baseline">
-                  <span className="text-sm">Location</span>
-                  <LocationSelect />
-               </div>
+               <LocationSelect user={user} />
             </div>
             <div className="pl-7 pr-9 pt-7">
                <p className="text-[70px] text-background font-headline leading-18">
                   {runSummary.headline}
                </p>
-               <div className="flex gap-1 pb-2 pt-2">
-                  <StarSolid className="size-4.5" />
-                  <StarSolid className="size-4.5" />
-                  <StarSolid className="size-4.5" />
-                  <StarSolid className="size-4.5" />
-               </div>
                <p className="text-[23px] pt-1 w-4/5">{runSummary.detail}</p>
             </div>
          </div>
@@ -129,25 +112,6 @@ const RunSummarySection = async () => {
             </div>
          </div>
       </div>
-   );
-};
-
-const LocationSelect = () => {
-   return (
-      <Select value="bangkok">
-         <SelectTrigger
-            className={cn(
-               "focus:outline-none text-base font-bold grow p-0 h-auto flex items-center justify-between"
-            )}
-         >
-            <SelectValue placeholder="Select" />
-         </SelectTrigger>
-         <SelectContent>
-            <SelectItem value="bangkok">Bangkok</SelectItem>
-            <SelectItem value="tokyo">Tokyo</SelectItem>
-            <SelectItem value="nyc">New York</SelectItem>
-         </SelectContent>
-      </Select>
    );
 };
 
@@ -189,19 +153,4 @@ const HighlightedStats = ({ data }: { data: string[] }) => {
    );
 };
 
-const getTodayScheduleIndex = () => {
-   const today = format(new Date(), "EEEE") as keyof typeof dateIndexMap;
-
-   const dateIndexMap = {
-      Sunday: 0,
-      Monday: 1,
-      Tuesday: 2,
-      Wednesday: 3,
-      Thursday: 4,
-      Friday: 5,
-      Saturday: 6,
-   };
-
-   return dateIndexMap[today];
-};
 export default RunSummarySection;

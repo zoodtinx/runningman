@@ -15,9 +15,26 @@ export const RunConditionSection = async () => {
 
    const userId = session.user.id;
 
+   const user = await prisma.user.findUnique({
+      where: {
+         id: userId,
+      },
+      include: {
+         schedules: {
+            orderBy: {
+               dayOfWeek: "asc",
+            },
+         },
+      },
+   });
+
+   if (!user) {
+      return <div className="text-red-500 p-4">User not found.</div>;
+   }
+
    const conditionsData = await prisma.runCondition.findMany({
       where: {
-         location: "bangkok",
+         location: user.location || "bangkok",
       },
       orderBy: {
          range: "desc",

@@ -55,14 +55,14 @@ export const RunConditionCard = ({ statData }: { statData: RunCondition }) => {
                "bg-[linear-gradient(to_bottom,_#ffd4d4_0%,_#ffbebe_100%)]"
          )}
       >
-         <div className="flex justify-between w-full">
+         <div className="flex justify-between w-full items-start">
             <div className="flex gap-1 items-center">
                <StatIcon statType={statData.type} />
-               <p className="font-semibold text-[14px] text-right">
+               <p className="font-semibold text-[14px] text-right uppercase">
                   {statData.name}
                </p>
             </div>
-            <div className="flex flex-col gap-[2px] items-end">
+            <div className="flex flex-col gap-[2px] items-end w-1/2">
                <p className="text-[13px] text-right leading-tight pt-1 pr-1">
                   {statData.summary}
                </p>

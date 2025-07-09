@@ -112,13 +112,13 @@ export async function refreshConditions(location: string) {
  * Refreshes run conditions for all supported locations.
  */
 export async function refreshAllConditions() {
-   // const locations = ["bangkok", "chiangmai", "phuket", "khonkaen", "hatyai"];
-   // for (const loc of locations) {
-   //    await refreshConditions(loc);
-   //    await delay(1000); // wait 1 second before next call
-   // }
+   const locations = ["bangkok", "chiangmai", "phuket", "khonkaen", "hatyai"];
+   for (const loc of locations) {
+      await refreshConditions(loc);
+      await delay(1000); // wait 1 second before next call
+   }
 
-   await refreshConditions("bangkok");
+   // await refreshConditions("bangkok");
 }
 
 /**
