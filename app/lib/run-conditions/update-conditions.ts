@@ -34,6 +34,23 @@ export async function refreshConditions(location: string) {
       data: newConditions,
    });
 
+   if (process.env.NODE_ENV === "development") {
+      const fs = await import("fs/promises");
+      const path = await import("path");
+      const outDir = path.join(process.cwd(), "tmp", "run-conditions");
+      await fs.mkdir(outDir, { recursive: true });
+      const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+      const outFile = path.join(outDir, `${location}-${timestamp}.json`);
+      const outData = {
+         location,
+         fetchedAt: new Date().toISOString(),
+         currentData: newCurrentData,
+         futureData: newfutureData,
+         mappedConditions: newConditions,
+      };
+      await fs.writeFile(outFile, JSON.stringify(outData, null, 2), "utf-8");
+   }
+
    return;
 }
 
@@ -58,7 +75,6 @@ export async function mapWeatherToRunConditionsWithFuture(config: {
    const summaries: Record<string, string> = {
       temperature: "Current temperature.",
       "feels-like": "Feels like temperature.",
-      "heat-index": "Heat index based on temp and humidity.",
       humidity: "Humidity level.",
       cloudiness: "Cloud cover percentage.",
       "uv-index": "UV index level.",
@@ -72,21 +88,19 @@ export async function mapWeatherToRunConditionsWithFuture(config: {
    const units: Record<string, string> = {
       temperature: "°C",
       "feels-like": "°C",
-      "heat-index": "°C",
       humidity: "%",
       cloudiness: "%",
       "uv-index": "",
       visibility: "km",
       "wind-speed": "km/h",
       "rain-chance": "%",
-      "sunset-time": "HH:mm",
-      "sunrise-time": "HH:mm",
+      "sunset-time": "",
+      "sunrise-time": "",
    };
 
    const keyMap: Record<string, keyof typeof currentValues | string> = {
       temperature: "temperature",
       "feels-like": "temperatureApparent",
-      "heat-index": "temperatureApparent",
       humidity: "humidity",
       cloudiness: "cloudCover",
       "uv-index": "uvIndex",
@@ -98,8 +112,8 @@ export async function mapWeatherToRunConditionsWithFuture(config: {
    };
 
    const dummyTimes: Record<string, string> = {
-      "sunset-time": "18:45",
-      "sunrise-time": "06:03",
+      "sunset-time": "21:00",
+      "sunrise-time": "21:00",
    };
 
    const conditions: CreateRunConditionDto[] = Object.keys(keyMap).map(
@@ -143,69 +157,66 @@ const capitalize = (s: string) =>
    s.charAt(0).toUpperCase() + s.slice(1).replace(/-/g, " ");
 
 const calculateRange = (type: string, val: number | string): number => {
-   if (
-      type === "temperature" ||
-      type === "feels-like" ||
-      type === "heat-index"
-   ) {
+   if (type === "temperature" || type === "feels-like") {
       if (typeof val === "number") {
-         if (val < 10) return 0;
-         if (val <= 25) return 2;
-         return 1;
+         if (val > 35) return 1; // bad
+         if (val >= 28) return 2; // okay
+         if (val >= 24) return 3; // good
+         return 2; // default okay if less than 24
       }
    }
 
    if (type === "humidity") {
       if (typeof val === "number") {
-         if (val < 30) return 1;
-         if (val <= 60) return 2;
-         return 0;
+         if (val < 30) return 2;
+         if (val <= 60) return 3;
+         return 1;
       }
    }
 
    if (type === "uv-index") {
       if (typeof val === "number") {
-         if (val <= 2) return 2;
-         if (val <= 5) return 1;
-         return 0;
+         if (val <= 2) return 3;
+         if (val <= 5) return 2;
+         return 1;
       }
    }
 
    if (type === "rain-chance") {
       if (typeof val === "number") {
-         if (val < 20) return 2;
-         if (val < 50) return 1;
-         return 0;
+         if (val < 20) return 3;
+         if (val < 50) return 2;
+         return 1;
       }
    }
 
    if (type === "cloudiness") {
       if (typeof val === "number") {
-         if (val < 30) return 2;
-         if (val < 70) return 1;
-         return 0;
+         if (val < 30) return 3;
+         if (val < 70) return 2;
+         return 1;
       }
    }
 
    if (type === "visibility") {
       if (typeof val === "number") {
-         if (val > 10) return 2;
-         if (val > 5) return 1;
-         return 0;
+         if (val > 10) return 3;
+         if (val > 5) return 2;
+         return 1;
       }
    }
 
    if (type === "wind-speed") {
       if (typeof val === "number") {
-         if (val < 10) return 2;
-         if (val < 20) return 1;
-         return 0;
+         if (val < 10) return 3;
+         if (val < 20) return 2;
+         return 1;
       }
    }
 
    if (type === "sunrise-time" || type === "sunset-time") {
-      return 1;
+      return 3; // always good
    }
 
-   return 1;
+   return 2;
 };

@@ -4,6 +4,7 @@ import { ScrollArea } from "@/components/primitives/ScrollArea";
 import { prisma } from "@/lib/prisma";
 import { format } from "date-fns";
 import { Settings } from "iconoir-react";
+import Link from "next/link";
 
 export const RunConditionSection = async () => {
    const session = await auth();
@@ -19,7 +20,7 @@ export const RunConditionSection = async () => {
          location: "bangkok",
       },
       orderBy: {
-         range: "asc",
+         range: "desc",
       },
    });
 
@@ -44,11 +45,13 @@ export const RunConditionSection = async () => {
          <div className="flex justify-between shrink-0 text-primary px-1 items-center">
             <p className="font-headline font-bold">RUNNING CONDITIONS</p>
             <div className="flex items-center gap-2">
-               <div className="w-fit text-primary rounded-full text-base font-medium">
+               <div className="w-fit text-primary rounded-full text-base font-medium opacity-30">
                   <span>Last Updated: </span>
                   <span>{updatedAt}</span>
                </div>
-               <Settings className="size-5 cursor-pointer" />
+               <Link href="/dashboard/settings">
+                  <Settings className="size-5 cursor-pointer" />
+               </Link>
             </div>
          </div>
          <ScrollArea className="w-full h-full overflow-hidden rounded-2xl">

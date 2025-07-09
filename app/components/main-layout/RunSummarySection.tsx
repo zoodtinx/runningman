@@ -54,7 +54,7 @@ const RunSummarySection = async () => {
       },
    });
 
-   console.log("user", user);
+   console.log("runConditions", runConditions);
 
    let conditionPriority = user!.conditionPriority;
    if (typeof conditionPriority === "string") {

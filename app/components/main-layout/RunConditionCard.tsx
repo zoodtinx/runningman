@@ -23,11 +23,11 @@ export const RunConditionCard = ({ statData }: { statData: RunCondition }) => {
       <div
          className={cn(
             "flex basis-1/2 w-1/2 h-[100px] rounded-base p-2 justify-between",
-            statData.range === 0 &&
+            statData.range === 3 &&
                "bg-[linear-gradient(to_bottom,_#dcfffe_0%,_#b4f0ef_100%)]",
-            statData.range === 1 &&
-               "bg-[linear-gradient(to_bottom,_#fdffda_0%,_#f5f9aa_100%)]",
             statData.range === 2 &&
+               "bg-[linear-gradient(to_bottom,_#fdffda_0%,_#f5f9aa_100%)]",
+            statData.range === 1 &&
                "bg-[linear-gradient(to_bottom,_#ffd4d4_0%,_#ffbebe_100%)]"
          )}
       >
@@ -45,9 +45,7 @@ export const RunConditionCard = ({ statData }: { statData: RunCondition }) => {
                )}
             >
                <span className="leading-7">{statData.value}</span>
-               <span className="text-[19px] leading-7">
-                  {statData.unit ?? ""}
-               </span>
+               <span className="text-[19px] leading-7"> {statData.unit}</span>
             </p>
          </div>
          <div className="flex flex-col justify-between w-1/2 items-end">
@@ -57,7 +55,9 @@ export const RunConditionCard = ({ statData }: { statData: RunCondition }) => {
                </p>
             </div>
             <div className="flex gap-1 justify-end items-baseline font-medium opacity-40">
-               <span>{statData.futureValue}</span>
+               <div>
+                  <span>{statData.futureValue}</span>
+               </div>
                <span className="text-sm">in 1 hour</span>
             </div>
          </div>
@@ -72,7 +72,7 @@ const StatIcon = ({ statType }: { statType: string }) => {
       case "temperature":
          return <TemperatureHigh className={iconClass} />;
       case "feels-like":
-         return <CircleSpark className={iconClass} />;
+         return <HeatingSquare className={iconClass} />;
       case "heat-index":
          return <HeatingSquare className={iconClass} />;
       case "humidity":
