@@ -1,6 +1,6 @@
 import { getDemoRoutes } from "@/api/demo/mock-data/demo-routes";
 import { getDemoRuns } from "@/api/demo/mock-data/demo-runs";
-import { demoUser, getDemoUser } from "@/api/demo/mock-data/demo-user";
+import { getDemoUser } from "@/api/demo/mock-data/demo-user";
 import { prisma } from "@/lib/prisma";
 
 export function createDemoSession() {

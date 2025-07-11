@@ -25,12 +25,24 @@ const RunsPage = async () => {
       </Link>
    ));
 
+   const routesData = await prisma.route.findMany({
+      where: {
+         userId: session?.user.id,
+      },
+      orderBy: [{ createdAt: "desc" }],
+   });
+
+   const routeOptions = routesData.map((route) => ({
+      value: route.id,
+      label: route.title,
+   }));
+
    return (
       <div className="grow overflow-hidden">
          <ScrollArea className="h-full">
             <div className="px-[12px] flex flex-col gap-[6px] justify-between pb-[500px]">
                <SessionProvider>
-                  <NewRunBar />
+                  <NewRunBar routeOptions={routeOptions} />
                </SessionProvider>
                {runBars}
             </div>

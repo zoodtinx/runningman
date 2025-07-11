@@ -7,10 +7,13 @@ import {
 } from "@/components/form-elements/utils/selections";
 import { ControlledInput } from "@/components/primitives/InputWithLabel";
 import { PlusSquare } from "iconoir-react";
-import React, { useEffect, useState } from "react";
-import { ControlledSelect } from "@/components/primitives/SelectWithLabel";
+import { ReactNode, useEffect, useState } from "react";
+import {
+   ControlledSelect,
+   SelectWithLabel,
+} from "@/components/primitives/SelectWithLabel";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { createRun } from "@/dashboard/runs/actions";
+import { createRun, getRouteData } from "@/dashboard/runs/actions";
 import { cn } from "@/lib/utils";
 
 import { useSession } from "next-auth/react";
@@ -20,7 +23,12 @@ import { CreateRunDto } from "@/lib/zod/runs.zod.schema";
 
 type CreateRunDtoWithPace = CreateRunDto & { pace?: string };
 
-const NewRunBar = () => {
+const NewRunBar = ({
+   routeOptions,
+}: {
+   routeOptions: { value: string; label: ReactNode };
+}) => {
+   const [selectedRoute, setSelectedRoute] = useState("");
    const [mode, setMode] = useState<"base" | "add">("base");
    const { data: session } = useSession();
 
@@ -139,6 +147,15 @@ const NewRunBar = () => {
       reset();
    };
 
+   const handleRouteSelect = async (value: string) => {
+      setSelectedRoute(value);
+      const route = await getRouteData(value);
+
+      if (route) {
+         reset(route);
+      }
+   };
+
    return (
       <div className="relative h-fit flex w-full ">
          <div
@@ -163,21 +180,42 @@ const NewRunBar = () => {
          >
             <div>
                <div className="flex justify-between">
-                  <div className="flex gap-[4px] text-background h-fit items-center">
+                  <div className="flex gap-[4px] text-background h-fit items-center shrink-0">
                      <PlusSquare className="size-6" />
                      <span className="font-headline font-semibold text-[26px]">
                         NEW RUN
                      </span>
                   </div>
-                  <div className="flex items-center gap-3">
-                     <ControlledDatePicker
-                        fieldName="dateTime"
-                        control={control}
-                     />
-                     <ControlledTimePicker
-                        control={control}
-                        fieldName="dateTime"
-                     />
+                  <div className="flex items-center gap-4">
+                     <div className="flex gap-2">
+                        <ControlledDatePicker
+                           fieldName="dateTime"
+                           control={control}
+                        />
+                        <ControlledTimePicker
+                           control={control}
+                           fieldName="dateTime"
+                        />
+                     </div>
+                     <div className="w-[150px]">
+                        <SelectWithLabel
+                           options={routeOptions}
+                           onValueChange={handleRouteSelect}
+                           value={selectedRoute}
+                           placeholder="Select from routes"
+                           className="text-background"
+                        />
+                        {/* <ControlledSelect
+                           fieldName="routeId"
+                           control={control}
+                           options={routeOptions}
+                           variant="dark"
+                           className="font-bold"
+                           placeholder="Select From Routes"
+                           required={true}
+                           errorMessage="Please specify run type"
+                        /> */}
+                     </div>
                   </div>
                </div>
                <div className="flex flex-col gap-3">

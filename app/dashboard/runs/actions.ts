@@ -44,3 +44,13 @@ export async function deleteRun(id: string) {
 
    revalidatePath("/dashboard/runs");
 }
+
+export async function getRouteData(id: string) {
+   const routeData = await prisma.route.findUnique({
+      where: {
+         id,
+      },
+   });
+
+   return routeData;
+}

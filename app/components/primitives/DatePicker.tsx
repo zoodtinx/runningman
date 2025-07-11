@@ -30,13 +30,13 @@ export function ControlledDatePicker<T extends FieldValues>({
          control={control}
          rules={required ? { required } : undefined}
          render={({ field, fieldState }) => (
-            <div className="flex items-center w-[120px]">
+            <div className="flex items-center w-[120px] cursor-pointer">
                <Popover>
                   <PopoverTrigger asChild>
                      <div
                         data-empty={!field.value}
                         className={cn(
-                           "data-[empty=true]:text-muted-foreground w-[280px] justify-start text-left font-normal",
+                           "data-[empty=true]:text-background w-[280px] justify-start text-left font-normal",
                            "text-background flex gap-1 items-center justify-end font-medium"
                         )}
                      >
@@ -48,7 +48,7 @@ export function ControlledDatePicker<T extends FieldValues>({
                         )}
                      </div>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0 bg-primary">
+                  <PopoverContent className="w-auto p-0 pb-2 bg-background rounded-2xl border-0">
                      <Calendar
                         mode="single"
                         selected={field.value}

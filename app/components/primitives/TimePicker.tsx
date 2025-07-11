@@ -124,14 +124,14 @@ const TimePicker: React.FC<TimePickerProps> = ({ value, handleChange }) => {
             </div>
          </PopoverTrigger>
 
-         <PopoverContent className="w-[150px] p-2 flex bg-foreground rounded-xl">
+         <PopoverContent className="w-fit p-2 pt-1 flex bg-background rounded-xl items-end gap-1">
             <div className="flex gap-1 w-full">
-               <div className="w-1/2">
-                  <label className="block text-sm text-secondary font-medium mb-1 text-center">
+               <div className="w-[50px]">
+                  <label className="block text-sm text-secondary font-medium mb-1">
                      Hours
                   </label>
                   <select
-                     className="w-full border border-tertiary rounded-md p-1 appearance-none text-md text-center"
+                     className="text-primary w-full border h-[40px] border-tertiary rounded-md p-1 appearance-none text-md text-center shrink-0 font-semibold"
                      value={selectedHour}
                      onChange={(e) => setSelectedHour(e.target.value)}
                   >
@@ -143,12 +143,12 @@ const TimePicker: React.FC<TimePickerProps> = ({ value, handleChange }) => {
                   </select>
                </div>
 
-               <div className="w-1/2">
-                  <label className="block text-sm text-secondary mb-1 text-center">
+               <div className="w-[50px]">
+                  <label className="block text-sm text-secondary mb-1">
                      Minutes
                   </label>
                   <select
-                     className="w-full border border-tertiary rounded-md p-1 appearance-none text-md text-center"
+                     className="text-primary w-full border h-[40px] border-tertiary rounded-md p-1 appearance-none text-md text-center shrink-0 font-semibold"
                      value={selectedMinute}
                      onChange={(e) => setSelectedMinute(e.target.value)}
                   >
@@ -161,7 +161,7 @@ const TimePicker: React.FC<TimePickerProps> = ({ value, handleChange }) => {
                </div>
             </div>
             <button
-               className="px-4 py-1 bg-tertiary rounded-md mt-2 w-full"
+               className="flex items-center justify-center bg-tertiary rounded-md h-[40px] w-[50px] shrink-0 font-semibold"
                onClick={togglePeriod}
             >
                {selectedPeriod}
