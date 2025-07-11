@@ -88,14 +88,14 @@ const RunSummarySection = async () => {
    };
 
    return (
-      <div className="h-1/2 w-full flex flex-1  flex-col justify-between">
+      <div className="h-1/2 w-full flex flex-1  flex-col justify-between text-background">
          <div>
             <div className="flex justify-between p-3 items-center">
-               <RunningManLogo className="text-background" />
+               <RunningManLogo className="" />
                <LocationSelect user={user} />
             </div>
             <div className="pl-7 pr-9 pt-7">
-               <p className="text-[70px] text-background font-headline leading-18">
+               <p className="text-[70px] font-headline leading-18">
                   {runSummary.headline}
                </p>
                <p className="text-[23px] pt-1 w-4/5">{runSummary.detail}</p>

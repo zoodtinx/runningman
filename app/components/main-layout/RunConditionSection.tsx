@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import NiceSettings from "@/components/icons/Settings";
 import { RunConditionCard } from "@/components/main-layout/RunConditionCard";
 import { ScrollArea } from "@/components/primitives/ScrollArea";
 import { prisma } from "@/lib/prisma";
@@ -61,13 +62,13 @@ export const RunConditionSection = async () => {
       <div className="flex flex-col gap-3 w-full p-[12px] overflow-hidden h-full">
          <div className="flex justify-between shrink-0 text-primary px-1 items-center">
             <p className="font-headline font-bold">RUNNING CONDITIONS</p>
-            <div className="flex items-center gap-2">
-               <div className="w-fit text-primary rounded-full text-base font-medium opacity-30">
-                  <span>Last Updated: </span>
+            <div className="flex items-center gap-3">
+               <div className="w-fit text-primary rounded-full text-sm font-medium opacity-30">
+                  <span>Updated: </span>
                   <span>{updatedAt}</span>
                </div>
                <Link href="/dashboard/settings">
-                  <Settings className="size-5 cursor-pointer" />
+                  <NiceSettings className="size-5 cursor-pointer" />
                </Link>
             </div>
          </div>

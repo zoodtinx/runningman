@@ -1,6 +1,6 @@
 import { getDemoRoutes } from "@/api/demo/mock-data/demo-routes";
 import { getDemoRuns } from "@/api/demo/mock-data/demo-runs";
-import { demoUser } from "@/api/demo/mock-data/demo-user";
+import { demoUser, getDemoUser } from "@/api/demo/mock-data/demo-user";
 import { prisma } from "@/lib/prisma";
 
 export function createDemoSession() {
@@ -8,7 +8,7 @@ export function createDemoSession() {
       // Create a demo user
 
       const user = await tx.user.create({
-         data: demoUser,
+         data: getDemoUser(),
       });
 
       const demoRuns = getDemoRuns(user.id);

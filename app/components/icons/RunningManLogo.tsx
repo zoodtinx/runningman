@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const RunningManLogo = ({ className }: { className: string }) => (
+const RunningManLogo = ({ className }: { className?: string }) => (
    <svg
       xmlns="http://www.w3.org/2000/svg"
       width={255}

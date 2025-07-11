@@ -274,10 +274,9 @@ const NewRunBar = () => {
                      />
                   </div>
                   <div className="flex-1">
-                     <ControlledSelect
+                     <ControlledInput
                         fieldName="gear"
                         control={control}
-                        options={runTypeOptions}
                         label="Gear"
                         variant="dark"
                         className="font-bold"

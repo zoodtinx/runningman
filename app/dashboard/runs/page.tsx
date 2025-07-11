@@ -28,7 +28,7 @@ const RunsPage = async () => {
    return (
       <div className="grow overflow-hidden">
          <ScrollArea className="h-full">
-            <div className="px-[12px] flex flex-col gap-[6px] justify-between">
+            <div className="px-[12px] flex flex-col gap-[6px] justify-between pb-[500px]">
                <SessionProvider>
                   <NewRunBar />
                </SessionProvider>

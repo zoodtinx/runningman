@@ -1,12 +1,29 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from "@prisma/client";
 import { conditionPreference } from "@/lib/constants/default-values";
+import { createDemoSession } from "@/api/demo/create-demo-session";
 
 const prisma = new PrismaClient();
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-   providers: [Google],
+   providers: [
+      Google,
+      CredentialsProvider({
+         name: "demo",
+         credentials: {},
+         async authorize() {
+            const demoUser = await createDemoSession();
+
+            if (demoUser) {
+               console.log("demoUser", demoUser);
+               return demoUser.user; // returned user goes into token & session
+            }
+            return null;
+         },
+      }),
+   ],
    pages: {
       signIn: "/login",
    },

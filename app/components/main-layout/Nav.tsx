@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import UserSettings from "@/components/icons/UserCard";
 
 export default function Nav() {
    const pathname = usePathname();
@@ -36,10 +37,9 @@ export default function Nav() {
                SCHEDULE
             </Link>
          </ul>
-         <Link
-            href="/dashboard/settings"
-            className="w-[60px] h-[60px] bg-primary rounded-full shrink-0"
-         />
+         <Link href="/dashboard/settings" className="">
+            <UserSettings className="size-13 stroke-[1.4]" />
+         </Link>
       </nav>
    );
 }

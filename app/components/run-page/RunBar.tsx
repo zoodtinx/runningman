@@ -23,8 +23,6 @@ const RunBar = ({ runData }: { runData: Run }) => {
    const pace = runData.duration / distance;
    const formattedPace = formatPace(pace);
 
-   console.log("runData", runData);
-
    return (
       <div
          className={cn(

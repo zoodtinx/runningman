@@ -2,65 +2,47 @@ import { CheckCircle } from "iconoir-react";
 
 export const moodOptions = [
    {
-      value: "terrible",
+      value: "low-energy",
       label: (
          <div className="flex items-center gap-1">
-            <CheckCircle className="text-red-500" />
-            <span>Terrible</span>
+            <div className="w-3 h-3 rounded-full bg-orange-500" />
+            <span>Low Energy</span>
          </div>
       ),
    },
    {
-      value: "low",
+      value: "standard",
       label: (
          <div className="flex items-center gap-1">
-            <CheckCircle className="text-orange-500" />
-            <span>Low</span>
+            <div className="w-3 h-3 rounded-full bg-gray-500" />
+            <span>Neutral</span>
          </div>
       ),
    },
    {
-      value: "tired",
+      value: "flowing",
       label: (
          <div className="flex items-center gap-1">
-            <CheckCircle className="text-yellow-500" />
-            <span>Tired</span>
+            <div className="w-3 h-3 rounded-full bg-green-500" />
+            <span>Flowing</span>
          </div>
       ),
    },
    {
-      value: "okay",
+      value: "electrifying",
       label: (
          <div className="flex items-center gap-1">
-            <CheckCircle className="text-gray-500" />
-            <span>Okay</span>
+            <div className="w-3 h-3 rounded-full bg-blue-500" />
+            <span>Electrifying</span>
          </div>
       ),
    },
    {
-      value: "good",
+      value: "transcendent",
       label: (
          <div className="flex items-center gap-1">
-            <CheckCircle className="text-green-500" />
-            <span>Good</span>
-         </div>
-      ),
-   },
-   {
-      value: "great",
-      label: (
-         <div className="flex items-center gap-1">
-            <CheckCircle className="text-emerald-600" />
-            <span>Great</span>
-         </div>
-      ),
-   },
-   {
-      value: "energetic",
-      label: (
-         <div className="flex items-center gap-1">
-            <CheckCircle className="text-blue-500" />
-            <span>Energetic</span>
+            <div className="w-3 h-3 rounded-full bg-purple-600" />
+            <span>Transcendent</span>
          </div>
       ),
    },

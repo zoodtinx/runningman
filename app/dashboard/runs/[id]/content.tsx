@@ -210,10 +210,9 @@ const RunPageContent = ({ runData }: { runData: RunFindOneResponse }) => {
                         />
                      </div>
                      <div className="flex-1">
-                        <ControlledSelect
+                        <ControlledInput
                            fieldName="gear"
                            control={control}
-                           options={runTypeOptions}
                            label="Gear"
                            variant="light"
                            className="font-bold"

@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { ControlledInput } from "@/components/primitives/InputWithLabel";
 import { ControlledSelect } from "@/components/primitives/SelectWithLabel";
@@ -17,6 +17,7 @@ import Loader from "@/components/icons/Loader";
 import DragBoard, {
    DragBoardProps,
 } from "@/dashboard/settings/components/DNDBox";
+import { signOut } from "next-auth/react";
 
 const deleteButtonTexts = [
    "Delete Account",
@@ -68,6 +69,12 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
             setDeleteStep(0);
          }
       }
+   };
+
+   const handleSignout = (e: React.MouseEvent) => {
+      e.preventDefault();
+      console.log("signed out");
+      signOut();
    };
 
    return (
@@ -144,6 +151,13 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
          </div>
          <div className="flex justify-between">
             <div className="flex items-center gap-2">
+               <Button
+                  className="border w-[90px]"
+                  disabled={loading}
+                  onClick={handleSignout}
+               >
+                  Sign Out
+               </Button>
                <button
                   className="text-secondary px-2 cursor-pointer"
                   type="button"
