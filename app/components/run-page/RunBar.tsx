@@ -30,14 +30,14 @@ const RunBar = ({ runData }: { runData: Run }) => {
             "border border-transparent hover:border-primary transition-colors cursor-default"
          )}
       >
-         <div className="flex justify-between w-full items-baseline font-headline px-1">
+         <div className="flex justify-between items-baseline font-headline px-1">
             <div className="flex items-baseline gap-2 leading-9">
                <p className="text-[36px] font-bold">{runData.distance}</p>
                <p className="text-[22px]">{unit}</p>
             </div>
             <div className="flex gap-5">
                <span className="text-[30px]">{formattedPace}</span>
-               <span className="flex gap-2 items-baseline">
+               <span className="hidden md:flex gap-2 items-baseline">
                   <p className="text-[30px]">{runData.duration}</p>
                   <p className="text-[22px]">min</p>
                </span>
@@ -46,12 +46,6 @@ const RunBar = ({ runData }: { runData: Run }) => {
          <div className="flex justify-between items-center">
             <RunTypeBar runType={runData.runType} />
             <div className="flex gap-3 opacity-30">
-               {/* <span className="flex gap-[2px] items-center text-sm">
-                  <MapPin className="size-3" />
-                  <p className="line-clamp-1 max-w-[200px]">
-                     {runData.location}
-                  </p>
-               </span> */}
                <span className="text-sm">
                   {format(
                      new Date(runData.dateTime),

@@ -73,7 +73,10 @@
    display: inline-block;
 }
 
-@theme inline {
+@theme {
+   /* --breakpoint-*: initial; */
+   /* --breakpoint-sm: 0rem; */
+
    --color-background: #0d0d0d;
    --color-foreground: #2d2d2d;
    --color-primary: #ffffff;
@@ -86,13 +89,21 @@
    --color-theme-great: #b3f5ff;
    --color-theme-perfect: #9afce7;
 
-   --font-sans: var(--font-geist-sans);
-   --font-headline: var(--font-swiss-721-extended);
-
    --text-sm: 13px;
    --text-base: 16px;
    --text-md: 20px;
    --text-2xl: 57px;
+}
+
+@theme inline {
+   --font-sans: var(--font-geist-sans);
+   --font-headline: var(--font-swiss-721-extended);
+
+   --color-theme-bad: #fc3d3d;
+   --color-theme-okay: #ff7024;
+   --color-theme-good: #ffc665;
+   --color-theme-great: #b3f5ff;
+   --color-theme-perfect: #9afce7;
 
    --animate-shake: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
    --animate-slide: slide var(--logo-duration) var(--logo-ease) infinite;

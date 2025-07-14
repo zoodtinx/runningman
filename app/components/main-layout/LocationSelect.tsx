@@ -26,7 +26,7 @@ export const LocationSelect = ({ user }: { user: User }) => {
       <div className="flex gap-1 items-center">
          {isLoading && <Loader className="animate-spin size-4" />}
          <div className="flex gap-2 items-baseline">
-            <span className="text-sm pt-1">Location</span>
+            <span className="text-sm pt-1 md:block sm:hidden">Location</span>
             <div className="w-[110px]">
                <Select value={user.location || ""} onValueChange={handleSelect}>
                   <SelectTrigger

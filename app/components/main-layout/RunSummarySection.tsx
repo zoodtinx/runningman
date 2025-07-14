@@ -90,7 +90,7 @@ const RunSummarySection = async () => {
    return (
       <div className="h-1/2 w-full flex flex-1  flex-col justify-between text-background">
          <div>
-            <div className="flex justify-between p-3 items-center">
+            <div className="sm:hidden md:flex justify-between p-3 items-center">
                <RunningManLogo className="" />
                <LocationSelect user={user} />
             </div>

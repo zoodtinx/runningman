@@ -7,6 +7,7 @@ import { prisma } from "@/lib/prisma";
 import { ScrollArea } from "@/components/primitives/ScrollArea";
 import NewRunBar from "@/components/run-page/NewRunBar";
 import RunBar from "@/components/run-page/RunBar";
+import { cn } from "@/lib/utils";
 
 const RunsPage = async () => {
    const session = await auth();
@@ -40,7 +41,12 @@ const RunsPage = async () => {
    return (
       <div className="grow overflow-hidden">
          <ScrollArea className="h-full">
-            <div className="px-[12px] flex flex-col gap-[6px] justify-between pb-[500px]">
+            <div
+               className={cn(
+                  "px-2 pt-2 flex flex-col gap-[6px] justify-between pb-[500px]",
+                  "md:pt-0 md:px-[12px]"
+               )}
+            >
                <SessionProvider>
                   <NewRunBar routeOptions={routeOptions} />
                </SessionProvider>

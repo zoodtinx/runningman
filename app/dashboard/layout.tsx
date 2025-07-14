@@ -7,8 +7,16 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { cn } from "@/lib/utils";
 import { getRunSummary } from "@/lib/run-conditions/calculate-readiness";
+import RunningManLogo from "@/components/icons/RunningManLogo";
+import { LocationSelect } from "@/components/main-layout/LocationSelect";
 
-const Layout = async ({ children }: { children: React.ReactNode }) => {
+const Layout = async ({
+   children,
+   searchParams,
+}: {
+   children: React.ReactNode;
+   searchParams: { mode?: string };
+}) => {
    const session = await auth();
 
    if (!session?.user?.id) {
@@ -17,17 +25,32 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
 
    const userId = session.user.id;
 
-   const user = await prisma.user.findUnique({
-      where: {
-         id: userId,
-      },
-      include: {
-         schedules: {
-            orderBy: {
-               dayOfWeek: "asc",
-            },
-         },
-      },
+   // const user = await prisma.user.findUnique({
+   //    where: {
+   //       id: userId,
+   //    },
+   //    include: {
+   //       schedules: {
+   //          orderBy: {
+   //             dayOfWeek: "asc",
+   //          },
+   //       },
+   //    },
+   // });
+
+   const [user, conditions] = await prisma.$transaction(async (tx) => {
+      const user = await tx.user.findUnique({
+         where: { id: userId },
+         include: { schedules: { orderBy: { dayOfWeek: "asc" } } },
+      });
+      if (!user) return [null, []];
+
+      const conditions = await tx.runCondition.findMany({
+         where: { userId: "master", location: user.location ?? "bangkok" },
+         orderBy: { range: "desc" },
+      });
+
+      return [user, conditions];
    });
 
    if (!user) {
@@ -55,6 +78,8 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
       runConditions
    );
 
+   const mode = searchParams?.mode;
+
    return (
       <div
          className={cn(
@@ -66,15 +91,46 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
             runSummary.readinessScore === 5 && "bg-theme-perfect"
          )}
       >
-         <main className="w-[1440px] h-full flex items-center gap-4 p-4">
-            <section className="w-1/2 h-full flex flex-col gap-2">
+         <main
+            className={cn(
+               "w-full flex flex-col items-center gap-0 p-2 pb-0 pt-0", // base style
+               "md:h-full md:w-[1440px] md:flex-row md:p-4 md:pb-4 md:pt-4 md:gap-4"
+            )}
+         >
+            <div className="flex justify-between items-center text-background md:hidden w-full px-2 h-[45px] shrink-0">
+               <RunningManLogo className="w-[160px]" />
+               <span className="text-sm border rounded-full px-2 font-semibold">
+                  View Conditions
+               </span>
+            </div>
+            <section
+               className={cn(
+                  "h-full md:flex flex-col gap-2 hidden",
+                  "md:w-1/2 ",
+                  "sm:w-full sm:hidden"
+               )}
+            >
                <RunSummarySection />
-               <div className="h-1/2 w-full bg-foreground rounded-[23px]">
+               <div
+                  className={cn(
+                     "md:h-1/2 w-full bg-foreground rounded-[23px]",
+                     "sm:h-auto"
+                  )}
+               >
                   <RunConditionSection />
                </div>
             </section>
-            <section className="flex flex-col w-1/2 h-full bg-foreground rounded-[23px] text-primary relative overflow-clip">
-               <Nav />
+            <section
+               className={cn(
+                  cn(
+                     "flex flex-col w-full max-sm:w-full h-[calc(100%-45px)] bg-foreground rounded-[20px] rounded-bl-[0px] rounded-br-[0px] text-primary relative overflow-clip",
+                     "md:w-1/2 md:rounded-bl-[23px] md:rounded-br-[23px] md:rounded-[23px]"
+                  )
+               )}
+            >
+               <div className="hidden md:flex">
+                  <Nav />
+               </div>
                {children}
             </section>
          </main>
