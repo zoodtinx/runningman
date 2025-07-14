@@ -152,7 +152,13 @@ const NewRunBar = ({
       const route = await getRouteData(value);
 
       if (route) {
-         reset(route);
+         setValue("title", route.title!);
+         setValue("note", route.note!);
+         setValue("location", route.location!);
+         setValue("runType", route.runType!);
+         setValue("distance", route.distance!);
+         setValue("duration", route.duration!);
+         setValue("laps", route.laps!);
       }
    };
 

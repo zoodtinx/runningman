@@ -1,4 +1,3 @@
-import React from "react";
 import { PageProps } from "@/types/page.types";
 import ExportPageContent from "@/dashboard/runs/[id]/export/content";
 import { SessionProvider } from "next-auth/react";
@@ -22,6 +21,7 @@ const ExportPage = async ({ params }: PageProps) => {
          <div className="rounded-base h-full w-full bg-background p-[20px]">
             <SessionProvider>
                <ExportPageContent runData={runData} />
+               {/* <SampleExportCard /> */}
             </SessionProvider>
          </div>
       </div>
