@@ -103,8 +103,14 @@ export default function RunSummaryPanel({
    );
 }
 
-const HighlightedStats = ({ data }: { data: string[] }) => {
-   const iconClass = "stroke-[1.7px]";
+export const HighlightedStats = ({
+   data,
+   mode = "base",
+}: {
+   data: string[];
+   mode?: "base" | "mobile";
+}) => {
+   const iconClass = `stroke-[1.7px] ${mode === "mobile" && "size-5"}`;
 
    const icon: Record<string, JSX.Element> = {
       temperature: <TemperatureHigh className={iconClass} />,

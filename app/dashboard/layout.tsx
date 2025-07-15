@@ -8,7 +8,7 @@ import { auth } from "@/auth";
 import { cn } from "@/lib/utils";
 import { getRunSummary } from "@/lib/run-conditions/calculate-readiness";
 import RunningManLogo from "@/components/icons/RunningManLogo";
-import { LocationSelect } from "@/components/main-layout/LocationSelect";
+import ViewConditionButton from "@/components/main-layout/ViewConditionButton";
 
 const Layout = async ({
    children,
@@ -78,8 +78,6 @@ const Layout = async ({
       runConditions
    );
 
-   const mode = searchParams?.mode;
-
    return (
       <div
          className={cn(
@@ -93,15 +91,16 @@ const Layout = async ({
       >
          <main
             className={cn(
-               "w-full flex flex-col items-center gap-0 p-2 pb-0 pt-0", // base style
+               "w-full flex flex-col items-center gap-0 p-2 pb-0 pt-0",
                "md:h-full md:w-[1440px] md:flex-row md:p-4 md:pb-4 md:pt-4 md:gap-4"
             )}
          >
             <div className="flex justify-between items-center text-background md:hidden w-full px-2 h-[45px] shrink-0">
                <RunningManLogo className="w-[160px]" />
-               <span className="text-sm border rounded-full px-2 font-semibold">
-                  View Conditions
-               </span>
+               <ViewConditionButton
+                  conditionsData={conditions}
+                  userData={user}
+               />
             </div>
             <section
                className={cn(

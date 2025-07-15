@@ -9,10 +9,10 @@ type ReadinessResult = {
 
 const HEADLINES = [
    "THE VIBES SAYS REST",
-   "RUN, BUT MAKE IT LIGHT",
-   "DECENT DAY TO RUN",
-   "PERFECT RUNNING WEATHER",
-   "IT'S GLORIOUS OUT THERE",
+   "TAKE IT EASY MODE",
+   "NOT BAD FOR A RUN",
+   "IDEAL RUNNING WEATHER",
+   "PEAK RUNNING CONDITION",
 ];
 
 export function getRunSummary(

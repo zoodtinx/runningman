@@ -4,7 +4,6 @@ import { RunConditionCard } from "@/components/main-layout/RunConditionCard";
 import { ScrollArea } from "@/components/primitives/ScrollArea";
 import { prisma } from "@/lib/prisma";
 import { format } from "date-fns";
-import { Settings } from "iconoir-react";
 import Link from "next/link";
 
 export const RunConditionSection = async () => {
