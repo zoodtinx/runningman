@@ -27,7 +27,7 @@ const RunBar = ({ runData }: { runData: Run }) => {
       <div
          className={cn(
             "flex flex-col justify-between h-[84px] rounded-base bg-background p-[10px]",
-            "border border-transparent hover:border-primary transition-colors cursor-default"
+            "border-2 border-transparent hover:border-primary transition-colors cursor-default"
          )}
       >
          <div className="flex justify-between items-baseline font-headline px-1">

@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { getRunSummary } from "@/lib/run-conditions/calculate-readiness";
 import RunningManLogo from "@/components/icons/RunningManLogo";
 import ViewConditionButton from "@/components/main-layout/ViewConditionButton";
+import MobileNav from "@/components/main-layout/MobileNav";
 
 const Layout = async ({
    children,
@@ -122,7 +123,7 @@ const Layout = async ({
             <section
                className={cn(
                   cn(
-                     "flex flex-col w-full max-sm:w-full h-[calc(100%-45px)] bg-foreground rounded-[20px] rounded-bl-[0px] rounded-br-[0px] text-primary relative overflow-clip",
+                     "flex flex-col w-full max-sm:w-full h-[calc(100%-45px)] md:h-full bg-foreground rounded-[20px] rounded-bl-[0px] rounded-br-[0px] text-primary relative overflow-clip",
                      "md:w-1/2 md:rounded-bl-[23px] md:rounded-br-[23px] md:rounded-[23px]"
                   )
                )}
@@ -132,6 +133,7 @@ const Layout = async ({
                </div>
                {children}
             </section>
+            <MobileNav />
          </main>
       </div>
    );

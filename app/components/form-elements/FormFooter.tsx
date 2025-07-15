@@ -12,6 +12,7 @@ export const FormFooter = ({
             className="flex gap-1 items-center font-headline font-bold text-[15px] p-2 cursor-pointer"
             onClick={(e) => {
                e.preventDefault();
+               e.stopPropagation();
                handleDestructive();
             }}
          >

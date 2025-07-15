@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
-import { Button } from "@/components/primitives/Button";
 import RunningManLogo from "@/components/icons/RunningManLogo";
 import { NavArrowRight } from "iconoir-react";
 import { GoogleCircleSolid } from "iconoir-react";
@@ -24,19 +23,20 @@ const Page = () => {
    const signInWithProvider = async (provider: string) => {
       setisLoading(true);
       await signIn(provider);
-      setisLoading(false);
    };
 
    return (
       <div className="w-full h-screen flex justify-center items-center bg-background text-primary">
          <div className="flex flex-col items-center gap-2">
-            <RunningManLogo className="" />
-            <p className="text-center font-headline text-[50px] w-[500px] leading-13">
+            <RunningManLogo className="w-[180px] md:w-auto" />
+            <p className="text-center font-headline text-[40px] md:text-[50px] w-[350px] md:w-[500px] leading-10 md:leading-13">
                It&apos;s either good or great to run.
             </p>
             <div className="flex flex-col items-center gap-2 pt-5">
                <div className="flex items-center text-md font-medium cursor-pointer group">
-                  <span>Explore Features</span>
+                  <span className="text-[18px] md:text-base">
+                     Explore Features
+                  </span>
                   <NavArrowRight className="group-hover:animate-shake" />
                </div>
                <button

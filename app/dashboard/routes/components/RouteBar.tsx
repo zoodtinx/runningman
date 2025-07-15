@@ -21,14 +21,16 @@ const RouteBar = ({ routeData }: { routeData: Route }) => {
       <div
          className={cn(
             "flex flex-col gap-1 justify-between h-[100px] rounded-base bg-background p-[10px] pt-1 text-primary",
-            "border border-transparent hover:border-primary transition-colors cursor-default"
+            "border-2 border-transparent hover:border-primary transition-colors cursor-default"
          )}
       >
          <div className="flex items-starts justify-between">
-            <span className="text-md font-semibold">{routeData.title}</span>
+            <span className="text-md font-semibold line-clamp-1">
+               {routeData.title}
+            </span>
             {routeData.location && (
-               <div className="flex items-center gap-1 text-sm font-medium">
-                  <MapPin className="size-3" />
+               <div className="items-center gap-1 text-base font-medium hidden md:flex shrink-0">
+                  <MapPin className="size-4" />
                   <span>{routeData.location}</span>
                </div>
             )}

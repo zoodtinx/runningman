@@ -46,7 +46,7 @@ export const InputWithLabel = React.forwardRef<
                      variant === "white" && "text-primary bg-white",
                      inputSize === "md" && "text-md",
                      inputSize === "2xl" &&
-                        "font-headline text-2xl leading-0 font-light",
+                        "font-headline text-[35px] md:text-2xl leading-0 font-light",
                      className
                   )}
                />
@@ -55,7 +55,7 @@ export const InputWithLabel = React.forwardRef<
                      className={cn(
                         "text-sm text-tertiary pb-[1px] font-semibold",
                         inputSize === "2xl" &&
-                           "font-normal font-headline text-[27px]"
+                           "font-normal font-headline text-[20px] md:text-[27px]"
                      )}
                   >
                      {unit}

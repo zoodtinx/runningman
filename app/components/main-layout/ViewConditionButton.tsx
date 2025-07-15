@@ -26,7 +26,7 @@ const ViewConditionButton = ({
    const [isOpen, setIsOpen] = useState(false);
 
    const handleClick = () => {
-      setIsOpen(true);
+      setIsOpen((prev) => !prev);
    };
 
    const handleClose = () => {

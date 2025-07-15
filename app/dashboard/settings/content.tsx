@@ -18,6 +18,7 @@ import DragBoard, {
    DragBoardProps,
 } from "@/dashboard/settings/components/DNDBox";
 import { signOut } from "next-auth/react";
+import { cn } from "@/lib/utils";
 
 const deleteButtonTexts = [
    "Delete Account",
@@ -80,9 +81,12 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
    return (
       <form
          onSubmit={handleSubmit(onSubmit)}
-         className="flex flex-col justify-between h-full"
+         className={cn(
+            "flex flex-col justify-between h-full overflow-y-auto",
+            "pb-[200px] pt-1 md:pt-0 md:pb-0"
+         )}
       >
-         <div className="flex flex-col px-[10px]">
+         <div className="flex flex-col px-2 md:px-[10px]">
             <p className="text-[23px] font-semibold pb-2">User Profile</p>
             <ControlledInput
                control={control}
@@ -139,7 +143,7 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
                   />
                </div>
             </div>
-            <div className="pt-10">
+            <div className="pt-7 md:pt-10">
                <p className="text-[23px] font-semibold pb-2">
                   Run Condition Priority
                </p>
@@ -149,8 +153,8 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
                />
             </div>
          </div>
-         <div className="flex justify-between">
-            <div className="flex items-center gap-2">
+         <div className="flex justify-between px-2 md:px-0 pt-7 md:pt-0 items-start">
+            <div className="flex flex-col md:flex-row items-start gap-2">
                <Button
                   className="border w-[90px]"
                   disabled={loading}
@@ -159,7 +163,7 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
                   Sign Out
                </Button>
                <button
-                  className="text-secondary px-2 cursor-pointer"
+                  className="text-secondary text-sm md:text-base px-0 md:px-2 cursor-pointer"
                   type="button"
                   onClick={handleDeleteClick}
                   disabled={deleteLoading}
@@ -174,7 +178,7 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
                   )}
                </button>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 ">
                {loading && <Loader className="animate-spin" />}
                <Button
                   className="border w-[90px]"

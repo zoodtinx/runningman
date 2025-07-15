@@ -37,18 +37,22 @@ export const DayBar = ({
                {getDayOfWeek(dayOfWeek)}
             </div>
             <div className="border-r border-primary" />
-            <div className="pl-4 w-[170px]">
-               <SelectWithLabel
-                  options={routes}
-                  noSelectionPlaceholder="Create a route first"
-                  placeholder="Select Route"
-                  value={schedulesData.routeId || ""}
-                  onValueChange={handleRouteChange}
-               />
-            </div>
-            <div className="grow flex flex-col justify-between items-end p-1">
-               <div className="flex gap-[4px] leading-5 items-baseline font-headline text-primary">
-                  <span className="text-[25px] opacity-10">Rest Day</span>
+            <div className="flex flex-col md:flex-row grow">
+               <div className="pl-4 w-[170px]">
+                  <SelectWithLabel
+                     options={routes}
+                     noSelectionPlaceholder="Create a route first"
+                     placeholder="Select Route"
+                     value={schedulesData.routeId || ""}
+                     onValueChange={handleRouteChange}
+                  />
+               </div>
+               <div className="grow flex flex-col justify-end items-end p-1">
+                  <div className="flex gap-[4px] leading-5 items-baseline font-headline text-primary">
+                     <span className="md:text-[25px] opacity-10 text-[20px]">
+                        Rest Day
+                     </span>
+                  </div>
                </div>
             </div>
          </div>
@@ -61,7 +65,7 @@ export const DayBar = ({
             {getDayOfWeek(dayOfWeek)}
          </div>
          <div className="border-r border-primary" />
-         <div className="grow flex">
+         <div className="grow flex flex-col md:flex-row">
             <div className="flex pl-4 w-[170px]">
                <SelectWithLabel
                   options={routes}
@@ -69,20 +73,20 @@ export const DayBar = ({
                   value={schedulesData.routeId || ""}
                   onValueChange={handleRouteChange}
                />
+               <XmarkCircle
+                  onClick={handleDiscardRoute}
+                  className="size-5 text-primary opacity-15 shrink-0 mt-1 ml-1 hover:opacity-100 cursor-default transition-opacity"
+               />
             </div>
-            <XmarkCircle
-               onClick={handleDiscardRoute}
-               className="size-5 text-primary opacity-15 shrink-0 mt-1 ml-1 hover:opacity-100 cursor-default transition-opacity"
-            />
             <div className="grow flex flex-col justify-between items-end p-1">
-               <div className="flex gap-[4px] leading-8 items-baseline font-headline">
-                  <span className="text-[45px] font-semibold">
+               <div className="flex gap-[4px] leading-10 md:leading-8 items-baseline font-headline">
+                  <span className="md:text-[45px] text-[30px] font-semibold">
                      {route.distance ? route.distance : route.duration}
                   </span>
                   <span className="text-[22px]">min</span>
                </div>
                <div className="flex flex-col items-end gap-1">
-                  <p className="text-sm">{route.location}</p>
+                  <p className="hidden md:block text-sm">{route.location}</p>
                   <RunTypeBar runType={route.runType} />
                </div>
             </div>

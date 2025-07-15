@@ -163,7 +163,7 @@ const NewRunBar = ({
    };
 
    return (
-      <div className="relative h-fit flex w-full ">
+      <div className="relative h-fit flex w-full z-40">
          <div
             className={cn(
                "flex gap-2 items-center justify-center font-headline text-[25px] font-bold h-[84px] rounded-base bg-background cursor-pointer w-full",
@@ -185,15 +185,15 @@ const NewRunBar = ({
             )}
          >
             <div>
-               <div className="flex justify-between">
+               <div className="flex flex-col md:flex-row justify-between">
                   <div className="flex gap-[4px] text-background h-fit items-center shrink-0">
                      <PlusSquare className="size-6" />
                      <span className="font-headline font-semibold text-[26px]">
                         NEW RUN
                      </span>
                   </div>
-                  <div className="flex items-center gap-4">
-                     <div className="flex gap-2">
+                  <div className="flex items-center gap-4 pb-3 pt-1 md:pb-0 md:pt-0 justify-between">
+                     <div className="flex gap-2 shrink-0 w-fit">
                         <ControlledDatePicker
                            fieldName="dateTime"
                            control={control}
@@ -203,12 +203,12 @@ const NewRunBar = ({
                            fieldName="dateTime"
                         />
                      </div>
-                     <div className="w-[150px]">
+                     <div className="w-[120px] md:w-[150px]">
                         <SelectWithLabel
                            options={routeOptions}
                            onValueChange={handleRouteSelect}
                            value={selectedRoute}
-                           placeholder="Select from routes"
+                           placeholder="Select route"
                            className="text-background"
                         />
                         {/* <ControlledSelect
@@ -236,8 +236,8 @@ const NewRunBar = ({
                      placeholder="Name your run"
                      errorMessage="Please enter run title"
                   />
-                  <div className="flex justify-between">
-                     <div className="w-[200px]">
+                  <div className="flex gap-2 justify-between">
+                     <div className="w-[110px] md:w-[200px] shrink-0">
                         <ControlledInput
                            fieldName="distance"
                            control={control}
@@ -249,8 +249,8 @@ const NewRunBar = ({
                            mode="number"
                         />
                      </div>
-                     <div className="flex gap-5">
-                        <div className="w-[200px]">
+                     <div className="flex gap-3">
+                        <div className="w-[110px] md:w-[200px]">
                            <ControlledInput
                               fieldName="duration"
                               control={control}
@@ -272,16 +272,39 @@ const NewRunBar = ({
                            />
                         </div>
                      </div>
+                     {/* <div className="flex pt-3 md:pt-0 gap-5">
+                        <div className="w-[200px]">
+                           <ControlledInput
+                              fieldName="duration"
+                              control={control}
+                              label="Duration"
+                              variant="dark"
+                              inputSize="2xl"
+                              unit="min"
+                              mode="number"
+                           />
+                        </div>
+                        <div className="w-[50px]">
+                           <ControlledInput
+                              fieldName="laps"
+                              control={control}
+                              label="Laps"
+                              variant="dark"
+                              inputSize="2xl"
+                              mode="number"
+                           />
+                        </div>
+                     </div> */}
                   </div>
                   <div className="w-[245px] flex flex-col">
                      <p className="text-sm text-secondary">Pace</p>
-                     <p className="font-headline text-2xl leading-16 text-secondary h-[110px]">
+                     <p className="font-headline text-[35px] md:text-2xl leading-10 md:leading-16 text-secondary h-fit pb-2 md:pb-0 md:h-[110px]">
                         {pace}
                      </p>
                   </div>
                </div>
             </div>
-            <div className="flex flex-col gap-5 text-background">
+            <div className="flex flex-col gap-4 md:gap-5 text-background">
                <div className="flex-1">
                   <ControlledInput
                      fieldName="location"
@@ -292,30 +315,32 @@ const NewRunBar = ({
                      placeholder="Where did you run?"
                   />
                </div>
-               <div className="flex gap-5">
-                  <div className="flex-1">
-                     <ControlledSelect
-                        fieldName="runType"
-                        control={control}
-                        options={runTypeOptions}
-                        label="Run Type"
-                        variant="dark"
-                        className="font-bold"
-                        placeholder="Run Type"
-                        required={true}
-                        errorMessage="Please specify run type"
-                     />
-                  </div>
-                  <div className="flex-1">
-                     <ControlledSelect
-                        fieldName="mood"
-                        control={control}
-                        options={moodOptions}
-                        label="Mood"
-                        variant="dark"
-                        className="font-bold"
-                        placeholder="How do you feel?"
-                     />
+               <div className="flex flex-col md:flex-row gap-5">
+                  <div className="flex gap-4">
+                     <div className="flex-1">
+                        <ControlledSelect
+                           fieldName="runType"
+                           control={control}
+                           options={runTypeOptions}
+                           label="Run Type"
+                           variant="dark"
+                           className="font-bold"
+                           placeholder="Run Type"
+                           required={true}
+                           errorMessage="Please specify run type"
+                        />
+                     </div>
+                     <div className="flex-1">
+                        <ControlledSelect
+                           fieldName="mood"
+                           control={control}
+                           options={moodOptions}
+                           label="Mood"
+                           variant="dark"
+                           className="font-bold"
+                           placeholder="How do you feel?"
+                        />
+                     </div>
                   </div>
                   <div className="flex-1">
                      <ControlledInput

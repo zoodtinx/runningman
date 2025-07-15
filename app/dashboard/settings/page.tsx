@@ -13,7 +13,7 @@ const SettingsPage = async () => {
    });
 
    return (
-      <div className="grow overflow-hidden p-[20px] pt-0">
+      <div className="grow overflow-hidden px-2 pt-2 md:p-[20px] md:pt-0">
          <SettingsPageContent userData={user} />
       </div>
    );

@@ -10,7 +10,7 @@ export default function Nav() {
    const currentPage = pathname?.split("/").pop() || "";
 
    return (
-      <nav className="flex items-center pl-7 pr-5 h-24 font-headline text-xl text-primary justify-between shrink-0">
+      <nav className="flex w-full items-center pl-7 pr-5 h-24 font-headline text-xl text-primary justify-between shrink-0">
          <ul className="flex gap-6">
             <Link
                href="/dashboard/runs"

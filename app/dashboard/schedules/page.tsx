@@ -3,6 +3,7 @@ import { auth } from "@/auth";
 import { DayBar } from "@/dashboard/schedules/components/DayBar";
 import SchedulePageNavBar from "@/dashboard/schedules/components/SchedulePageNavBar";
 import { redirect } from "next/navigation";
+import { ScrollArea } from "@/components/primitives/ScrollArea";
 
 const SchedulePage = async ({
    searchParams,
@@ -51,13 +52,15 @@ const SchedulePage = async ({
 
    return (
       <div className="grow overflow-hidden">
-         <div className="px-[12px] flex flex-col gap-[6px] justify-between">
-            <SchedulePageNavBar
-               totalCount={totalCount}
-               userId={session.user!.id!}
-            />
-            {days}
-         </div>
+         <ScrollArea className="h-full">
+            <div className="pt-2 px-2 pb-[200px] md:pt-0 md:px-[12px] flex flex-col gap-[6px] justify-between">
+               <SchedulePageNavBar
+                  totalCount={totalCount}
+                  userId={session.user!.id!}
+               />
+               {days}
+            </div>
+         </ScrollArea>
       </div>
    );
 };

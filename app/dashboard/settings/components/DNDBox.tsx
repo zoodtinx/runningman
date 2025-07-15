@@ -113,7 +113,7 @@ export default function DragBoard({
                      <MoreVert className="size-5" />
                      <span className="font-medium">{activeItem.label}</span>
                   </div>
-                  <activeItem.icon className="size-5" />
+                  <activeItem.icon className="hidden md:block size-5" />
                </div>
             ) : null}
          </DragOverlay>
@@ -179,7 +179,7 @@ function Draggable({ item }: { item: Item }) {
             <MoreVert className="size-5" />
             <span className="font-medium">{item.label}</span>
          </div>
-         <item.icon className="size-5" />
+         <item.icon className="hidden md:block size-5" />
       </div>
    );
 }

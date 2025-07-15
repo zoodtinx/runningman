@@ -104,23 +104,23 @@ const RunPageContent = ({ runData }: { runData: RunFindOneResponse }) => {
    };
 
    return (
-      <div className="flex flex-col text-primary w-full h-full">
+      <div className="flex flex-col text-primary w-full h-full pb-[200px] md:pb-0 overflow-y-auto overflow-x-hidden">
          <RunPageBreadCrumb runData={runData} />
          <form
-            className="flex flex-col grow justify-between"
+            className="flex flex-col grow justify-between "
             onSubmit={handleSubmit(onSubmit)}
          >
             <div className="flex flex-col">
-               <div className="flex gap-[18px] pt-4 ">
+               <div className="flex gap-[18px] pt-4">
                   <div
                      onClick={handleShare}
                      className={cn(
-                        "flex flex-col items-center justify-center h-[290px] w-[290px] bg-foreground shrink-0 gap-3 cursor-pointer",
+                        "flex flex-col items-center justify-center h-[140px] md:h-[290px] aspect-square bg-background md:bg-foreground shrink-0 gap-3 cursor-pointer",
                         "hover:bg-primary hover:text-background transition-colors ease-in-out"
                      )}
                   >
                      <UnionAlt className="size-11" />
-                     <div className="font-headline font-bold">
+                     <div className="font-headline font-bold text-center md:text-base md:leading-normal leading-4 text-[13px]">
                         EXPORT FOR SOCIAL
                      </div>
                   </div>
@@ -157,7 +157,7 @@ const RunPageContent = ({ runData }: { runData: RunFindOneResponse }) => {
                         </div>
                         <div className="w-fit flex flex-col">
                            <p className="text-sm text-secondary">Pace</p>
-                           <p className="font-headline text-2xl leading-16 text-secondary h-[110px]">
+                           <p className="font-headline text-[35px] md:text-2xl leading-10 md:leading-16 text-secondary h-auto md:h-[110px]">
                               {pace}
                            </p>
                         </div>
@@ -229,24 +229,28 @@ const RunPageContent = ({ runData }: { runData: RunFindOneResponse }) => {
                   />
                </div>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between pt-[20px] md:pt-0">
                <div className="flex items-center gap-2">
-                  <Button onClick={handleBack} className="" type="button">
+                  <Button onClick={handleBack} className="border" type="button">
                      <NavArrowLeft className="size-5 w-[20px]" />
                   </Button>
                   <Button
                      onClick={handleDelete}
-                     className="w-[90px]"
+                     className="border w-[90px]"
                      type="button"
                   >
                      Delete
                   </Button>
                </div>
                <div className="flex items-center gap-2">
-                  <Button className="w-[90px]" type="submit">
+                  <Button className="border w-[90px]" type="submit">
                      Save
                   </Button>
-                  <Button onClick={handleShare} className="" type="button">
+                  <Button
+                     onClick={handleShare}
+                     className="border "
+                     type="button"
+                  >
                      <ShareAndroid className="size-4 w-[20px]" />
                   </Button>
                </div>

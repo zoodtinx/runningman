@@ -43,7 +43,7 @@ const RunsPage = async () => {
          <ScrollArea className="h-full">
             <div
                className={cn(
-                  "px-2 pt-2 flex flex-col gap-[6px] justify-between pb-[500px]",
+                  "px-2 pt-2 flex flex-col gap-[6px] justify-between pb-[200px]",
                   "md:pt-0 md:px-[12px]"
                )}
             >
