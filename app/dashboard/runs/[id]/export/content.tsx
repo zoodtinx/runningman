@@ -14,9 +14,13 @@ import {
 } from "@/components/primitives/Breadcrumb";
 import { RunFindOneResponse } from "@/lib/zod/runs.zod.schema";
 import { Download, NavArrowLeft, NavArrowRight } from "iconoir-react";
-import { exportRunCards } from "@/dashboard/runs/[id]/export/utils";
+import {
+   downloadBase64AsJPG,
+   exportRunCards,
+} from "@/dashboard/runs/[id]/export/utils";
 import { Run } from "@prisma/client";
 import Image from "next/image";
+import { format } from "date-fns";
 
 const ExportPageContent = ({ runData }: { runData: Run }) => {
    const [themeData, setThemeData] = useState<
@@ -39,20 +43,6 @@ const ExportPageContent = ({ runData }: { runData: Run }) => {
       <div className="flex flex-col text-primary w-full h-full">
          <ExportPageBreadCrumb runData={runData} />
          <EmblaCarousel themes={themeData} />
-         {/* {urlString && (
-            <Image
-               src={urlString}
-               alt="Exported Run Card"
-               width={500}
-               height={500}
-            />
-         )}
-         <button
-            onClick={handleDownload}
-            className="text-primary cursor-pointer"
-         >
-            Download
-         </button> */}
       </div>
    );
 };
@@ -90,6 +80,10 @@ export function EmblaCarousel({
    }, [emblaApi, onSelect]);
 
    const carousel = themes.map((theme) => {
+      const today = format(new Date(), "d MMMM");
+      const handleDownload = () => {
+         downloadBase64AsJPG(theme.dataUrl, `${theme.theme} ${today}.png`);
+      };
       return (
          <div
             key={theme.theme}
@@ -107,23 +101,24 @@ export function EmblaCarousel({
                   width={50}
                   height={50}
                   alt=""
-                  className="w-[280px] h-[280px] md:w-[400px] md:h-[400px]"
+                  className="w-[280px] h-[280px] md:w-[400px] md:h-[400px] shrink-0"
                />
-               {/* <div className="w-[280px] h-[280px] md:w-[400px] md:h-[400px] bg-zinc-900 mt-7"></div> */}
-               <Download className="mt-5" />
+               <div
+                  className="p-5 cursor-pointer hover:opacity-50"
+                  onClick={handleDownload}
+               >
+                  <Download className="" />
+               </div>
             </div>
          </div>
       );
    });
 
    return (
-      <div className="w-full h-full flex flex-col items-center justify-center">
+      <div className="w-full md:w-[620px] h-full flex flex-col items-center justify-center">
          <p className="font-headline text-[20px] font-bold">THEME</p>
          <div className="relative w-full h-fit md:h-[600px]">
-            <div
-               className="overflow-hidden h-full px-4 pb-[70px]"
-               ref={emblaRef}
-            >
+            <div className="overflow-hidden h-full pb-[70px]" ref={emblaRef}>
                <div className="flex h-full">{carousel}</div>
             </div>
 

@@ -3,7 +3,7 @@
 import { Run } from "@prisma/client";
 import ReactDOM from "react-dom/client";
 import SunriseSprint from "@/dashboard/runs/[id]/export/export-cards/SunriseSprint";
-import { toJpeg, toPng } from "html-to-image";
+import { toPng } from "html-to-image";
 
 const themes = [
    "morningRun",

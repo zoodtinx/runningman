@@ -1,5 +1,3 @@
-import { CheckCircle } from "iconoir-react";
-
 export const moodOptions = [
    {
       value: "low-energy",

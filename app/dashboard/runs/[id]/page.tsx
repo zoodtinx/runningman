@@ -28,7 +28,7 @@ const RunPageLayout = async ({ params }: PageProps) => {
             className={cn(
                "rounded-base h-full w-full",
                "bg-transparent p-1 pt-4",
-               "md:bg-background md:p-[20px] md:pt-4"
+               "md:bg-background md:p-[20px] md:pt-3"
             )}
          >
             <SessionProvider>

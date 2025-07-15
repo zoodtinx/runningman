@@ -17,7 +17,6 @@ export async function createScheduleItem(input: CreateScheduleItemDto) {
       throw new Error(
          "Invalid schedule item data: " + JSON.stringify(parsed.error.format())
       );
-      min;
    }
 
    await prisma.scheduleItem.create({

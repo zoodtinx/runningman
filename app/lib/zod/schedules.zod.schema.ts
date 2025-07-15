@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { nullableStringField, nullableNumberField } from "@/lib/zod/helper";
+import { nullableStringField } from "@/lib/zod/helper";
 import { routeSchema } from "@/lib/zod/routes.zod.schema";
 import { userSchema } from "@/lib/zod/user.zod.schema";
 

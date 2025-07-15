@@ -1,4 +1,5 @@
 import { nullableStringField } from "@/lib/zod/helper";
+import { scheduleItemSchema } from "@/lib/zod/schedules.zod.schema";
 import { z } from "zod";
 
 const conditionPriority = z.object({
@@ -31,6 +32,12 @@ export const userSchema = z.object({
    height: z.number().nullable().optional(),
    conditionPriority: conditionPriority,
 });
+
+export const userWithSchedulesSchema = userSchema.extend({
+   schedules: z.array(scheduleItemSchema).optional(),
+});
+
+export type UserWithSchedules = z.infer<typeof userWithSchedulesSchema>;
 
 export type ConditionPriority = z.infer<typeof conditionPriority>;
 

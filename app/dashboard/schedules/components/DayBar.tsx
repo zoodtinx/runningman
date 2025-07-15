@@ -5,8 +5,7 @@ import { SelectWithLabel } from "@/components/primitives/SelectWithLabel";
 import { editScheduleItem } from "@/dashboard/schedules/actions";
 import { cn } from "@/lib/utils";
 import { ScheduleItem } from "@/lib/zod/schedules.zod.schema";
-import { Xmark, XmarkCircle } from "iconoir-react";
-import { useState } from "react";
+import { XmarkCircle } from "iconoir-react";
 
 export const DayBar = ({
    schedulesData,

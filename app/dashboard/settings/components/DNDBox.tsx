@@ -19,8 +19,6 @@ import {
    Wind,
    Rain,
    AirplaneHelix,
-   DotsGrid3x3,
-   Flower,
    CheckCircle,
 } from "iconoir-react";
 import { ConditionPriority } from "@/lib/zod/user.zod.schema";

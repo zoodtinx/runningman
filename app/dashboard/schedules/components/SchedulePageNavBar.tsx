@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, Trash, Xmark } from "iconoir-react";
+import { Plus, Trash } from "iconoir-react";
 import { addWeek, removeWeek } from "@/dashboard/schedules/actions";
 import { useRouter, useSearchParams } from "next/navigation";
 

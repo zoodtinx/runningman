@@ -13,7 +13,6 @@ import MobileNav from "@/components/main-layout/MobileNav";
 
 const Layout = async ({
    children,
-   searchParams,
 }: {
    children: React.ReactNode;
    searchParams: { mode?: string };
@@ -25,19 +24,6 @@ const Layout = async ({
    }
 
    const userId = session.user.id;
-
-   // const user = await prisma.user.findUnique({
-   //    where: {
-   //       id: userId,
-   //    },
-   //    include: {
-   //       schedules: {
-   //          orderBy: {
-   //             dayOfWeek: "asc",
-   //          },
-   //       },
-   //    },
-   // });
 
    const [user, conditions] = await prisma.$transaction(async (tx) => {
       const user = await tx.user.findUnique({
@@ -106,7 +92,7 @@ const Layout = async ({
             <section
                className={cn(
                   "h-full md:flex flex-col gap-2 hidden",
-                  "md:w-1/2 ",
+                  "md:w-1/2 shrink-0",
                   "sm:w-full sm:hidden"
                )}
             >

@@ -23,13 +23,13 @@ import RunningManLogo from "@/components/icons/RunningManLogo";
 import React, { JSX } from "react";
 import { Calendar } from "iconoir-react";
 import { prisma } from "@/lib/prisma";
-import { auth } from "@/auth";
 import { getRunSummary } from "@/lib/run-conditions/calculate-readiness";
 import { LocationSelect } from "@/components/main-layout/LocationSelect";
-import { RunCondition, User } from "@prisma/client";
+import { RunCondition } from "@prisma/client";
+import { UserWithSchedules } from "@/lib/zod/user.zod.schema";
 
 interface RunSummarySectionMobileProps {
-   user: User;
+   user: UserWithSchedules;
    runConditions: RunCondition[];
 }
 
@@ -37,7 +37,7 @@ const RunSummarySectionMobile = ({
    user,
    runConditions,
 }: RunSummarySectionMobileProps) => {
-   let conditionPriority = user!.conditionPriority;
+   let conditionPriority: Record<string, any> = user!.conditionPriority;
    if (typeof conditionPriority === "string") {
       try {
          conditionPriority = JSON.parse(conditionPriority);
@@ -54,7 +54,7 @@ const RunSummarySectionMobile = ({
    const scheduledRun = async () => {
       const todayIndex = new Date().getDay();
 
-      if (!user?.schedules[todayIndex].routeId) {
+      if (!user?.schedules![todayIndex].routeId) {
          return "No Run Scheduled";
       }
 

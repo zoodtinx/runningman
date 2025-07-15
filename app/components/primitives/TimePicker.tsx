@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../primitives/Popover";
 import { setHours, setMinutes, format } from "date-fns";
-import { Xmark as XIcon } from "iconoir-react";
 import { Controller, Control, Path, FieldValues } from "react-hook-form";
 
 type ControlledTimePickerProps<T extends FieldValues> = {
@@ -74,7 +73,7 @@ const TimePicker: React.FC<TimePickerProps> = ({ value, handleChange }) => {
       setSelectedHour(hour);
       setSelectedMinute(minute);
       setSelectedPeriod(period);
-   }, []);
+   }, [dateObject, value]);
 
    useEffect(() => {
       if (!value || !value.includes("T")) return;
