@@ -102,7 +102,7 @@ const RoutePageContent = ({
       <div className="flex flex-col text-primary w-full h-full">
          <RoutePageBreadCrumb routeData={routeData} />
          <form
-            className="flex flex-col grow justify-between"
+            className="flex flex-col grow justify-start gap-5 md:gap-0 md:justify-between"
             onSubmit={handleSubmit(onSubmit)}
          >
             <div className="flex flex-col pt-3">
@@ -117,9 +117,9 @@ const RoutePageContent = ({
                   placeholder="Name your route"
                   errorMessage="Please enter route title"
                />
-               <div className="flex gap-3 pt-6">
-                  <div className="h-full p-1 w-[130px]">
-                     <div className="h-full bg-foreground rounded-base p-2 cursor-default flex flex-col transition-colors duration-200">
+               <div className="flex gap-3 pt-4 md:pt-6">
+                  <div className="h-full md:p-1 w-[130px]">
+                     <div className="h-full bg-background md:bg-foreground rounded-base p-2 cursor-default flex flex-col transition-colors duration-200 gap-1">
                         <button
                            type="button"
                            className={`flex items-center px-2 font-semibold h-1/2 w-full rounded-sm transition-colors duration-200 ${
@@ -147,7 +147,7 @@ const RoutePageContent = ({
                   <div className="flex justify-between gap-3 grow">
                      {mode === "distance" ? (
                         <>
-                           <div className="w-[250px]">
+                           <div className="md:w-[250px]">
                               <ControlledInput
                                  fieldName="distance"
                                  control={control}
@@ -175,7 +175,7 @@ const RoutePageContent = ({
                         </>
                      ) : (
                         <>
-                           <div className="w-[250px]">
+                           <div className="md:w-[250px]">
                               <ControlledInput
                                  fieldName="duration"
                                  control={control}
@@ -191,7 +191,7 @@ const RoutePageContent = ({
                      )}
                   </div>
                </div>
-               <div className="flex flex-col gap-4 pt-6">
+               <div className="flex flex-col gap-4 pt-2 md:pt-6">
                   <ControlledInput
                      fieldName="location"
                      control={control}
@@ -228,19 +228,26 @@ const RoutePageContent = ({
             </div>
             <div className="flex justify-between">
                <div className="flex items-center gap-2">
-                  <Button onClick={handleBack} className="" type="button">
+                  <Button
+                     onClick={handleBack}
+                     className="border border-primary"
+                     type="button"
+                  >
                      <NavArrowLeft className="size-5 w-[20px]" />
                   </Button>
                   <Button
                      onClick={handleDelete}
-                     className="w-[90px]"
+                     className="w-[90px] border border-primary"
                      type="button"
                   >
                      Delete
                   </Button>
                </div>
                <div className="flex items-center gap-2">
-                  <Button className="w-[90px]" type="submit">
+                  <Button
+                     className="w-[90px] border border-primary"
+                     type="submit"
+                  >
                      Save
                   </Button>
                </div>

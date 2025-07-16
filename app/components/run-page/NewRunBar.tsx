@@ -163,7 +163,7 @@ const NewRunBar = ({
    };
 
    return (
-      <div className="relative h-fit flex w-full z-40">
+      <div className="relative h-fit flex w-full">
          <div
             className={cn(
                "flex gap-2 items-center justify-center font-headline text-[25px] font-bold h-[84px] rounded-base bg-background cursor-pointer w-full",

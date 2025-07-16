@@ -30,7 +30,9 @@ const Page = () => {
          <div className="flex flex-col items-center gap-2">
             <RunningManLogo className="w-[180px] md:w-auto" />
             <p className="text-center font-headline text-[40px] md:text-[50px] w-[350px] md:w-[500px] leading-10 md:leading-13">
-               It&apos;s either good or great to run.
+               {/* It&apos;s either good or great to run. */}
+               No such thing as a bad run
+               {/* Every run is a journey. */}
             </p>
             <div className="flex flex-col items-center gap-2 pt-5">
                <div className="flex items-center text-md font-medium cursor-pointer group">

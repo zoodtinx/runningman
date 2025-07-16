@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { NavArrowUpSolid } from "iconoir-react";
+import { Menu } from "iconoir-react";
 import { useState, useRef, useEffect } from "react";
 
 export default function MobileNav() {
@@ -33,22 +33,31 @@ export default function MobileNav() {
    ];
 
    return (
-      <div className="absolute bottom-5 w-full flex justify-center z-20 md:hidden">
+      <div
+         className="absolute bottom-5 w-full flex justify-center z-20 md:hidden"
+         onClick={(e) => {
+            e.stopPropagation();
+         }}
+      >
          <div
             ref={navRef}
             onClick={() => setOpen(!open)}
             className={cn(
-               "flex items-center bg-gray-300 rounded-full h-[37px] transition-[width] duration-200 overflow-hidden",
-               open ? "w-[320px]" : "w-[37px]"
+               "flex items-center bg-primary rounded-full h-[50px] transition-all duration-200 overflow-hidden shadow-md",
+               open ? "w-[340px] h-[37px]" : "w-[50px]"
             )}
          >
-            {!open && <NavArrowUpSolid className="mx-auto size-6" />}
+            {!open && <Menu className="mx-auto size-7 stroke-[2.5px]" />}
             {open && (
                <ul className="flex w-full justify-between font-semibold text-sm px-4">
                   {nav.map(({ href, label, key }) => (
                      <Link
                         key={key}
                         href={href}
+                        onClick={(e) => {
+                           e.stopPropagation();
+                           setOpen(false);
+                        }}
                         className={cn(
                            current === key ? "font-bold" : "font-medium"
                         )}

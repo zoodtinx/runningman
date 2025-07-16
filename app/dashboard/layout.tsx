@@ -78,11 +78,11 @@ const Layout = async ({
       >
          <main
             className={cn(
-               "w-full flex flex-col items-center gap-0 p-2 pb-0 pt-0",
+               "w-full flex flex-col items-center gap-0 p-2 pb-0 pt-0 ",
                "md:h-full md:w-[1440px] md:flex-row md:p-4 md:pb-4 md:pt-4 md:gap-4"
             )}
          >
-            <div className="flex justify-between items-center text-background md:hidden w-full px-2 h-[45px] shrink-0">
+            <div className="flex justify-between items-center text-background md:hidden w-full px-2 h-[45px] shrink-0 z-10">
                <RunningManLogo className="w-[160px]" />
                <ViewConditionButton
                   conditionsData={conditions}

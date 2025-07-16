@@ -39,7 +39,7 @@ export const SelectWithLabel = React.forwardRef<
       ref
    ) => {
       return (
-         <div className="group w-full z-20">
+         <div className="group w-full">
             {label && <p className={cn("text-sm text-secondary")}>{label}</p>}
             <div className="flex w-full items-end">
                <Select

@@ -110,7 +110,7 @@ export const HighlightedStats = ({
    data: string[];
    mode?: "base" | "mobile";
 }) => {
-   const iconClass = `stroke-[1.7px] ${mode === "mobile" && "size-4"}`;
+   const iconClass = `stroke-[1.7px] ${mode === "mobile" && "size-6"}`;
 
    const icon: Record<string, JSX.Element> = {
       temperature: <TemperatureHigh className={iconClass} />,
