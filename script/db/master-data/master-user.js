@@ -9,22 +9,21 @@ export const masterUser = {
    theme: "speed",
    location: "bangkok",
    conditionPriority: {
+      "sunrise-time": 0,
+      "sunset-time": 0,
+
       cloudiness: 1,
-      "sunset-time": 1,
-      "sunrise-time": 1,
+      visibility: 1,
+      "wind-speed": 1,
 
-      "feels-like": 2,
       "heat-index": 2,
-      visibility: 2,
-      "wind-speed": 2,
-      pollen: 2,
+      "uv-index": 2,
+      "rain-chance": 2,
+      aqi: 2,
 
+      "feels-like": 3,
       temperature: 3,
       humidity: 3,
-      "uv-index": 3,
-      "rain-chance": 3,
-      aqi: 3,
-      "pm2.5": 3,
    },
    notificationEnabled: true,
 };

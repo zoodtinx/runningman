@@ -26,7 +26,7 @@ type CreateRunDtoWithPace = CreateRunDto & { pace?: string };
 const NewRunBar = ({
    routeOptions,
 }: {
-   routeOptions: { value: string; label: ReactNode };
+   routeOptions: { value: string; label: ReactNode }[];
 }) => {
    const [selectedRoute, setSelectedRoute] = useState("");
    const [mode, setMode] = useState<"base" | "add">("base");

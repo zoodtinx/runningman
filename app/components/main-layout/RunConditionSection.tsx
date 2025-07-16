@@ -53,7 +53,7 @@ export const RunConditionSection = async () => {
    }
 
    const updatedAt = format(
-      conditionsData[0].updatedAt,
+      conditionsData[0]?.updatedAt,
       "hh.mm a, d MMM"
    ).toUpperCase();
 

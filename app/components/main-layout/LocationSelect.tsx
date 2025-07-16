@@ -11,9 +11,9 @@ import { cn } from "@/lib/utils";
 import { changeLocation } from "@/dashboard/actions";
 import { useState } from "react";
 import Loader from "@/components/icons/Loader";
-import { User } from "@prisma/client";
+import { UserWithSchedules } from "@/lib/zod/user.zod.schema";
 
-export const LocationSelect = ({ user }: { user: User }) => {
+export const LocationSelect = ({ user }: { user: UserWithSchedules }) => {
    const [isLoading, setIsLoading] = useState(false);
 
    const handleSelect = async (value: string) => {

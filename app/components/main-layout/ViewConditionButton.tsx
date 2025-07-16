@@ -25,6 +25,10 @@ const ViewConditionButton = ({
    // const router = useRouter();
    const [isOpen, setIsOpen] = useState(false);
 
+   if (!userData || !conditionsData) {
+      return;
+   }
+
    const handleClick = () => {
       setIsOpen((prev) => !prev);
    };

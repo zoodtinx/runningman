@@ -6,13 +6,14 @@ import { ScrollArea } from "@/components/primitives/ScrollArea";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { RunCondition } from "@prisma/client";
 
-type RunCondition = {
-   id: string;
-   updatedAt: string; // not used here, only passed as `updatedAt` prop
-   range: number;
-   [key: string]: any; // for additional fields used by RunConditionCard
-};
+// type RunCondition = {
+//    id: string;
+//    updatedAt: string; // not used here, only passed as `updatedAt` prop
+//    range: number;
+//    [key: string]: any; // for additional fields used by RunConditionCard
+// };
 
 type RunConditionSectionClientProps = {
    statChunks: RunCondition[][];
@@ -52,7 +53,7 @@ export default function RunConditionContent({
             <div className="flex flex-col gap-2 pb-[100px]">
                {statChunks.map((pair, idx) => (
                   <div key={idx} className="flex gap-2">
-                     {pair.map((stat) => (
+                     {pair.map((stat: RunCondition) => (
                         <RunConditionCard key={stat.id} statData={stat} />
                      ))}
                   </div>

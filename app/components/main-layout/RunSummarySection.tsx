@@ -1,4 +1,3 @@
-// layout.tsx (server)
 import {
    TemperatureHigh,
    Droplet,
@@ -92,7 +91,7 @@ const RunSummarySection = async () => {
          <div>
             <div className="sm:hidden md:flex justify-between p-3 items-center">
                <RunningManLogo className="" />
-               <LocationSelect user={user} />
+               <LocationSelect user={user as any} />
             </div>
             <div className="pl-7 pr-9 pt-7">
                <p className="text-[70px] font-headline leading-18">

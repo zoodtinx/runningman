@@ -5,11 +5,7 @@ import SchedulePageNavBar from "@/dashboard/schedules/components/SchedulePageNav
 import { redirect } from "next/navigation";
 import { ScrollArea } from "@/components/primitives/ScrollArea";
 
-const SchedulePage = async ({
-   searchParams,
-}: {
-   searchParams: { page?: string };
-}) => {
+const SchedulePage = async ({ searchParams }: any) => {
    const session = await auth();
    if (!session?.user) {
       return;
@@ -47,7 +43,7 @@ const SchedulePage = async ({
    }));
 
    const days = schedules.map((day) => (
-      <DayBar schedulesData={day} key={day.id} routes={routeOptions} />
+      <DayBar schedulesData={day as any} key={day.id} routes={routeOptions} />
    ));
 
    return (

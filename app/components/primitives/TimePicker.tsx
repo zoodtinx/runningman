@@ -73,7 +73,7 @@ const TimePicker: React.FC<TimePickerProps> = ({ value, handleChange }) => {
       setSelectedHour(hour);
       setSelectedMinute(minute);
       setSelectedPeriod(period);
-   }, [dateObject, value]);
+   }, []);
 
    useEffect(() => {
       if (!value || !value.includes("T")) return;
