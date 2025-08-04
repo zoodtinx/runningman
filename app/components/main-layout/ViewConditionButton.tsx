@@ -9,7 +9,8 @@ import { RunCondition, User } from "@prisma/client";
 import { format } from "date-fns";
 import { HighlightedStats } from "@/components/main-layout/RunSummaryPanel";
 import NiceSettings from "@/components/icons/Settings";
-import { ControlSlider, Link } from "iconoir-react";
+import { ControlSlider } from "iconoir-react";
+import Link from "next/link";
 
 interface ViewConditionButtonProps {
    userData: User;
@@ -57,7 +58,7 @@ const ViewConditionButton = ({
    if (conditionIsOpen === "open") {
       return (
          <div
-            className={`absolute flex flex-col top-[44px] h-[calc(100%-44px)] inset-0 w-full z-10 px-2 ${getBgColorClass()}`}
+            className={`absolute flex flex-col top-[44px] h-[calc(100%-45px)] inset-0 w-full z-10 px-2 ${getBgColorClass()}`}
          >
             <div
                className={cn(
@@ -87,7 +88,7 @@ const ViewConditionButton = ({
                   <div className="flex justify-between w-full items-center gap-3">
                      <span>Updated: {updatedAt}</span>
                      <Link href="/dashboard/settings">
-                        <ControlSlider className="size-5 cursor-pointer" />
+                        <NiceSettings className="size-5 cursor-pointer" />
                      </Link>
                   </div>
                </div>

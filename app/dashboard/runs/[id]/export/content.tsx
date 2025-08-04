@@ -36,7 +36,20 @@ const ExportPageContent = ({ runData }: { runData: Run }) => {
    useEffect(() => {
       (async () => {
          const result = await exportRunCards(runData);
-         setThemeData(result ?? []);
+         const mockArray = new Array(2);
+         const mockThemes = [
+            {
+               theme: "",
+               dataUrl: "",
+               transparent: false,
+            },
+            {
+               theme: " ",
+               dataUrl: " ",
+               transparent: true,
+            },
+         ];
+         setThemeData(result || mockThemes);
       })();
    }, [runData]);
 
@@ -62,8 +75,8 @@ export function EmblaCarousel({
       containScroll: "trimSnaps",
       align: "center",
    });
-   const [canScrollPrev, setCanScrollPrev] = useState(false);
-   const [canScrollNext, setCanScrollNext] = useState(false);
+   const [canScrollPrev, setCanScrollPrev] = useState(true);
+   const [canScrollNext, setCanScrollNext] = useState(true);
 
    const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
    const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
@@ -76,8 +89,10 @@ export function EmblaCarousel({
 
    useEffect(() => {
       if (!emblaApi) return;
-      onSelect();
+      emblaApi.on("init", onSelect); // Embla v7+
+      emblaApi.on("reInit", onSelect); // If you're rebuilding embla
       emblaApi.on("select", onSelect);
+      onSelect();
    }, [emblaApi, onSelect]);
 
    const carousel = themes.map((theme) => {
@@ -91,28 +106,26 @@ export function EmblaCarousel({
             className={cn(
                "flex-shrink-0 px-4 text-center text-white text-xl rounded-lg mx-2 w-[400px]",
                "md:w-full",
-               "lg:w-[70%]"
+               "lg:w-full"
             )}
          >
             <div className="flex flex-col grow items-center">
-               <div className="flex flex-col h-[90px]">
+               <div className="flex flex-col h-[82px] md:h-[90px]">
                   <p className="font-headline text-[30px]">{theme.theme}</p>
                   {theme.transparent && (
                      <p className="text-[18px] opacity-40">Transparent</p>
                   )}
                </div>
-               <Image
-                  src={theme.dataUrl}
-                  width={50}
-                  height={50}
-                  alt=""
-                  className={cn(
-                     "w-[280px] h-[280px] shrink-0",
-                     "md:w-[400px] md:h-[400px]"
-                  )}
-               />
+               <div className="relative w-[400px] h-[400px] md:w-[400px]">
+                  <Image
+                     src={theme.dataUrl}
+                     alt=""
+                     fill
+                     className="object-contain"
+                  />
+               </div>
                <div
-                  className="p-5 cursor-pointer hover:opacity-50"
+                  className="p-5 mt-10 cursor-pointer hover:opacity-50"
                   onClick={handleDownload}
                >
                   <Download className="" />
@@ -125,8 +138,8 @@ export function EmblaCarousel({
    return (
       <div className="w-full lg:w-[620px] h-full flex flex-col items-center justify-center">
          <p className="font-headline text-[20px] font-bold">THEME</p>
-         <div className="relative w-full h-fit md:h-[600px]">
-            <div className="overflow-hidden h-full pb-[70px]" ref={emblaRef}>
+         <div className="relative w-full h-auto md:h-[600px]">
+            <div className="overflow-hidden h-full md:pb-[70px]" ref={emblaRef}>
                <div className="flex h-full">{carousel}</div>
             </div>
 

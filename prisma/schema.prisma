@@ -38,7 +38,7 @@ model Run {
   id        String   @id @default(uuid())
   title     String
   distance  Float
-  duration  Int
+  duration  Float
   laps      Int
   location  String?
   runType   String

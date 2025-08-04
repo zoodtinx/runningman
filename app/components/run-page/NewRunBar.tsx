@@ -237,7 +237,7 @@ const NewRunBar = ({
                      errorMessage="Please enter run title"
                   />
                   <div className="flex gap-2 justify-between">
-                     <div className="w-[110px] md:w-[200px] shrink-0">
+                     <div className="flex-1 md:w-[200px] shrink-0">
                         <ControlledInput
                            fieldName="distance"
                            control={control}
@@ -249,8 +249,29 @@ const NewRunBar = ({
                            mode="number"
                         />
                      </div>
-                     <div className="flex gap-3">
-                        <div className="w-[110px] md:w-[200px]">
+                     <div className="flex-1 md:w-[200px]">
+                        <ControlledInput
+                           fieldName="duration"
+                           control={control}
+                           label="Duration"
+                           variant="dark"
+                           inputSize="2xl"
+                           unit="min"
+                           mode="number"
+                        />
+                     </div>
+                     <div className="w-[50px]">
+                        <ControlledInput
+                           fieldName="laps"
+                           control={control}
+                           label="Laps"
+                           variant="dark"
+                           inputSize="2xl"
+                           mode="number"
+                        />
+                     </div>
+                     {/* <div className="flex flex-1 gap-3">
+                        <div className="flex-1 md:w-[200px]">
                            <ControlledInput
                               fieldName="duration"
                               control={control}
@@ -271,7 +292,7 @@ const NewRunBar = ({
                               mode="number"
                            />
                         </div>
-                     </div>
+                     </div> */}
                      {/* <div className="flex pt-3 md:pt-0 gap-5">
                         <div className="w-[200px]">
                            <ControlledInput

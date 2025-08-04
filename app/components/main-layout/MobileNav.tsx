@@ -17,8 +17,6 @@ import {
    DropdownMenu,
    DropdownMenuContent,
    DropdownMenuItem,
-   DropdownMenuLabel,
-   DropdownMenuSeparator,
    DropdownMenuTrigger,
 } from "@/components/primitives/DropdownMenu";
 
@@ -59,7 +57,7 @@ export default function MobileNav() {
          <DropdownMenu>
             <DropdownMenuTrigger>
                <div className="aspect-square bg-white rounded-full p-2 shadow-md">
-                  <Menu className="mx-auto size-5 stroke-[2.5px]" />
+                  <Menu className="mx-auto size-5 md:size-7 stroke-[2.5px]" />
                </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-white border-transparent rounded-xl">

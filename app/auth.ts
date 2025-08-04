@@ -92,7 +92,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       async redirect({ url, baseUrl }) {
          console.log("url", url);
          if (url && url.includes("/login")) {
-            return `${baseUrl}/dashboard`;
+            return `${baseUrl}/dashboard/runs?condition=open`;
          }
          return url.startsWith(baseUrl) ? url : baseUrl;
       },

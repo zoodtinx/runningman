@@ -4,6 +4,13 @@ import { Run } from "@prisma/client";
 import ReactDOM from "react-dom/client";
 import SunriseSprint from "@/dashboard/runs/[id]/export/export-cards/SunriseSprint";
 import { toPng } from "html-to-image";
+import {
+   MorningRun,
+   Dopaminization,
+   FlowState,
+   FlyingSprint,
+   Zone4,
+} from "@/dashboard/runs/[id]/export/export-cards/Templates";
 
 const themes = [
    "morningRun",
@@ -21,8 +28,27 @@ async function renderTheme(theme: (typeof themes)[number], runData: Run) {
 
    const root = ReactDOM.createRoot(holder);
 
-   // For now, always render SunriseSprint, later switch by theme
-   root.render(<SunriseSprint runData={runData} />);
+   // swutchtheme
+   switch (theme) {
+      case "morningRun":
+         root.render(<MorningRun runData={runData} />);
+         break;
+      case "flowState":
+         root.render(<FlowState runData={runData} />);
+         break;
+      case "dopaminization":
+         root.render(<Dopaminization runData={runData} />);
+         break;
+      case "zone4":
+         root.render(<Zone4 runData={runData} />);
+         break;
+      case "flyingSprint":
+         root.render(<FlyingSprint runData={runData} />);
+         break;
+      default:
+         root.render(<MorningRun runData={runData} />);
+         break;
+   }
 
    await document.fonts.ready;
    await new Promise((r) => setTimeout(r, 50));
