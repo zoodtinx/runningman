@@ -135,7 +135,7 @@ export const HighlightedStats = ({
    );
 
    return (
-      <div className="flex gap-[5px] md:flex sm:hidden">
+      <div className="flex gap-[5px]">
          {icons}
          <Check className={iconClass} />
          {/* {isOk ? (

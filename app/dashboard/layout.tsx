@@ -1,5 +1,5 @@
 // layout.tsx (server)
-import React from "react";
+import React, { Suspense } from "react";
 import Nav from "@/components/main-layout/Nav";
 import { RunConditionSection } from "@/components/main-layout/RunConditionSection";
 import RunSummarySection from "@/components/main-layout/RunSummarySection";
@@ -78,11 +78,12 @@ const Layout = async ({
       >
          <main
             className={cn(
-               "w-full flex flex-col items-center gap-0 p-2 pb-0 pt-0 ",
-               "md:h-full md:w-[1440px] md:flex-row md:p-4 md:pb-4 md:pt-4 md:gap-4"
+               "w-full flex flex-col items-center gap-0 p-2 pb-0 pt-0",
+               "lg:p-2 lg:h-full lg:w-[1440px] lg:flex-row lg:gap-2",
+               "xl:h-full xl:w-[1440px] xl:flex-row xl:p-4 xl:pb-4 xl:pt-4 xl:gap-4"
             )}
          >
-            <div className="flex justify-between items-center text-background md:hidden w-full px-2 h-[45px] shrink-0 z-10">
+            <div className="flex justify-between items-center text-background lg:hidden w-full px-2 h-[45px] shrink-0 z-50">
                <RunningManLogo className="w-[160px]" />
                <ViewConditionButton
                   conditionsData={conditions}
@@ -91,16 +92,18 @@ const Layout = async ({
             </div>
             <section
                className={cn(
-                  "h-full md:flex flex-col gap-2 hidden",
-                  "md:w-1/2 shrink-0",
-                  "sm:w-full sm:hidden"
+                  "h-full hidden",
+                  "hidden w-full",
+                  "lg:flex lg:flex-col lg:gap-2 lg:w-1/2 lg:shrink-0"
                )}
             >
                <RunSummarySection />
                <div
                   className={cn(
-                     "md:h-1/2 w-full bg-foreground rounded-[23px]",
-                     "sm:h-auto"
+                     "w-full bg-foreground rounded-[23px]",
+                     "sm:h-auto",
+                     "lg:h-1/2 lg:rounded-[15px]",
+                     "xl:rounded-[23px]"
                   )}
                >
                   <RunConditionSection />
@@ -108,19 +111,20 @@ const Layout = async ({
             </section>
             <section
                className={cn(
-                  cn(
-                     "flex flex-col w-full max-sm:w-full h-[calc(100%-45px)] md:h-full bg-foreground rounded-[20px] rounded-bl-[0px] rounded-br-[0px] text-primary relative overflow-clip",
-                     "md:w-1/2 md:rounded-bl-[23px] md:rounded-br-[23px] md:rounded-[23px]"
-                  )
+                  "flex flex-col w-full max-sm:w-full h-[calc(100%-45px)] bg-foreground rounded-[20px] rounded-bl-[0px] rounded-br-[0px] text-primary relative overflow-clip",
+                  "lg:h-full lg:w-1/2 lg:rounded-[15px] lg:rounded-bl-[23px] lg:rounded-br-[23px]",
+                  "rounded-[23px]"
                )}
             >
-               <div className="hidden md:flex">
+               <div className="hidden lg:flex">
                   <Nav />
                </div>
                {children}
             </section>
-            <MobileNav />
          </main>
+         <Suspense>
+            <MobileNav />
+         </Suspense>
       </div>
    );
 };

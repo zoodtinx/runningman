@@ -44,7 +44,7 @@ const RunsPage = async () => {
             <div
                className={cn(
                   "px-2 pt-2 flex flex-col gap-[6px] justify-between pb-[200px]",
-                  "md:pt-0 md:px-[12px]"
+                  "lg:pt-0 lg:px-[12px]"
                )}
             >
                <SessionProvider>

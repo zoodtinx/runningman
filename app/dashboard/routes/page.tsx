@@ -27,7 +27,7 @@ const RoutesPage = async () => {
    return (
       <div className="grow overflow-hidden">
          <ScrollArea className="h-full">
-            <div className="pt-2 px-2 md:pt-0 md:px-[12px] flex flex-col gap-[6px] justify-between pb-[200px]">
+            <div className="pt-2 px-2 lg:pt-0 lg:px-[12px] flex flex-col gap-[6px] justify-between pb-[200px]">
                <SessionProvider>
                   <NewRouteBar />
                </SessionProvider>

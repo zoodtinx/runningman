@@ -29,6 +29,7 @@ import { runTypeOptions } from "@/components/form-elements/utils/selections";
 import { NavArrowLeft } from "iconoir-react";
 
 import { editRoute, deleteRoute } from "@/dashboard/routes/actions";
+import { cn } from "@/lib/utils";
 
 type EditRouteDtoWithPace = Partial<EditRouteDto>;
 
@@ -44,7 +45,6 @@ const RoutePageContent = ({
       defaultValues: { ...routeData, userId: session?.user?.id },
    });
 
-   // When mode changes, clear the other field and set laps to null if mode is "time"
    useEffect(() => {
       if (mode === "distance") {
          setValue("distance", 1);
@@ -99,13 +99,16 @@ const RoutePageContent = ({
    };
 
    return (
-      <div className="flex flex-col text-primary w-full h-full">
+      <div className={cn("flex flex-col text-primary w-full h-full")}>
          <RoutePageBreadCrumb routeData={routeData} />
          <form
-            className="flex flex-col grow justify-start gap-5 md:gap-0 md:justify-between"
+            className={cn(
+               "flex flex-col grow justify-start gap-5",
+               "lg:justify-between"
+            )}
             onSubmit={handleSubmit(onSubmit)}
          >
-            <div className="flex flex-col pt-3">
+            <div className={cn("flex flex-col pt-3")}>
                <ControlledInput
                   fieldName="title"
                   control={control}
@@ -117,37 +120,45 @@ const RoutePageContent = ({
                   placeholder="Name your route"
                   errorMessage="Please enter route title"
                />
-               <div className="flex gap-3 pt-4 md:pt-6">
-                  <div className="h-full md:p-1 w-[130px]">
-                     <div className="h-full bg-background md:bg-foreground rounded-base p-2 cursor-default flex flex-col transition-colors duration-200 gap-1">
+               <div className={cn("flex gap-3 pt-4", "md:pt-6")}>
+                  <div className={cn("h-full w-[130px]", "md:p-1")}>
+                     <div
+                        className={cn(
+                           "h-full rounded-base p-2 cursor-default flex flex-col transition-colors duration-200 gap-1",
+                           "bg-background",
+                           "lg:bg-foreground"
+                        )}
+                     >
                         <button
                            type="button"
-                           className={`flex items-center px-2 font-semibold h-1/2 w-full rounded-sm transition-colors duration-200 ${
+                           className={cn(
+                              "flex items-center px-2 font-semibold h-1/2 w-full rounded-sm transition-colors duration-200",
                               mode === "distance"
                                  ? "bg-primary text-background"
                                  : "bg-transparent text-secondary hover:text-primary"
-                           }`}
+                           )}
                            onClick={(e) => handleToggle(e, "distance")}
                         >
                            Distance
                         </button>
                         <button
                            type="button"
-                           className={`flex items-center px-2 font-semibold h-1/2 w-full rounded-sm transition-colors duration-200 ${
+                           className={cn(
+                              "flex items-center px-2 font-semibold h-1/2 w-full rounded-sm transition-colors duration-200",
                               mode === "time"
                                  ? "bg-primary text-background"
                                  : "bg-transparent text-secondary hover:text-primary"
-                           }`}
+                           )}
                            onClick={(e) => handleToggle(e, "time")}
                         >
                            Time
                         </button>
                      </div>
                   </div>
-                  <div className="flex justify-between gap-3 grow">
+                  <div className={cn("flex justify-between gap-3 grow")}>
                      {mode === "distance" ? (
                         <>
-                           <div className="md:w-[250px]">
+                           <div className={cn("md:w-[250px]")}>
                               <ControlledInput
                                  fieldName="distance"
                                  control={control}
@@ -175,7 +186,7 @@ const RoutePageContent = ({
                         </>
                      ) : (
                         <>
-                           <div className="md:w-[250px]">
+                           <div className={cn("md:w-[250px]")}>
                               <ControlledInput
                                  fieldName="duration"
                                  control={control}
@@ -191,7 +202,7 @@ const RoutePageContent = ({
                      )}
                   </div>
                </div>
-               <div className="flex flex-col gap-4 pt-2 md:pt-6">
+               <div className={cn("flex flex-col gap-4 pt-2", "md:pt-6")}>
                   <ControlledInput
                      fieldName="location"
                      control={control}

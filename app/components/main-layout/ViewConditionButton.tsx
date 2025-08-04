@@ -1,17 +1,15 @@
 "use client";
 
-import { useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { RunConditionCard } from "@/components/main-layout/RunConditionCard";
 import { ScrollArea } from "@/components/primitives/ScrollArea";
-import NiceSettings from "@/components/icons/Settings";
 import { getRunSummary } from "@/lib/run-conditions/calculate-readiness";
 import { cn } from "@/lib/utils";
 import { RunCondition, User } from "@prisma/client";
 import { format } from "date-fns";
-import Link from "next/link";
-import { useState } from "react";
 import { HighlightedStats } from "@/components/main-layout/RunSummaryPanel";
+import NiceSettings from "@/components/icons/Settings";
+import { ControlSlider, Link } from "iconoir-react";
 
 interface ViewConditionButtonProps {
    userData: User;
@@ -22,28 +20,12 @@ const ViewConditionButton = ({
    userData,
    conditionsData,
 }: ViewConditionButtonProps) => {
-   // Remove useSearchParams and search param logic
-   // const router = useRouter();
-   const [isOpen, setIsOpen] = useState(true);
-   const pathname = usePathname();
-
-   console.log("pathname", pathname);
-
-   useEffect(() => {
-      if (pathname == "/dashboard/runs") {
-         return;
-      } else {
-         setIsOpen(false);
-      }
-   }, [pathname]);
+   const searchParams = useSearchParams();
+   const conditionIsOpen = searchParams.get("condition");
 
    if (!userData || !conditionsData) {
       return;
    }
-
-   const handleClick = () => {
-      setIsOpen((prev) => !prev);
-   };
 
    const runSummary = getRunSummary(
       userData.conditionPriority as Record<string, number>,
@@ -55,7 +37,6 @@ const ViewConditionButton = ({
       "hh.mm a, d MMM"
    ).toUpperCase();
 
-   // Get background color classname based on readinessScore
    const getBgColorClass = () => {
       switch (runSummary.readinessScore) {
          case 1:
@@ -73,61 +54,55 @@ const ViewConditionButton = ({
       }
    };
 
-   return (
-      <>
-         <button
-            onClick={handleClick}
-            className="text-sm border rounded-full px-2 font-semibold"
+   if (conditionIsOpen === "open") {
+      return (
+         <div
+            className={`absolute flex flex-col top-[44px] h-[calc(100%-44px)] inset-0 w-full z-10 px-2 ${getBgColorClass()}`}
          >
-            {isOpen ? "Go Run" : "View Conditions"}
-         </button>
-
-         {isOpen && (
             <div
-               className={`absolute flex flex-col top-[45px] h-[calc(100%-45px)] inset-0 w-full z-40 px-2 ${getBgColorClass()}`}
+               className={cn(
+                  "flex flex-col gap-1 w-full font-headline font-semibold pl-4 pr-4 pt-1",
+                  "h-[130px] md:h-[200px] md:w-3/5"
+               )}
             >
-               <div
+               <HighlightedStats data={runSummary.keyCondition} mode="mobile" />
+               <p
                   className={cn(
-                     "flex flex-col gap-1 text-[35px] font-headline leading-9 font-semibold pl-4 pr-4 pt-1",
-                     "h-[130px]"
+                     "text-[35px] leading-9 md:text-[50px] md:leading-12"
                   )}
                >
-                  <HighlightedStats
-                     data={runSummary.keyCondition}
-                     mode="mobile"
-                  />
-                  <p>{runSummary.headline}</p>
-               </div>
-               <div
-                  className={cn(
-                     "flex flex-col w-full max-sm:w-full h-[calc(100%-130px)] bg-foreground rounded-[20px]",
-                     "rounded-bl-[0px] rounded-br-[0px] text-primary relative overflow-clip"
-                  )}
-               >
-                  <div className="flex justify-between items-center pt-2 px-4 text-sm text-primary opacity-50">
-                     <div className="flex justify-between w-full items-center gap-3">
-                        <span>Updated: {updatedAt}</span>
-                        <Link
-                           href="/dashboard/settings"
-                           onClick={() => setIsOpen(false)}
-                        >
-                           <NiceSettings className="size-5 cursor-pointer" />
-                        </Link>
-                     </div>
-                  </div>
-
-                  <ScrollArea className="w-full h-full overflow-hidden rounded-2xl rounded-bl-none rounded-br-none px-2 pt-2">
-                     <div className="flex flex-col gap-2 text-background pb-[100px]">
-                        {conditionsData.map((stat) => (
-                           <RunConditionCard key={stat.id} statData={stat} />
-                        ))}
-                     </div>
-                  </ScrollArea>
-               </div>
+                  {runSummary.headline}
+               </p>
+               <p className="hidden  md:block font-sans text-base font-normal leading-snug">
+                  {runSummary.detail}
+               </p>
             </div>
-         )}
-      </>
-   );
+            <div
+               className={cn(
+                  "flex flex-col w-full max-sm:w-full h-[calc(100%-130px)] bg-foreground rounded-[20px]",
+                  "rounded-bl-[0px] rounded-br-[0px] text-primary relative overflow-clip"
+               )}
+            >
+               <div className="flex justify-between items-center pt-2 px-4 text-sm text-primary opacity-50">
+                  <div className="flex justify-between w-full items-center gap-3">
+                     <span>Updated: {updatedAt}</span>
+                     <Link href="/dashboard/settings">
+                        <ControlSlider className="size-5 cursor-pointer" />
+                     </Link>
+                  </div>
+               </div>
+
+               <ScrollArea className="w-full h-full overflow-hidden rounded-2xl rounded-bl-none rounded-br-none px-2 pt-2">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-background pb-[100px]">
+                     {conditionsData.map((stat) => (
+                        <RunConditionCard key={stat.id} statData={stat} />
+                     ))}
+                  </div>
+               </ScrollArea>
+            </div>
+         </div>
+      );
+   }
 };
 
 export default ViewConditionButton;

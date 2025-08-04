@@ -21,6 +21,7 @@ import {
 import { Run } from "@prisma/client";
 import Image from "next/image";
 import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 const ExportPageContent = ({ runData }: { runData: Run }) => {
    const [themeData, setThemeData] = useState<
@@ -87,7 +88,11 @@ export function EmblaCarousel({
       return (
          <div
             key={theme.theme}
-            className="w-[400px] md:w-[70%] flex-shrink-0 px-4 text-center text-white text-xl rounded-lg  mx-2"
+            className={cn(
+               "flex-shrink-0 px-4 text-center text-white text-xl rounded-lg mx-2 w-[400px]",
+               "md:w-full",
+               "lg:w-[70%]"
+            )}
          >
             <div className="flex flex-col grow items-center">
                <div className="flex flex-col h-[90px]">
@@ -101,7 +106,10 @@ export function EmblaCarousel({
                   width={50}
                   height={50}
                   alt=""
-                  className="w-[280px] h-[280px] md:w-[400px] md:h-[400px] shrink-0"
+                  className={cn(
+                     "w-[280px] h-[280px] shrink-0",
+                     "md:w-[400px] md:h-[400px]"
+                  )}
                />
                <div
                   className="p-5 cursor-pointer hover:opacity-50"
@@ -115,7 +123,7 @@ export function EmblaCarousel({
    });
 
    return (
-      <div className="w-full md:w-[620px] h-full flex flex-col items-center justify-center">
+      <div className="w-full lg:w-[620px] h-full flex flex-col items-center justify-center">
          <p className="font-headline text-[20px] font-bold">THEME</p>
          <div className="relative w-full h-fit md:h-[600px]">
             <div className="overflow-hidden h-full pb-[70px]" ref={emblaRef}>

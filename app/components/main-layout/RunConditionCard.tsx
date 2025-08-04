@@ -47,7 +47,8 @@ export const RunConditionCard = ({ statData }: { statData: RunCondition }) => {
       <div
          className={cn(
             "flex flex-col w-full h-[90px] shrink-0 md:shrink rounded-base p-2 justify-between",
-            "md:basis-1/2 md:w-1/2 md:h-[100px]",
+            // "md:basis-1/2 md:w-1/2 md:h-[100px]",
+            "lg:basis-1/2 lg:w-1/2 lg:h-[100px]",
             statData.range === 3 &&
                "bg-[linear-gradient(to_bottom,_#dcfffe_0%,_#b4f0ef_100%)]",
             statData.range === 2 &&

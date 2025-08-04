@@ -4,6 +4,7 @@ import { DayBar } from "@/dashboard/schedules/components/DayBar";
 import SchedulePageNavBar from "@/dashboard/schedules/components/SchedulePageNavBar";
 import { redirect } from "next/navigation";
 import { ScrollArea } from "@/components/primitives/ScrollArea";
+import { cn } from "@/lib/utils";
 
 const SchedulePage = async ({ searchParams }: any) => {
    const session = await auth();
@@ -49,7 +50,13 @@ const SchedulePage = async ({ searchParams }: any) => {
    return (
       <div className="grow overflow-hidden">
          <ScrollArea className="h-full">
-            <div className="pt-2 px-2 pb-[200px] md:pt-0 md:px-[12px] flex flex-col gap-[6px] justify-between">
+            <div
+               className={cn(
+                  "flex flex-col justify-between gap-[6px]",
+                  "pt-2 px-2 pb-[200px]",
+                  "lg:pt-0 lg:px-[12px]"
+               )}
+            >
                <SchedulePageNavBar
                   totalCount={totalCount}
                   userId={session.user!.id!}
