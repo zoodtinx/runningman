@@ -66,16 +66,13 @@ export async function fetchFutureWeatherData(location: string) {
 }
 
 export async function fetchAQI(location: string) {
-   // Map of supported locations to their coordinates (lat,lon)
    const coords = locationCoords[location.toLowerCase()];
    if (!coords) throw new Error(`Unknown location: ${location}`);
 
-   // IQAir API expects lat/lon as separate params
    const [lat, lon] = coords.split(",");
    const apiKey = process.env.IQAIR_API_KEY;
    if (!apiKey) throw new Error("Missing IQAir API key");
 
-   // Override Bangkok coordinates for IQAir API to use the specified lat/lon
    let latOverride = lat,
       lonOverride = lon;
    if (location.toLowerCase() === "bangkok") {
@@ -89,7 +86,6 @@ export async function fetchAQI(location: string) {
       if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
       const result = await res.json();
 
-      // The AQI value is at result.data.current.pollution.aqius
       const aqi = result?.data?.current?.pollution?.aqius;
       return typeof aqi === "number" ? aqi : null;
    } catch (error) {

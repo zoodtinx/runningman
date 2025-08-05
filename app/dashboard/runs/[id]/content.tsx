@@ -41,6 +41,7 @@ const RunPageContent = ({ runData }: { runData: RunFindOneResponse }) => {
          defaultValues: { ...runData, userId: session?.user?.id },
       });
 
+   // auto calculate pace based on distance/time change
    useEffect(() => {
       const calculatePace = (values: EditRunDtoWithPace) => {
          const distance = values.distance ?? 0;

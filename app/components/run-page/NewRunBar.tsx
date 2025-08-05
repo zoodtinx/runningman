@@ -1,26 +1,29 @@
 "use client";
 
+import { useSession } from "next-auth/react";
+import { useEffect, useState, ReactNode } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { PlusSquare } from "iconoir-react";
+
 import { FormFooter } from "@/components/form-elements/FormFooter";
 import {
    moodOptions,
    runTypeOptions,
 } from "@/components/form-elements/utils/selections";
+
 import { ControlledInput } from "@/components/primitives/InputWithLabel";
-import { PlusSquare } from "iconoir-react";
-import { ReactNode, useEffect, useState } from "react";
 import {
    ControlledSelect,
    SelectWithLabel,
 } from "@/components/primitives/SelectWithLabel";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { createRun, getRouteData } from "@/dashboard/runs/actions";
-import { cn } from "@/lib/utils";
-
-import { useSession } from "next-auth/react";
 import { ControlledDatePicker } from "@/components/primitives/DatePicker";
 import { ControlledTimePicker } from "@/components/primitives/TimePicker";
-import { CreateRunDto } from "@/lib/zod/runs.zod.schema";
 
+import { createRun, getRouteData } from "@/dashboard/runs/actions";
+import { CreateRunDto } from "@/lib/zod/runs.zod.schema";
+import { cn } from "@/lib/utils";
+
+// Extended DTO to include pace string
 type CreateRunDtoWithPace = CreateRunDto & { pace?: string };
 
 const NewRunBar = ({
@@ -51,12 +54,14 @@ const NewRunBar = ({
          },
       });
 
+   // Populate userId when session is ready
    useEffect(() => {
       if (session?.user?.id) {
          setValue("userId", session.user.id);
       }
    }, [session, setValue]);
 
+   // Calculate pace and generate title dynamically
    useEffect(() => {
       const subscription = watch((values) => {
          const distance = values.distance ?? 0;
@@ -78,8 +83,9 @@ const NewRunBar = ({
       });
 
       const values = getValues();
-
       const dateTime = values.dateTime ? new Date(values.dateTime) : new Date();
+
+      // Auto-generate title based on day + time of day
       const days = [
          "Sunday",
          "Monday",
@@ -92,23 +98,18 @@ const NewRunBar = ({
       const dayName = days[dateTime.getDay()];
       const hour = dateTime.getHours();
       let timeOfDay = "Morning";
-      if (hour >= 12 && hour < 17) {
-         timeOfDay = "Afternoon";
-      } else if (hour >= 17 || hour < 5) {
-         timeOfDay = "Evening";
-      }
+      if (hour >= 12 && hour < 17) timeOfDay = "Afternoon";
+      else if (hour >= 17 || hour < 5) timeOfDay = "Evening";
       const autoTitle = `${dayName} ${timeOfDay} Run`;
-      if (
-         !values.title ||
-         values.title === "" ||
-         values.title.endsWith("Run")
-      ) {
+
+      if (!values.title || values.title.endsWith("Run")) {
          setValue("title", autoTitle);
       }
 
       return () => subscription.unsubscribe();
    }, [watch, setValue, getValues]);
 
+   // Escape key cancels the form
    useEffect(() => {
       const handleKeyDown = (e: KeyboardEvent) => {
          if (e.key === "Escape") {
@@ -123,14 +124,21 @@ const NewRunBar = ({
 
    const pace = watch("pace");
 
+   // Form submit handler
    const onSubmit: SubmitHandler<CreateRunDto> = async (data) => {
-      if (data.distance !== undefined) data.distance = Number(data.distance);
-      if (data.duration !== undefined) data.duration = Number(data.duration);
-      if (data.laps !== undefined) data.laps = Number(data.laps);
-
-      if (!data.userId && session?.user?.id) {
-         data.userId = session.user.id;
-      }
+      Object.assign(data, {
+         userId: data.userId ?? session?.user?.id,
+         distance:
+            data.distance !== undefined
+               ? +Number(data.distance).toFixed(2)
+               : data.distance,
+         duration:
+            data.duration !== undefined
+               ? +Number(data.duration).toFixed(2)
+               : data.duration,
+         laps:
+            data.laps !== undefined ? +Number(data.laps).toFixed(1) : data.laps,
+      });
 
       try {
          await createRun(data);
@@ -147,6 +155,7 @@ const NewRunBar = ({
       reset();
    };
 
+   // Preload fields from selected route
    const handleRouteSelect = async (value: string) => {
       setSelectedRoute(value);
       const route = await getRouteData(value);
@@ -164,6 +173,7 @@ const NewRunBar = ({
 
    return (
       <div className="relative h-fit flex w-full">
+         {/* Collapsed button */}
          <div
             className={cn(
                "flex gap-2 items-center justify-center font-headline text-[25px] font-bold h-[84px] rounded-base bg-background cursor-pointer w-full",
@@ -174,6 +184,8 @@ const NewRunBar = ({
             <span>NEW RUN</span>
             <PlusSquare className="size-6" />
          </div>
+
+         {/* Expanded form */}
          <form
             onSubmit={handleSubmit(onSubmit)}
             className={cn(
@@ -184,6 +196,7 @@ const NewRunBar = ({
                   : "scale-y-0 opacity-0"
             )}
          >
+            {/* Header: Title + Date/Time + Route */}
             <div>
                <div className="flex flex-col md:flex-row justify-between">
                   <div className="flex gap-[4px] text-background h-fit items-center shrink-0">
@@ -211,19 +224,11 @@ const NewRunBar = ({
                            placeholder="Select route"
                            className="text-background"
                         />
-                        {/* <ControlledSelect
-                           fieldName="routeId"
-                           control={control}
-                           options={routeOptions}
-                           variant="dark"
-                           className="font-bold"
-                           placeholder="Select From Routes"
-                           required={true}
-                           errorMessage="Please specify run type"
-                        /> */}
                      </div>
                   </div>
                </div>
+
+               {/* Input: Title, Distance, Duration, Laps, Pace */}
                <div className="flex flex-col gap-3">
                   <ControlledInput
                      fieldName="title"
@@ -270,52 +275,6 @@ const NewRunBar = ({
                            mode="number"
                         />
                      </div>
-                     {/* <div className="flex flex-1 gap-3">
-                        <div className="flex-1 md:w-[200px]">
-                           <ControlledInput
-                              fieldName="duration"
-                              control={control}
-                              label="Duration"
-                              variant="dark"
-                              inputSize="2xl"
-                              unit="min"
-                              mode="number"
-                           />
-                        </div>
-                        <div className="w-[50px]">
-                           <ControlledInput
-                              fieldName="laps"
-                              control={control}
-                              label="Laps"
-                              variant="dark"
-                              inputSize="2xl"
-                              mode="number"
-                           />
-                        </div>
-                     </div> */}
-                     {/* <div className="flex pt-3 md:pt-0 gap-5">
-                        <div className="w-[200px]">
-                           <ControlledInput
-                              fieldName="duration"
-                              control={control}
-                              label="Duration"
-                              variant="dark"
-                              inputSize="2xl"
-                              unit="min"
-                              mode="number"
-                           />
-                        </div>
-                        <div className="w-[50px]">
-                           <ControlledInput
-                              fieldName="laps"
-                              control={control}
-                              label="Laps"
-                              variant="dark"
-                              inputSize="2xl"
-                              mode="number"
-                           />
-                        </div>
-                     </div> */}
                   </div>
                   <div className="w-[245px] flex flex-col">
                      <p className="text-sm text-secondary">Pace</p>
@@ -325,6 +284,8 @@ const NewRunBar = ({
                   </div>
                </div>
             </div>
+
+            {/* Input: Location, RunType, Mood, Gear, Note */}
             <div className="flex flex-col gap-4 md:gap-5 text-background">
                <div className="flex-1">
                   <ControlledInput
@@ -383,6 +344,7 @@ const NewRunBar = ({
                      placeholder="Something to remember"
                   />
                </div>
+               {/* Submit / Cancel */}
                <FormFooter handleDestructive={handleDestructive} />
             </div>
          </form>

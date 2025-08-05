@@ -1,3 +1,5 @@
+
+
 // Utility functions and constants for run condition mapping
 
 export const summaries: Record<string, string> = {
@@ -90,7 +92,7 @@ export const runningConditionStatusMessages = {
    "rain-chance": {
       1: "Prepare to get soaked",
       2: "Maybe pack a light jacket",
-      3: "Dry as a bone",
+      3: "No rain in sight",
    },
    "sunset-time": {
       1: "Running in the dark",

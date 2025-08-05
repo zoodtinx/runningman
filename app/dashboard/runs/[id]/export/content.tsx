@@ -31,12 +31,10 @@ const ExportPageContent = ({ runData }: { runData: Run }) => {
          transparent: boolean;
       }[]
    >([]);
-   // make it an object
 
    useEffect(() => {
       (async () => {
          const result = await exportRunCards(runData);
-         const mockArray = new Array(2);
          const mockThemes = [
             {
                theme: "",
@@ -110,13 +108,18 @@ export function EmblaCarousel({
             )}
          >
             <div className="flex flex-col grow items-center">
-               <div className="flex flex-col h-[82px] md:h-[90px]">
+               <div className="flex flex-col h-fit mb-6 md:h-fit">
                   <p className="font-headline text-[30px]">{theme.theme}</p>
-                  {theme.transparent && (
-                     <p className="text-[18px] opacity-40">Transparent</p>
-                  )}
                </div>
-               <div className="relative w-[400px] h-[400px] md:w-[400px]">
+               <div
+                  className={cn(
+                     "relative",
+                     "w-[280px] h-[300px]",
+                     "md:w-[430px] md:h-[430px]",
+                     // "lg:w-[460px] lg:h-[460px]",
+                     "xl:w-[400px] xl:h-[400px]"
+                  )}
+               >
                   <Image
                      src={theme.dataUrl}
                      alt=""
@@ -125,10 +128,11 @@ export function EmblaCarousel({
                   />
                </div>
                <div
-                  className="p-5 mt-10 cursor-pointer hover:opacity-50"
+                  className="flex gap-1 items-center py-1 pl-2 pr-4 mt-7 md:mt-10 cursor-pointer hover:opacity-50 border rounded-full"
                   onClick={handleDownload}
                >
-                  <Download className="" />
+                  <Download className="size-5" />
+                  <span className="text-[15px]">Download</span>
                </div>
             </div>
          </div>
@@ -138,7 +142,9 @@ export function EmblaCarousel({
    return (
       <div className="w-full lg:w-[620px] h-full flex flex-col items-center justify-center">
          <p className="font-headline text-[20px] font-bold">THEME</p>
-         <div className="relative w-full h-auto md:h-[600px]">
+         <div
+            className={cn("relative w-full h-auto", "md:h-fit", "xl:h-[600px]")}
+         >
             <div className="overflow-hidden h-full md:pb-[70px]" ref={emblaRef}>
                <div className="flex h-full">{carousel}</div>
             </div>

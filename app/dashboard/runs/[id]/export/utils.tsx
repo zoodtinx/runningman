@@ -2,7 +2,6 @@
 
 import { Run } from "@prisma/client";
 import ReactDOM from "react-dom/client";
-import SunriseSprint from "@/dashboard/runs/[id]/export/export-cards/SunriseSprint";
 import { toPng } from "html-to-image";
 import {
    MorningRun,
@@ -28,7 +27,6 @@ async function renderTheme(theme: (typeof themes)[number], runData: Run) {
 
    const root = ReactDOM.createRoot(holder);
 
-   // swutchtheme
    switch (theme) {
       case "morningRun":
          root.render(<MorningRun runData={runData} />);

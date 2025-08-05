@@ -12,6 +12,7 @@ const SchedulePage = async ({ searchParams }: any) => {
       return;
    }
 
+   // paginae based on searchParam
    const page = parseInt(searchParams.page || "1");
    if (isNaN(page) || page < 1) redirect("?page=1");
 
@@ -28,8 +29,6 @@ const SchedulePage = async ({ searchParams }: any) => {
       }),
       prisma.scheduleItem.count({ where: { userId: session?.user.id } }),
    ]);
-
-   console.log("id", session?.user.id);
 
    const routesData = await prisma.route.findMany({
       where: {

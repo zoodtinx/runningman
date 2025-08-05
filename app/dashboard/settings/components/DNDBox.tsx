@@ -32,7 +32,6 @@ type Item = {
 const items: Item[] = [
    { id: "temperature", label: "Temperature", icon: TemperatureHigh },
    { id: "feels-like", label: "Feels Like", icon: TemperatureHigh },
-   { id: "heat-index", label: "Heat Index", icon: TemperatureHigh },
    { id: "humidity", label: "Humidity", icon: Droplet },
    { id: "cloudiness", label: "Cloudiness", icon: Cloud },
    { id: "uv-index", label: "UV Index", icon: SunLight },

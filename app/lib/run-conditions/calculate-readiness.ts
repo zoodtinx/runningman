@@ -19,14 +19,12 @@ export function getRunSummary(
    importanceWeights: Record<string, number>,
    conditions: RunCondition[]
 ): ReadinessResult {
+   // assign importance score to each data point
    const weightedConditions = conditions.map((condition) => {
       const weight = importanceWeights[condition.type] ?? 0;
-
-      // Ignore very low weight + bad condition
       const shouldIgnore = weight < 0.2 && condition.range === 1;
       if (shouldIgnore) return { ...condition, weight: 0, weightedScore: 0 };
 
-      // Boost perfect scores
       const boost = condition.range === 3 ? 1.05 : 1;
       const weightedScore = condition.range * weight * boost;
 
@@ -38,11 +36,8 @@ export function getRunSummary(
       (sum, c) => sum + c.weightedScore,
       0
    );
-
    const averageScore =
       totalWeight === 0 ? 0 : totalWeightedScore / totalWeight;
-
-   // More generous mapping
    const readinessScore = mapScore(averageScore);
 
    const topConditions = weightedConditions
@@ -62,9 +57,9 @@ export function getRunSummary(
 }
 
 function mapScore(avg: number) {
-   if (avg < 1) return 1; // bad
-   if (avg < 1.5) return 2; // low
-   if (avg < 2.4) return 3; // medium
-   if (avg < 2.9) return 4; // good
-   return 5; // great (now rarer)
+   if (avg < 1) return 1;
+   if (avg < 1.5) return 2;
+   if (avg < 2.4) return 3;
+   if (avg < 2.9) return 4;
+   return 5;
 }

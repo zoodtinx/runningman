@@ -19,6 +19,7 @@ import DragBoard, {
 } from "@/dashboard/settings/components/DNDBox";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
+import { Check } from "iconoir-react";
 
 const deleteButtonTexts = [
    "Delete Account",
@@ -32,6 +33,7 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
    });
 
    const [loading, setLoading] = useState(false);
+   const [success, setSuccess] = useState(false);
    const [deleteStep, setDeleteStep] = useState(0);
    const [deleteLoading, setDeleteLoading] = useState(false);
 
@@ -53,6 +55,8 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
       try {
          console.log(parsedData);
          await editUser(userData.id, parsedData);
+         setSuccess(true);
+         setTimeout(() => setSuccess(false), 2000);
       } finally {
          setLoading(false);
       }
@@ -82,7 +86,7 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
       <form
          onSubmit={handleSubmit(onSubmit)}
          className={cn(
-            "flex flex-col justify-start lg:justify-between h-full overflow-y-auto",
+            "flex flex-col justify-start lg:justify-between h-full overflow-y-auto md:overflow-hidden",
             "pb-[200px] pt-1 lg:pt-0 lg:pb-0"
          )}
       >
@@ -154,7 +158,7 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
             </div>
          </div>
          <div className="flex justify-between px-2 lg:px-0 pt-7 lg:pt-0 items-start">
-            <div className="flex flex-col lg:flex-row items-start gap-2">
+            <div className="flex flex-col lg:flex-row items-start xl:items-center gap-2">
                <Button
                   className="border w-[90px]"
                   disabled={loading}
@@ -178,7 +182,13 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
                   )}
                </button>
             </div>
-            <div className="flex items-center gap-2 ">
+            <div className="flex items-center gap-2">
+               <Check
+                  className={cn(
+                     "text-green-500 transition-opacity duration-300",
+                     success && !loading ? "opacity-100" : "opacity-0"
+                  )}
+               />
                {loading && <Loader className="animate-spin" />}
                <Button
                   className="border w-[90px]"

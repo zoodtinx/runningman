@@ -17,11 +17,8 @@ const RunPageLayout = async ({ params }: PageProps) => {
       },
    });
 
-   console.log("id", id);
-   console.log("routeData", routeData);
-
    if (!routeData) {
-      return "Boo!";
+      return;
    }
 
    return (

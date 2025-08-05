@@ -3,7 +3,6 @@ import ExportPageContent from "@/dashboard/runs/[id]/export/content";
 import { SessionProvider } from "next-auth/react";
 import { prisma } from "@/lib/prisma";
 import { cn } from "@/lib/utils";
-import { exportRunCards } from "@/dashboard/runs/[id]/export/utils";
 
 const ExportPage = async ({ params }: PageProps) => {
    const { id } = await params;
@@ -15,7 +14,7 @@ const ExportPage = async ({ params }: PageProps) => {
    });
 
    if (!runData) {
-      return "Boo!";
+      return;
    }
 
    return (

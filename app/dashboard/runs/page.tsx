@@ -8,7 +8,6 @@ import { ScrollArea } from "@/components/primitives/ScrollArea";
 import NewRunBar from "@/components/run-page/NewRunBar";
 import RunBar from "@/components/run-page/RunBar";
 import { cn } from "@/lib/utils";
-import { RunningGauge } from "@/dashboard/runs/components/ProgressGuage";
 
 const RunsPage = async () => {
    const session = await auth();
@@ -42,7 +41,6 @@ const RunsPage = async () => {
    return (
       <div className="grow overflow-hidden">
          <ScrollArea className="h-full">
-            {/* <RunningGauge /> */}
             <div
                className={cn(
                   "px-2 pt-2 flex flex-col gap-[6px] justify-between pb-[200px]",

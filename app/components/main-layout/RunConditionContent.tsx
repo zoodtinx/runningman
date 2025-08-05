@@ -8,13 +8,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { RunCondition } from "@prisma/client";
 
-// type RunCondition = {
-//    id: string;
-//    updatedAt: string; // not used here, only passed as `updatedAt` prop
-//    range: number;
-//    [key: string]: any; // for additional fields used by RunConditionCard
-// };
-
 type RunConditionSectionClientProps = {
    statChunks: RunCondition[][];
    updatedAt: string;

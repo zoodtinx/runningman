@@ -1,6 +1,5 @@
 "use server";
 
-// Imports
 import fs from "fs/promises";
 import path from "path";
 import { prisma } from "@/lib/prisma";
@@ -17,66 +16,43 @@ import {
    capitalize,
    calculateRange,
    getStatusMessage,
+   runningConditionStatusMessages,
 } from "./run-condition-utils";
 
-// Utility Functions
-function delay(ms: number) {
-   return new Promise((resolve) => setTimeout(resolve, ms));
+// main function
+export async function refreshAllConditions() {
+   const locations = ["bangkok", "chiangmai", "phuket", "khonkaen", "hatyai"];
+   for (const loc of locations) {
+      await refreshConditions(loc);
+      await delay(1000); // deplay to prevent rate limit
+   }
 }
 
-// Main Functions
-
-/**
- * Refreshes run conditions for a specific location.
- * Fetches current and future weather data, maps them to run conditions,
- * and stores them in the database. Falls back to local file if fetch fails.
- */
 export async function refreshConditions(location: string) {
-   console.log("updating");
    let newCurrentData, newfutureData, newConditions, aqi: number | null;
 
    await prisma.$transaction(async (tx) => {
-      // Remove old conditions for this location
       await tx.runCondition.deleteMany({
          where: { location },
       });
 
       try {
-         // Fetch new weather data
+         // fetch current weather data
          newCurrentData = await fetchRealtimeWeatherData(location);
-         await delay(400); // delay between requests
+         await delay(400);
+         // fetch future weather data
          newfutureData = await fetchFutureWeatherData(location);
+         // fetch aqi data
          aqi = await fetchAQI(location);
-
-         // Optionally write to local file in development
-         if (process.env.NODE_ENV === "development") {
-            const fs = await import("fs/promises");
-            const path = await import("path");
-            const outDir = path.join(process.cwd(), "tmp", "run-conditions");
-            await fs.mkdir(outDir, { recursive: true });
-            const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-            const outFile = path.join(outDir, `${location}-${timestamp}.json`);
-            const outData = {
-               location,
-               fetchedAt: new Date().toISOString(),
-               currentData: newCurrentData,
-               futureData: newfutureData,
-            };
-            await fs.writeFile(
-               outFile,
-               JSON.stringify(outData, null, 2),
-               "utf-8"
-            );
-         }
 
          if (!newfutureData || !newCurrentData)
             throw new Error("No future data");
       } catch (error) {
-         // Fallback to local file if fetch fails
          console.error(
             "Failed to fetch weather data, falling back to local file:",
             error
          );
+         // fallbcak to mock data
          const fallbackFile = path.join(
             process.cwd(),
             "tmp",
@@ -89,16 +65,16 @@ export async function refreshConditions(location: string) {
          newfutureData = parsed.futureData;
       }
 
+      // add aqi to current weather data object
       newCurrentData.values.aqi = aqi;
 
-      // Map weather data to run conditions
+      // process current, future, and aqi data into one object
       newConditions = await mapWeatherToRunConditionsWithFuture({
          currentData: newCurrentData,
          futureData: newfutureData,
          locationName: location,
       });
 
-      // Store new conditions in the database
       await tx.runCondition.createMany({
          data: newConditions,
       });
@@ -107,22 +83,6 @@ export async function refreshConditions(location: string) {
    return;
 }
 
-/**
- * Refreshes run conditions for all supported locations.
- */
-export async function refreshAllConditions() {
-   const locations = ["bangkok", "chiangmai", "phuket", "khonkaen", "hatyai"];
-   for (const loc of locations) {
-      await refreshConditions(loc);
-      await delay(1000); // wait 1 second before next call
-   }
-
-   // await refreshConditions("bangkok");
-}
-
-/**
- * Maps weather data to an array of run condition DTOs.
- */
 export async function mapWeatherToRunConditionsWithFuture(config: {
    currentData: any;
    futureData: any;
@@ -131,40 +91,44 @@ export async function mapWeatherToRunConditionsWithFuture(config: {
    const { currentData, futureData, locationName } = config;
 
    const currentValues = currentData.values;
+   // futur value is in hourly property
    const futureValues = futureData.hourly.values;
-   console.log("daily values", futureData.daily.values);
 
    const conditions: CreateRunConditionDto[] = Object.keys(keyMap).map(
       (key) => {
+         // currentValues & futureValues have keys that match keyMap key
          let currRaw = currentValues[keyMap[key]];
          let futRaw = futureValues[keyMap[key]];
 
-         // sunrise/set time only avaialble in futureValues payload object
+         // sun times has no future value
          if (key === "sunrise-time" || key === "sunset-time") {
             currRaw = futureData.daily.values[keyMap[key]];
-            console.log("currRaw", currRaw);
             futRaw = undefined;
          }
 
-         // Wind speed conversion m/s to km/h
+         // wind speed is in miles, convert to km
          if (key === "wind-speed") {
             if (typeof currRaw === "number")
                currRaw = +(currRaw * 3.6).toFixed(1);
             if (typeof futRaw === "number") futRaw = +(futRaw * 3.6).toFixed(1);
          }
 
+         // fallback for undefined or null field
          const value =
-            currRaw === undefined ? dummyTimes[key] || "" : currRaw.toString();
+            currRaw === undefined || currRaw === null
+               ? dummyTimes[key] || ""
+               : currRaw.toString();
          const futureValue =
-            futRaw === undefined ? dummyTimes[key] || "" : futRaw.toString();
+            futRaw === undefined || futRaw === null
+               ? dummyTimes[key] || ""
+               : futRaw.toString();
 
          const valueType = typeof currRaw === "number" ? "number" : "string";
 
+         // check if it's bad (1), okay (2), or good (3)
          const range = calculateRange(key, currRaw) as 1 | 2 | 3;
-         const description = getStatusMessage(
-            key as keyof typeof import("./run-condition-utils").runningConditionStatusMessages,
-            range
-         );
+         const statusKey = key as keyof typeof runningConditionStatusMessages;
+         const description = getStatusMessage(statusKey, range);
 
          return {
             type: key,
@@ -182,4 +146,8 @@ export async function mapWeatherToRunConditionsWithFuture(config: {
    );
 
    return conditions;
+}
+
+function delay(ms: number) {
+   return new Promise((resolve) => setTimeout(resolve, ms));
 }

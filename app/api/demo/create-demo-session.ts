@@ -5,8 +5,6 @@ import { prisma } from "@/lib/prisma";
 
 export function createDemoSession() {
    return prisma.$transaction(async (tx) => {
-      // Create a demo user
-
       const user = await tx.user.create({
          data: getDemoUser(),
       });
@@ -29,7 +27,7 @@ export function createDemoSession() {
 
       const baseSchedule = Array.from({ length: 7 }).map((_, i) => ({
          userId: user.id,
-         dayOfWeek: i, // 0 = Sunday, 6 = Saturday
+         dayOfWeek: i,
          routeId: null as string | null,
       }));
 
