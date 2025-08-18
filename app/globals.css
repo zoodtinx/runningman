@@ -112,6 +112,27 @@ button {
    cursor: pointer;
 }
 
+/* Sliders related classes. */
+.slider {
+   overflow: hidden;
+   width: 100%;
+}
+
+.slide-track {
+   display: flex;
+   width: calc(300%);
+   animation: scroll 60s linear infinite;
+}
+
+@keyframes scroll {
+   from {
+      transform: translateX(0);
+   }
+   to {
+      transform: translateX(-50%);
+   }
+}
+
 .rdp-root {
    --rdp-accent-color: yellow; /* The accent color used for selected days and UI elements. */
    --rdp-accent-background-color: #f0f0ff; /* The accent background color used for selected days and UI elements. */

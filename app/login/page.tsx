@@ -1,20 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import { useRef, useState } from "react";
 import { signIn } from "next-auth/react";
 import RunningManLogo from "@/components/icons/RunningManLogo";
-import {
-   ArrowRightTag,
-   ArrowUpLeft,
-   NavArrowDown,
-   NavArrowRight,
-} from "iconoir-react";
-import { GoogleCircleSolid } from "iconoir-react";
-import { cn } from "@/lib/utils";
+import { ArrowRightTag, ArrowUpLeft, NavArrowDown } from "iconoir-react";
 import { GithubLogo } from "@/login/components/Github";
 
 const Page = () => {
    const [isLoading, setisLoading] = useState(false);
+   const featuresRef = useRef<HTMLDivElement>(null);
 
    if (isLoading) {
       return (
@@ -31,6 +25,14 @@ const Page = () => {
       await signIn(provider);
    };
 
+   const handleExploreFeatures = () => {
+      if (featuresRef.current) {
+         featuresRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+   };
+
+   const exportScreenshots = [1, 2, 3, 4, 5];
+
    return (
       <div className="w-full h-screen flex justify-center items-center bg-background text-primary">
          <div className="w-full h-full">
@@ -41,7 +43,10 @@ const Page = () => {
                         <div className="flex justify-between mb-[40px]">
                            <RunningManLogo className="w-[300px] h-auto" />
                            <button
-                              onClick={(e) => e.currentTarget.focus()}
+                              onClick={(e) => {
+                                 e.currentTarget.focus();
+                                 signInWithProvider("credentials");
+                              }}
                               className={
                                  "flex items-center text-[16px] bg-theme-good h-[30px] text-black px-2 rounded-[10px] font-headline uppercase font-semibold " +
                                  "focus:outline-none focus:ring-[1.5px] focus:ring-white focus:ring-offset-[2.5px] ring-offset-black"
@@ -67,14 +72,17 @@ const Page = () => {
                            <div className="h-[300px] w-[430px] bg-white/10"></div>
                         </div>
                      </div>
-                     <button className="pb-5 group w-fit mx-auto">
+                     <button
+                        className="pb-5 group w-fit mx-auto"
+                        onClick={handleExploreFeatures}
+                     >
                         <p className="uppercase text-center font-headline font-semibold">
                            Explore Features
                         </p>
                         <NavArrowDown className="mx-auto animate-shake" />
                      </button>
                   </div>
-                  <div className="w-full pt-[60px]">
+                  <div ref={featuresRef} className="w-full pt-[60px]">
                      <div className="flex justify-between w-full mb-[40px]">
                         <div className="w-[407px] h-[290px] bg-white/10"></div>
                         <div className="flex flex-col items-end justify-between border-r border-r-white pr-[45px]">
@@ -109,7 +117,21 @@ const Page = () => {
                         <p className="text-center font-headline text-[40px] leading-tight mb-[40px]">
                            Stylishly Export Stats
                         </p>
-                        <div className="size-[310px] bg-white/10"></div>
+                        <div className="slider">
+                           <div className="slide-track flex gap-6">
+                              <div className="w-[310px] h-[310px] bg-white/10"></div>
+                              <div className="w-[310px] h-[310px] bg-white/10"></div>
+                              <div className="w-[310px] h-[310px] bg-white/10"></div>
+                              <div className="w-[310px] h-[310px] bg-white/10"></div>
+                              <div className="w-[310px] h-[310px] bg-white/10"></div>
+                              {/* duplicate for seamless loop */}
+                              <div className="w-[310px] h-[310px] bg-white/10"></div>
+                              <div className="w-[310px] h-[310px] bg-white/10"></div>
+                              <div className="w-[310px] h-[310px] bg-white/10"></div>
+                              <div className="w-[310px] h-[310px] bg-white/10"></div>
+                              <div className="w-[310px] h-[310px] bg-white/10"></div>
+                           </div>
+                        </div>
                      </div>
                   </div>
                   <div className="bg-background p-[33px] rounded-2xl mb-[30px]">
@@ -194,13 +216,39 @@ const Page = () => {
                         </span>
                      </button>
                   </div>
-                  {/* <div className="border-b border-b-white" /> */}
-                  <div className="bg-white/5 p-[33px] rounded-2xl mb-[30px] h-[200px]">
-                     <p className="text-center font-headline text-[40px] leading-tight mb-[30px]">
-                        Experience Full Features
+                  <div className="border-b border-b-white mb-[70px]" />
+                  <div className="mb-[70px]">
+                     <p className="text-center font-headline text-[40px] leading-tight mb-[15px]">
+                        Explore Full Features
                      </p>
+                     <button
+                        onClick={(e) => {
+                           e.currentTarget.focus();
+                           signInWithProvider("credentials");
+                        }}
+                        className={
+                           "flex items-center text-[16px] bg-theme-good h-[30px] text-black px-2 rounded-[10px] font-headline uppercase font-semibold mx-auto mb-[50px] " +
+                           "focus:outline-none focus:ring-[1.5px] focus:ring-white focus:ring-offset-[2.5px] ring-offset-black"
+                        }
+                     >
+                        <ArrowRightTag />
+                        <p className="px-2">Launch Demo</p>
+                     </button>
+                     <div className="w-[440px] text-sm mx-auto border-t opacity-30 pt-4">
+                        <p className="font-semibold">Disclaimers:</p>
+                        <p className="pb-4">
+                           Each demo session is generated personally for each
+                           user. Users are free to explore features, log runs,
+                           add Routes, export stats, or delete content during
+                           their session.
+                        </p>
+                        <p className="font-semibold">
+                           All data will be automatically deleted 1 hour after
+                           creation.
+                        </p>
+                     </div>
                   </div>
-                  <div className="flex justify-between items-center text-[14px] px-3 w-full h-[33px] mt-[60px] text-foreground bg-theme-good font-medium">
+                  <div className="flex justify-between items-center text-[14px] px-3 w-full h-[33px] text-foreground bg-theme-good font-medium">
                      <button className="flex gap-1 items-center">
                         <ArrowUpLeft className="size-4" />
                         <p>See More Of My Portfolio Projects</p>
