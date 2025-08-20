@@ -5,6 +5,7 @@ import { signIn } from "next-auth/react";
 import RunningManLogo from "@/components/icons/RunningManLogo";
 import { ArrowRightTag, ArrowUpLeft, NavArrowDown } from "iconoir-react";
 import { GithubLogo } from "@/login/components/Github";
+import Image from "next/image";
 
 const Page = () => {
    const [isLoading, setisLoading] = useState(false);
@@ -31,7 +32,25 @@ const Page = () => {
       }
    };
 
-   const exportScreenshots = [1, 2, 3, 4, 5];
+   const exportScreenshots = [
+      "https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm4.webp?updatedAt=1755574977778",
+      "https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm1.webp?updatedAt=1755574977758",
+      "https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm3.webp?updatedAt=1755574977353",
+      "https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm5.webp?updatedAt=1755574977434",
+      "https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm2.webp?updatedAt=1755574977614",
+   ];
+
+   const imageCarousels = exportScreenshots.map((url) => (
+      <div className="size-[310px]" key={url}>
+         <Image
+            src={url}
+            alt=""
+            className="object-cover"
+            height={310}
+            width={310}
+         />
+      </div>
+   ));
 
    return (
       <div className="w-full h-screen flex justify-center items-center bg-background text-primary">
@@ -56,20 +75,35 @@ const Page = () => {
                               <p className="px-2">Launch Demo</p>
                            </button>
                         </div>
-                        <div className="h-[440px] w-full bg-white/10 mb-[20px]"></div>
+                        <div className="h-[440px] w-full mb-[20px] rounded-[12px] overflow-hidden">
+                           <Image
+                              src="https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm-hero1-2.webp?updatedAt=1755578775229"
+                              alt=""
+                              className="w-full h-full"
+                              height={0}
+                              width={1200}
+                           />
+                        </div>
                         <div className="flex">
                            <div className="grow">
-                              <div className="flex flex-col leading-tight font-headline text-[50px] mb-4">
+                              <div className="flex flex-col leading-tight font-headline text-[50px] mb-4 pt-5">
                                  <p>\ Check Conditions</p>
                                  <p>\ Track Runs</p>
                                  <p>\ Share Your Stats</p>
                               </div>
-                              <p>
+                              <p className="opacity-40">
                                  Check the air, plan your route, and log your
                                  runs. All in one sleek app.
                               </p>
                            </div>
-                           <div className="h-[300px] w-[430px] bg-white/10"></div>
+                           <div className="h-[300px] w-[430px] bg-white/10 relative overflow-hidden rounded-[12px]">
+                              <Image
+                                 src="https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm-hero2-2.webp?updatedAt=1755578775371"
+                                 alt=""
+                                 fill
+                                 className="object-cover"
+                              />
+                           </div>
                         </div>
                      </div>
                      <button
@@ -84,7 +118,14 @@ const Page = () => {
                   </div>
                   <div ref={featuresRef} className="w-full pt-[60px]">
                      <div className="flex justify-between w-full mb-[40px]">
-                        <div className="w-[407px] h-[290px] bg-white/10"></div>
+                        <div className="w-[407px] h-[290px] relative">
+                           <Image
+                              src="https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm-feat1.webp?updatedAt=1755574977476"
+                              alt=""
+                              fill
+                              className="object-contain object-left"
+                           />
+                        </div>
                         <div className="flex flex-col items-end justify-between border-r border-r-white pr-[45px]">
                            <div className="font-headline text-[40px] leading-tight">
                               <p>Know the Air</p>
@@ -110,29 +151,33 @@ const Page = () => {
                               your run safely and comfortably.
                            </p>
                         </div>
-                        <div className="w-[407px] h-[290px] bg-white/10"></div>
+                        <div className="w-[407px] h-[290px] relative">
+                           <Image
+                              src="https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm-feat2.webp?updatedAt=1755574977637"
+                              alt=""
+                              fill
+                              className="object-contain object-right"
+                           />
+                        </div>
                      </div>
                      <div className="border-b border-b-white mb-[40px]" />
                      <div className="flex flex-col items-center w-full mb-[70px]">
                         <p className="text-center font-headline text-[40px] leading-tight mb-[40px]">
                            Stylishly Export Stats
                         </p>
-                        <div className="slider">
+                        <div className="slider relative">
+                           <div className="z-10 absolute h-full left-0 w-[200px] bg-gradient-to-r from-background to-transparent" />
+                           <div className="z-10 absolute h-full right-0 w-[200px] bg-gradient-to-l from-background to-transparent" />
                            <div className="slide-track flex gap-6">
-                              <div className="w-[310px] h-[310px] bg-white/10"></div>
-                              <div className="w-[310px] h-[310px] bg-white/10"></div>
-                              <div className="w-[310px] h-[310px] bg-white/10"></div>
-                              <div className="w-[310px] h-[310px] bg-white/10"></div>
-                              <div className="w-[310px] h-[310px] bg-white/10"></div>
-                              {/* duplicate for seamless loop */}
-                              <div className="w-[310px] h-[310px] bg-white/10"></div>
-                              <div className="w-[310px] h-[310px] bg-white/10"></div>
-                              <div className="w-[310px] h-[310px] bg-white/10"></div>
-                              <div className="w-[310px] h-[310px] bg-white/10"></div>
-                              <div className="w-[310px] h-[310px] bg-white/10"></div>
+                              {imageCarousels}
+                              {imageCarousels}
+                              {imageCarousels}
+                              {imageCarousels}
+                              {imageCarousels}
                            </div>
                         </div>
                      </div>
+                     <div className="border-b border-b-white mb-[40px]" />
                   </div>
                   <div className="bg-background p-[33px] rounded-2xl mb-[30px]">
                      <p className="text-center font-headline text-[40px] leading-tight mb-[30px]">
@@ -235,7 +280,6 @@ const Page = () => {
                         <p className="px-2">Launch Demo</p>
                      </button>
                      <div className="w-[440px] text-sm mx-auto border-t opacity-30 pt-4">
-                        <p className="font-semibold">Disclaimers:</p>
                         <p className="pb-4">
                            Each demo session is generated personally for each
                            user. Users are free to explore features, log runs,

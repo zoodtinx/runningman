@@ -120,8 +120,8 @@ button {
 
 .slide-track {
    display: flex;
-   width: calc(300%);
-   animation: scroll 60s linear infinite;
+   width: calc(700%);
+   animation: scroll 200s linear infinite;
 }
 
 @keyframes scroll {
