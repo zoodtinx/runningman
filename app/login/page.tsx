@@ -58,9 +58,9 @@ const Page = () => {
             <div className="w-full h-full flex flex-col items-center overflow-y-auto overflow-x-hidden">
                <div className="flex flex-col gap-2 w-[1200px]">
                   <div className="pt-[61px] h-screen w-full flex flex-col justify-between">
-                     <div>
-                        <div className="flex justify-between mb-[40px]">
-                           <RunningManLogo className="w-[300px] h-auto" />
+                     <div className="grow flex flex-col">
+                        <div className="flex justify-between grow">
+                           <RunningManLogo className="w-[300px]" />
                            <button
                               onClick={(e) => {
                                  e.currentTarget.focus();
@@ -75,33 +75,39 @@ const Page = () => {
                               <p className="px-2">Launch Demo</p>
                            </button>
                         </div>
-                        <div className="h-[440px] w-full mb-[20px] rounded-[12px] overflow-hidden">
-                           <Image
-                              src="https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm-hero1-2.webp?updatedAt=1755578775229"
-                              alt=""
-                              className="w-full h-full"
-                              height={0}
-                              width={1200}
-                           />
-                        </div>
-                        <div className="flex">
-                           <div className="grow">
-                              <div className="flex flex-col leading-tight font-headline text-[50px] mb-4 pt-5">
-                                 <p>\ Check Conditions</p>
-                                 <p>\ Track Runs</p>
-                                 <p>\ Share Your Stats</p>
+                        <div className="grow">
+                           <div className="flex mb-6">
+                              <div className="">
+                                 <div className="flex flex-col leading-tight font-headline text-[50px] mb-4">
+                                    <p>Check Conditions&nbsp;\</p>
+                                    <p>Start Running&nbsp;\</p>
+                                    <p>Share Your Stats&nbsp;\</p>
+                                 </div>
+                                 <p className="text-white/60 pr-28">
+                                    Plan your perfect run every time with
+                                    RunningMan. Real-time environment updates,
+                                    pre-calculated park routes, and flexible
+                                    tracking for runners of all levels. And
+                                    yeah, we make your post-run pics look fire
+                                    too so you can stylishly show off.
+                                 </p>
                               </div>
-                              <p className="opacity-40">
-                                 Check the air, plan your route, and log your
-                                 runs. All in one sleek app.
-                              </p>
+                              <div className="h-[300px] w-[430px] bg-white/10 relative overflow-hidden rounded-[12px] shrink-0">
+                                 <Image
+                                    src="https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm-hero2-2.webp?updatedAt=1755578775371"
+                                    alt=""
+                                    fill
+                                    className="object-cover"
+                                 />
+                              </div>
                            </div>
-                           <div className="h-[300px] w-[430px] bg-white/10 relative overflow-hidden rounded-[12px]">
+                           <div className="h-[440px] w-full mb-[20px] rounded-[12px] overflow-hidden">
                               <Image
-                                 src="https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm-hero2-2.webp?updatedAt=1755578775371"
+                                 src="https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm-hero1-2.webp?updatedAt=1755578775229"
                                  alt=""
-                                 fill
-                                 className="object-cover"
+                                 className="w-full h-full"
+                                 height={0}
+                                 width={1200}
                               />
                            </div>
                         </div>
@@ -127,14 +133,15 @@ const Page = () => {
                            />
                         </div>
                         <div className="flex flex-col items-end justify-between border-r border-r-white pr-[45px]">
-                           <div className="font-headline text-[40px] leading-tight">
+                           <div className="font-headline text-[40px] leading-tight text-right">
                               <p>Know the Air</p>
                               <p>Before The Run</p>
                            </div>
                            <p className="text-right w-[540px]">
-                              Provides an overview of current weather, air
-                              quality, and sun up/down times so you can plan
-                              your run safely and comfortably.
+                              Get a quick look at your local air quality before
+                              lacing up your running shoes. You'll know exactly
+                              what the air's like outside and can decide if it's
+                              a run day or a rest day.
                            </p>
                         </div>
                      </div>
@@ -142,13 +149,14 @@ const Page = () => {
                      <div className="flex justify-between w-full mb-[40px]">
                         <div className="flex flex-col justify-between border-l border-l-white pl-[45px]">
                            <div className="font-headline text-[40px] leading-tight">
-                              <p>Know the Air</p>
-                              <p>Before The Run</p>
+                              <p>Track Your Run</p>
+                              <p>As You Remember It</p>
                            </div>
                            <p className="w-[540px]">
-                              Provides an overview of current weather, air
-                              quality, and sun up/down times so you can plan
-                              your run safely and comfortably.
+                              It's just you and your running journal. Log your
+                              miles, times, routes, and how you felt with simple
+                              manual entry that puts you in complete control of
+                              your running data.
                            </p>
                         </div>
                         <div className="w-[407px] h-[290px] relative">
@@ -161,11 +169,11 @@ const Page = () => {
                         </div>
                      </div>
                      <div className="border-b border-b-white mb-[40px]" />
-                     <div className="flex flex-col items-center w-full mb-[70px]">
+                     <div className="flex flex-col items-center w-full mb-[45px]">
                         <p className="text-center font-headline text-[40px] leading-tight mb-[40px]">
-                           Stylishly Export Stats
+                           Post-Run Pic Perfection
                         </p>
-                        <div className="slider relative">
+                        <div className="slider relative mb-[40px]">
                            <div className="z-10 absolute h-full left-0 w-[200px] bg-gradient-to-r from-background to-transparent" />
                            <div className="z-10 absolute h-full right-0 w-[200px] bg-gradient-to-l from-background to-transparent" />
                            <div className="slide-track flex gap-6">
@@ -176,6 +184,13 @@ const Page = () => {
                               {imageCarousels}
                            </div>
                         </div>
+                        <p className="w-[560px] text-center">
+                           Snap your post-run moments with curated designs that
+                           match your run vibe. Whether you crushed a PR or just
+                           enjoyed a chill jog. Make your manual log more
+                           personal with pics that actually capture how each run
+                           felt.
+                        </p>
                      </div>
                      <div className="border-b border-b-white mb-[40px]" />
                   </div>
