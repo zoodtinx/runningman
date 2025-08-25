@@ -53,37 +53,72 @@ const Page = () => {
    ));
 
    return (
-      <div className="w-full h-screen flex justify-center items-center bg-background text-primary">
+      <div
+         className={
+            "w-full h-screen flex justify-center items-center bg-background text-primary"
+         }
+      >
          <div className="w-full h-full">
-            <div className="w-full h-full flex flex-col items-center overflow-y-auto overflow-x-hidden">
-               <div className="flex flex-col gap-2 w-[1200px]">
-                  <div className="pt-[61px] h-screen w-full flex flex-col justify-between">
+            <div
+               className={
+                  "w-full h-full flex flex-col items-center overflow-y-auto overflow-x-hidden"
+               }
+            >
+               <div className="flex flex-col gap-2 w-full xl:w-[1200px]">
+                  <div
+                     className={
+                        "pt-3 h-screen w-full flex flex-col justify-between " +
+                        "xl:pt-[61px]"
+                     }
+                  >
                      <div className="grow flex flex-col">
-                        <div className="flex justify-between grow">
-                           <RunningManLogo className="w-[300px]" />
+                        <div className="flex justify-between grow px-3">
+                           <RunningManLogo
+                              className={
+                                 "w-[170px] " + "md:w-[200px] " + "lg:w-[300px]"
+                              }
+                           />
                            <button
                               onClick={(e) => {
                                  e.currentTarget.focus();
                                  signInWithProvider("credentials");
                               }}
                               className={
-                                 "flex items-center text-[16px] bg-theme-good h-[30px] text-black px-2 rounded-[10px] font-headline uppercase font-semibold " +
+                                 "flex items-center text-[12px] bg-theme-good h-[23px] text-black px-2 rounded-[7px] font-headline uppercase font-semibold " +
+                                 "md:text-[14px] md:h-[26px] md:rounded-[10px] " +
+                                 "lg:text-[16px] lg:h-[30px] " +
                                  "focus:outline-none focus:ring-[1.5px] focus:ring-white focus:ring-offset-[2.5px] ring-offset-black"
                               }
                            >
-                              <ArrowRightTag />
-                              <p className="px-2">Launch Demo</p>
+                              <ArrowRightTag className="hidden md:block" />
+                              <p className="px-1 md:px-2">Launch Demo</p>
                            </button>
                         </div>
-                        <div className="grow">
-                           <div className="flex mb-6">
-                              <div className="">
-                                 <div className="flex flex-col leading-tight font-headline text-[50px] mb-4">
+                        <div className={"grow px-3 md:px-4 lg:px-0 md:pt-0"}>
+                           <div
+                              className={
+                                 "flex flex-col mb-3 " +
+                                 "md:flex-row " +
+                                 "lg:mb-6"
+                              }
+                           >
+                              <div>
+                                 <div
+                                    className={
+                                       "flex flex-col leading-tight font-headline text-[30px] mb-4 " +
+                                       "md:text-[40px] " +
+                                       "lg:text-[50px]"
+                                    }
+                                 >
                                     <p>Check Conditions&nbsp;\</p>
                                     <p>Start Running&nbsp;\</p>
                                     <p>Share Your Stats&nbsp;\</p>
                                  </div>
-                                 <p className="text-white/60 pr-28">
+                                 <p
+                                    className={
+                                       "text-white/60 text-sm md:pr-28 md:text-base"
+                                    }
+                                 >
                                     Plan your perfect run every time with
                                     RunningMan. Real-time environment updates,
                                     pre-calculated park routes, and flexible
@@ -92,7 +127,12 @@ const Page = () => {
                                     too so you can stylishly show off.
                                  </p>
                               </div>
-                              <div className="h-[300px] w-[430px] bg-white/10 relative overflow-hidden rounded-[12px] shrink-0">
+                              <div
+                                 className={
+                                    "hidden bg-white/10 relative overflow-hidden rounded-[12px] shrink-0 " +
+                                    "md:block md:h-[300px] md:w-[430px]"
+                                 }
+                              >
                                  <Image
                                     src="https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm-hero2-2.webp?updatedAt=1755578775371"
                                     alt=""
@@ -101,11 +141,17 @@ const Page = () => {
                                  />
                               </div>
                            </div>
-                           <div className="h-[440px] w-full mb-[20px] rounded-[12px] overflow-hidden">
+                           <div
+                              className={
+                                 "h-fit w-full mb-[20px] rounded-[7px] overflow-hidden " +
+                                 "md:h-[320px] " +
+                                 "lg:h-[440px] md:rounded-[12px]"
+                              }
+                           >
                               <Image
                                  src="https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm-hero1-2.webp?updatedAt=1755578775229"
                                  alt=""
-                                 className="w-full h-full"
+                                 className="object-contain"
                                  height={0}
                                  width={1200}
                               />
@@ -113,31 +159,61 @@ const Page = () => {
                         </div>
                      </div>
                      <button
-                        className="pb-5 group w-fit mx-auto"
+                        className="pb-2 lg:pb-5 group w-fit mx-auto"
                         onClick={handleExploreFeatures}
                      >
-                        <p className="uppercase text-center font-headline font-semibold">
+                        <p
+                           className={
+                              "uppercase text-center font-headline font-semibold text-sm " +
+                              "md:text-base"
+                           }
+                        >
                            Explore Features
                         </p>
                         <NavArrowDown className="mx-auto animate-shake" />
                      </button>
                   </div>
-                  <div ref={featuresRef} className="w-full pt-[60px]">
-                     <div className="flex justify-between w-full mb-[40px]">
-                        <div className="w-[407px] h-[290px] relative">
+
+                  {/* Features Section */}
+                  <div ref={featuresRef} className="w-full pt-[60px] md:px-8">
+                     <div
+                        className={
+                           "flex flex-col justify-between items-center w-full mb-[40px] " +
+                           "md:flex-row md:items-start"
+                        }
+                     >
+                        <div
+                           className={
+                              "w-[250px] h-[175px] relative shrink-0 mb-5 " +
+                              "md:w-[407px] md:h-[290px] md:mb-0"
+                           }
+                        >
                            <Image
                               src="https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm-feat1.webp?updatedAt=1755574977476"
                               alt=""
                               fill
-                              className="object-contain object-left"
+                              className="object-contain object-left w-full h-full"
                            />
                         </div>
-                        <div className="flex flex-col items-end justify-between border-r border-r-white pr-[45px]">
-                           <div className="font-headline text-[40px] leading-tight text-right">
+                        <div
+                           className={
+                              "flex flex-col items-end justify-between border-r border-r-transparent md:border-r-white md:pr-[45px]"
+                           }
+                        >
+                           <div
+                              className={
+                                 "font-headline pb-2 text-[30px] leading-tight text-center w-full " +
+                                 "md:pb-0 md:w-fir md:text-right md:text-[40px]"
+                              }
+                           >
                               <p>Know the Air</p>
                               <p>Before The Run</p>
                            </div>
-                           <p className="text-right w-[540px]">
+                           <p
+                              className={
+                                 "text-center px-5 md:px-0 md:text-right md:pl-10 md:w-auto lg:w-[540px]"
+                              }
+                           >
                               Get a quick look at your local air quality before
                               lacing up your running shoes. You'll know exactly
                               what the air's like outside and can decide if it's
@@ -145,35 +221,77 @@ const Page = () => {
                            </p>
                         </div>
                      </div>
+
                      <div className="border-b border-b-white mb-[40px]" />
-                     <div className="flex justify-between w-full mb-[40px]">
-                        <div className="flex flex-col justify-between border-l border-l-white pl-[45px]">
-                           <div className="font-headline text-[40px] leading-tight">
+
+                     <div
+                        className={
+                           "flex flex-col justify-between items-center w-full mb-[40px] " +
+                           "md:flex-row md:items-start"
+                        }
+                     >
+                        <div
+                           className={
+                              "flex flex-col items-end justify-between border-l border-l-transparent order-2 md:border-l-white md:pl-[45px] md:order-1"
+                           }
+                        >
+                           <div
+                              className={
+                                 "font-headline pb-2 text-[30px] leading-tight text-center w-full " +
+                                 "md:pb-0 md:w-fir md:text-left md:text-[40px]"
+                              }
+                           >
                               <p>Track Your Run</p>
                               <p>As You Remember It</p>
                            </div>
-                           <p className="w-[540px]">
+                           <p
+                              className={
+                                 "text-center px-5 md:px-0 md:text-left md:pr-10 md:w-auto lg:w-[540px]"
+                              }
+                           >
                               It's just you and your running journal. Log your
                               miles, times, routes, and how you felt with simple
                               manual entry that puts you in complete control of
                               your running data.
                            </p>
                         </div>
-                        <div className="w-[407px] h-[290px] relative">
+                        <div
+                           className={
+                              "w-[250px] h-[175px] relative shrink-0 mb-5 order-1 " +
+                              "md:w-[407px] md:h-[290px] md:mb-0 md:order-2"
+                           }
+                        >
                            <Image
                               src="https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm-feat2.webp?updatedAt=1755574977637"
                               alt=""
                               fill
-                              className="object-contain object-right"
+                              className="object-contain object-center md:object-right"
                            />
                         </div>
                      </div>
+
                      <div className="border-b border-b-white mb-[40px]" />
-                     <div className="flex flex-col items-center w-full mb-[45px]">
-                        <p className="text-center font-headline text-[40px] leading-tight mb-[40px]">
+
+                     {/* Post Run Pic */}
+                     <div
+                        className={
+                           "flex flex-col items-center w-full mb-[45px] h-[420px] " +
+                           "lg:h-auto"
+                        }
+                     >
+                        <p
+                           className={
+                              "text-center font-headline text-[30px] leading-tight mb-[27px] " +
+                              "md:text-[40px] md:mb-[40px]"
+                           }
+                        >
                            Post-Run Pic Perfection
                         </p>
-                        <div className="slider relative mb-[40px]">
+                        <div
+                           className={
+                              "slider relative mb-[27px] " + "md:mb-[40px]"
+                           }
+                        >
                            <div className="z-10 absolute h-full left-0 w-[200px] bg-gradient-to-r from-background to-transparent" />
                            <div className="z-10 absolute h-full right-0 w-[200px] bg-gradient-to-l from-background to-transparent" />
                            <div className="slide-track flex gap-6">
@@ -184,7 +302,7 @@ const Page = () => {
                               {imageCarousels}
                            </div>
                         </div>
-                        <p className="w-[560px] text-center">
+                        <p className={"px-5 text-center md:w-[560px] md:px-0"}>
                            Snap your post-run moments with curated designs that
                            match your run vibe. Whether you crushed a PR or just
                            enjoyed a chill jog. Make your manual log more
@@ -192,13 +310,25 @@ const Page = () => {
                            felt.
                         </p>
                      </div>
+
                      <div className="border-b border-b-white mb-[40px]" />
                   </div>
-                  <div className="bg-background p-[33px] rounded-2xl mb-[30px]">
-                     <p className="text-center font-headline text-[40px] leading-tight mb-[30px]">
+
+                  {/* Tech Stack Section */}
+                  <div className="bg-background p-[33px] py-0 md:py-[33px] rounded-2xl mb-[30px]">
+                     <p
+                        className={
+                           "text-center font-headline text-[30px] leading-tight mb-[30px] " +
+                           "md:text-[40px]"
+                        }
+                     >
                         Tech Stack
                      </p>
-                     <div className="flex gap-[23px] mb-[30px]">
+                     <div
+                        className={
+                           "flex flex-col gap-[23px] mb-[30px] " + "md:flex-row"
+                        }
+                     >
                         <div className="flex-1 border border-primary/50 rounded-xl h-auto overflow-hidden">
                            <p className="px-3 py-2 text-[15px] text-primary/50 bg-primary/5 font-headline uppercase font-semibold text-center">
                               Client & Server
@@ -265,7 +395,7 @@ const Page = () => {
                      </div>
                      <button
                         className={
-                           "flex items-center text-md bg-white/5 h-[34px] text-white mx-auto px-2 pr-3 gap-2 rounded-full " +
+                           "flex items-center bg-white/5 h-[34px] text-md text-white mx-auto px-2 pr-3 gap-2 rounded-full " +
                            "focus:outline-none focus:ring-2 focus:ring-primary/40 focus:ring-offset-[2.5px] ring-offset-black"
                         }
                         onClick={(e) => e.currentTarget.focus()}
@@ -276,9 +406,17 @@ const Page = () => {
                         </span>
                      </button>
                   </div>
+
                   <div className="border-b border-b-white mb-[70px]" />
+
+                  {/* Full Features CTA */}
                   <div className="mb-[70px]">
-                     <p className="text-center font-headline text-[40px] leading-tight mb-[15px]">
+                     <p
+                        className={
+                           "text-center font-headline text-[30px] leading-tight mb-[15px] " +
+                           "md:text-[40px]"
+                        }
+                     >
                         Explore Full Features
                      </p>
                      <button
@@ -294,7 +432,7 @@ const Page = () => {
                         <ArrowRightTag />
                         <p className="px-2">Launch Demo</p>
                      </button>
-                     <div className="w-[440px] text-sm mx-auto border-t opacity-30 pt-4">
+                     <div className="w-[300px] md:w-[440px] text-sm mx-auto border-t opacity-30 pt-4">
                         <p className="pb-4">
                            Each demo session is generated personally for each
                            user. Users are free to explore features, log runs,
@@ -307,12 +445,15 @@ const Page = () => {
                         </p>
                      </div>
                   </div>
+
                   <div className="flex justify-between items-center text-[14px] px-3 w-full h-[33px] text-foreground bg-theme-good font-medium">
                      <button className="flex gap-1 items-center">
                         <ArrowUpLeft className="size-4" />
                         <p>See More Of My Portfolio Projects</p>
                      </button>
-                     <p>© 2025 Peerapol Glaajing, All Rights Reserved.</p>
+                     <p className="hidden md:block">
+                        © 2025 Peerapol Glaajing, All Rights Reserved.
+                     </p>
                   </div>
                </div>
             </div>

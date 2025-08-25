@@ -81,7 +81,7 @@
    --text-2xl: 57px;
 
    --breakpoint-sm: 0px;
-   --breakpoint-md: 768px;
+   --breakpoint-md: 821px;
    --breakpoint-lg: 1181px;
    --breakpoint-xl: 1280px;
 }
@@ -122,6 +122,14 @@ button {
    display: flex;
    width: calc(700%);
    animation: scroll 200s linear infinite;
+}
+
+/* Mobile styles for slider */
+@media (max-width: 767px) {
+   .slide-track {
+      width: calc(1200%);
+      animation-duration: 120s;
+   }
 }
 
 @keyframes scroll {
