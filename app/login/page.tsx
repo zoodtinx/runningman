@@ -178,7 +178,7 @@ const Page = () => {
                   <div ref={featuresRef} className="w-full pt-[60px] md:px-8">
                      <div
                         className={
-                           "flex flex-col justify-between items-center w-full mb-[40px] " +
+                           "flex flex-col justify-between items-center w-full mb-[40px] border-r border-r-transparent md:border-r-white " +
                            "md:flex-row md:items-start"
                         }
                      >
@@ -197,7 +197,7 @@ const Page = () => {
                         </div>
                         <div
                            className={
-                              "flex flex-col items-end justify-between border-r border-r-transparent md:border-r-white md:pr-[45px]"
+                              "flex flex-col items-end justify-between md:pr-[45px]"
                            }
                         >
                            <div
@@ -226,13 +226,13 @@ const Page = () => {
 
                      <div
                         className={
-                           "flex flex-col justify-between items-center w-full mb-[40px] " +
+                           "flex flex-col justify-between items-center w-full mb-[40px] border-l border-l-transparent md:border-l-white " +
                            "md:flex-row md:items-start"
                         }
                      >
                         <div
                            className={
-                              "flex flex-col items-end justify-between border-l border-l-transparent order-2 md:border-l-white md:pl-[45px] md:order-1"
+                              "flex flex-col items-end justify-between border-l border-l-transparent order-2  md:pl-[45px] md:order-1"
                            }
                         >
                            <div

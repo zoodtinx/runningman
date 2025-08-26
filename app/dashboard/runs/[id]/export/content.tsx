@@ -110,6 +110,9 @@ export function EmblaCarousel({
             <div className="flex flex-col grow items-center">
                <div className="flex flex-col h-fit mb-6 md:h-fit">
                   <p className="font-headline text-[30px]">{theme.theme}</p>
+                  <p className="font-headline opacity-30 h-[30px]">
+                     {!theme.transparent && "Transparent"}
+                  </p>
                </div>
                <div
                   className={cn(
