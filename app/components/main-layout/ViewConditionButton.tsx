@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { RunConditionCard } from "@/components/main-layout/RunConditionCard";
 import { ScrollArea } from "@/components/primitives/ScrollArea";
 import { getRunSummary } from "@/lib/run-conditions/calculate-readiness";
@@ -9,7 +9,6 @@ import { RunCondition, User } from "@prisma/client";
 import { format } from "date-fns";
 import { HighlightedStats } from "@/components/main-layout/RunSummaryPanel";
 import NiceSettings from "@/components/icons/Settings";
-import { ControlSlider } from "iconoir-react";
 import Link from "next/link";
 
 interface ViewConditionButtonProps {

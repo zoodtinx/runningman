@@ -1,7 +1,5 @@
 "use client";
 
-import { usePathname, useSearchParams } from "next/navigation";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
 import {
    Calendar,
@@ -11,7 +9,6 @@ import {
    Menu,
    Running,
 } from "iconoir-react";
-import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
    DropdownMenu,
@@ -21,9 +18,7 @@ import {
 } from "@/components/primitives/DropdownMenu";
 
 export default function MobileNav() {
-   const pathname = usePathname();
    const router = useRouter();
-   const current = pathname?.split("/").pop() || "";
 
    const nav = [
       { href: "/dashboard/runs", label: "RUNS", key: "runs", Icon: Running },
@@ -71,7 +66,7 @@ export default function MobileNav() {
                            "flex gap-1 font-medium"
                            // current === key ? "font-bold" : "font-medium"
                         )}
-                        onClick={(e) => {
+                        onClick={() => {
                            router.replace(href);
                         }}
                      >
@@ -91,7 +86,7 @@ const ViewConditionButton = () => {
    const searchParams = new URLSearchParams(window.location.search);
    searchParams.set("condition", "open");
 
-   const handleClick = (e: React.MouseEvent) => {
+   const handleClick = () => {
       router.push(`?${searchParams.toString()}`);
    };
 

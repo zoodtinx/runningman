@@ -73,6 +73,7 @@ const TimePicker: React.FC<TimePickerProps> = ({ value, handleChange }) => {
       setSelectedHour(hour);
       setSelectedMinute(minute);
       setSelectedPeriod(period);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
    useEffect(() => {

@@ -41,20 +41,43 @@ const RoutePageContent = ({
    const router = useRouter();
    const { data: session } = useSession();
    const [mode, setMode] = useState<"distance" | "time">("distance");
-   const { control, handleSubmit, setValue } = useForm<EditRouteDtoWithPace>({
-      defaultValues: { ...routeData, userId: session?.user?.id },
-   });
+   const { control, handleSubmit, setValue, getValues } =
+      useForm<EditRouteDtoWithPace>({
+         defaultValues: { ...routeData, userId: session?.user?.id },
+      });
+   const [distanceValue, setDistanceValue] = useState<number | null>(
+      routeData.distance ?? null
+   );
+   const [durationValue, setDurationValue] = useState<number | null>(
+      routeData.duration ?? null
+   );
+   const [lapsValue, setLapsValue] = useState<number>(routeData.laps ?? 1);
 
    useEffect(() => {
       if (mode === "distance") {
-         setValue("distance", 1);
+         setValue("distance", distanceValue);
          setValue("duration", null);
-      } else if (mode === "time") {
-         setValue("duration", 1);
+         setValue("laps", lapsValue);
+      } else {
+         setValue("duration", durationValue);
          setValue("distance", null);
          setValue("laps", 1);
       }
-   }, [mode, setValue]);
+   }, [mode, distanceValue, durationValue, setValue, lapsValue]);
+
+   const handleToggle = (
+      e: React.MouseEvent,
+      selected: "distance" | "time"
+   ) => {
+      e.preventDefault();
+      if (mode === "distance") {
+         setDistanceValue(getValues("distance") ?? null);
+         setLapsValue(getValues("laps") ?? 1);
+      } else {
+         setDurationValue(getValues("duration") ?? null);
+      }
+      setMode(selected);
+   };
 
    const handleDelete = async (e: React.MouseEvent) => {
       e.preventDefault();
@@ -71,16 +94,7 @@ const RoutePageContent = ({
       router.push("/dashboard/routes");
    };
 
-   const handleToggle = (
-      e: React.MouseEvent,
-      selected: "distance" | "time"
-   ) => {
-      e.preventDefault();
-      setMode(selected);
-   };
-
    const onSubmit = async (data: EditRouteDtoWithPace) => {
-      console.log("clicked");
       if (data.distance !== undefined) data.distance = Number(data.distance);
       if (data.duration !== undefined) data.duration = Number(data.duration);
       if (data.laps !== undefined) data.laps = Number(data.laps);
@@ -273,7 +287,6 @@ export const RoutePageBreadCrumb = ({
 }: {
    routeData: RouteFindOneResponse;
 }) => {
-   console.log("routeData", routeData);
    return (
       <Breadcrumb>
          <BreadcrumbList>

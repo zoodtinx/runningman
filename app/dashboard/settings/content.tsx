@@ -20,6 +20,7 @@ import DragBoard, {
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import { Check } from "iconoir-react";
+import { useSession } from "next-auth/react";
 
 const deleteButtonTexts = [
    "Delete Account",
@@ -28,6 +29,7 @@ const deleteButtonTexts = [
 ];
 
 const SettingsPageContent = ({ userData }: { userData: User }) => {
+   const { data: session } = useSession();
    const { handleSubmit, control } = useForm<EditUserDto>({
       defaultValues: userData,
    });
@@ -53,7 +55,6 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
 
       setLoading(true);
       try {
-         console.log(parsedData);
          await editUser(userData.id, parsedData);
          setSuccess(true);
          setTimeout(() => setSuccess(false), 2000);
@@ -68,7 +69,11 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
       } else {
          setDeleteLoading(true);
          try {
-            await deleteUser("mock-user");
+            if (!session?.user?.id) {
+               return;
+            }
+            await signOut();
+            await deleteUser(session?.user?.id);
          } finally {
             setDeleteLoading(false);
             setDeleteStep(0);
@@ -78,7 +83,6 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
 
    const handleSignout = (e: React.MouseEvent) => {
       e.preventDefault();
-      console.log("signed out");
       signOut();
    };
 

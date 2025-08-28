@@ -15,7 +15,7 @@ const RoutesPage = async () => {
       where: {
          userId: session?.user.id,
       },
-      orderBy: [{ createdAt: "desc" }],
+      orderBy: [{ title: "asc" }],
    });
    const routeBars = routesData.map((route) => (
       <Link href={`/dashboard/routes/${route.id}`} key={route.id}>

@@ -141,6 +141,21 @@ button {
    }
 }
 
+@keyframes slide-up {
+   from {
+      transform: translateY(10%);
+      opacity: 0;
+   }
+   to {
+      transform: translateY(0);
+      opacity: 1;
+   }
+}
+
+.animate-slide-up {
+   animation: slide-up 1.35s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
 .rdp-root {
    --rdp-accent-color: yellow; /* The accent color used for selected days and UI elements. */
    --rdp-accent-background-color: #f0f0ff; /* The accent background color used for selected days and UI elements. */

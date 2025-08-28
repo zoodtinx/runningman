@@ -1,6 +1,5 @@
 import RunningManLogo from "@/components/icons/RunningManLogo";
 import { cn } from "@/lib/utils";
-import { redirect } from "next/navigation";
 import React from "react";
 
 interface ExportCardProps {
@@ -211,7 +210,7 @@ const Zone4 = ({ runData }: ExportCardProps) => {
    return (
       <div className="flex flex-col items-end gap-5">
          <div className="flex bg-[#0000ff] text-white w-[930px] h-[180px] px-[40px] rounded-[30px] items-center">
-            {data.map((dataPoint, i, arr) => {
+            {data.map((dataPoint, i) => {
                const isFirstElem = i === 0;
                return (
                   <div

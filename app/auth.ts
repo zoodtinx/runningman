@@ -17,8 +17,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             const demoUser = await createDemoSession();
 
             if (demoUser) {
-               console.log("demoUser", demoUser);
-               return demoUser.user; // returned user goes into token & session
+               return demoUser.user;
             }
             return null;
          },
@@ -29,19 +28,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       signIn: "/login",
    },
    session: {
-      strategy: "jwt", // Use JWT instead of database sessions
+      strategy: "jwt",
+      maxAge: 2 * 60 * 60,
+   },
+   jwt: {
+      maxAge: 2 * 60 * 60,
    },
    callbacks: {
       async signIn({ user }) {
-         console.log("user", user);
          if (!user.email) return false;
 
          const baseSchedule = Array.from({ length: 7 }).map((_, i) => ({
-            dayOfWeek: i, // 0 = Sunday, 6 = Saturday
+            dayOfWeek: i,
             routeId: null,
          }));
 
-         const newUser = await prisma.user.upsert({
+         await prisma.user.upsert({
             where: { email: user.email },
             update: {},
             create: {
@@ -59,12 +61,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             },
          });
 
-         console.log("newUser", newUser);
          return true;
       },
 
       async jwt({ token, user }) {
-         // Store user data in JWT token during sign-in
          if (user?.email) {
             const dbUser = await prisma.user.findUnique({
                where: { email: user.email },
@@ -80,7 +80,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
 
       async session({ session, token }) {
-         // Get user data from JWT token (no database query needed)
          if (token.id) {
             session.user.id = token.id as string;
             session.user.email = token.email as string;
@@ -90,7 +89,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
 
       async redirect({ url, baseUrl }) {
-         console.log("url", url);
          if (url && url.includes("/login")) {
             return `${baseUrl}/dashboard/runs?condition=open`;
          }

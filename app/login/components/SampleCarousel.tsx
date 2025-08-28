@@ -10,7 +10,7 @@ type PropType = {
 
 const SampleCarousel: React.FC<PropType> = (props) => {
    const { slides, options } = props;
-   const [emblaRef, emblaApi] = useSampleCarousel(options, [Autoplay()]);
+   const [emblaRef] = useSampleCarousel(options, [Autoplay()]);
 
    return (
       <section className="embla w-full">

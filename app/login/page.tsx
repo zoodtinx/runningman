@@ -52,6 +52,8 @@ const Page = () => {
       </div>
    ));
 
+   const headlines = ["Check Conditions", "Start Running", "Share Your Stats"];
+
    return (
       <div
          className={
@@ -94,7 +96,11 @@ const Page = () => {
                               <p className="px-1 md:px-2">Launch Demo</p>
                            </button>
                         </div>
-                        <div className={"grow px-3 md:px-4 lg:px-0 md:pt-0"}>
+                        <div
+                           className={
+                              "grow px-3 md:px-4 lg:px-0 md:pt-0 animate-slide-up"
+                           }
+                        >
                            <div
                               className={
                                  "flex flex-col mb-3 " +
@@ -110,9 +116,21 @@ const Page = () => {
                                        "lg:text-[50px]"
                                     }
                                  >
-                                    <p>Check Conditions&nbsp;\</p>
-                                    <p>Start Running&nbsp;\</p>
-                                    <p>Share Your Stats&nbsp;\</p>
+                                    <div
+                                       className="
+        flex flex-col leading-tight font-headline text-[30px] mb-4
+        md:text-[40px] lg:text-[50px]
+      "
+                                    >
+                                       {headlines.map((text, i) => (
+                                          <p key={i}>
+                                             {text}&nbsp;
+                                             <span className="text-theme-good">
+                                                \
+                                             </span>
+                                          </p>
+                                       ))}
+                                    </div>
                                  </div>
                                  <p
                                     className={
@@ -170,7 +188,7 @@ const Page = () => {
                         >
                            Explore Features
                         </p>
-                        <NavArrowDown className="mx-auto animate-shake" />
+                        <NavArrowDown className="mx-auto animate-shake text-theme-good" />
                      </button>
                   </div>
 
@@ -178,7 +196,7 @@ const Page = () => {
                   <div ref={featuresRef} className="w-full pt-[60px] md:px-8">
                      <div
                         className={
-                           "flex flex-col justify-between items-center w-full mb-[40px] border-r border-r-transparent md:border-r-white " +
+                           "flex flex-col justify-between items-center w-full mb-[40px] border-r border-r-transparent md:border-r-theme-good " +
                            "md:flex-row md:items-start"
                         }
                      >
@@ -215,18 +233,18 @@ const Page = () => {
                               }
                            >
                               Get a quick look at your local air quality before
-                              lacing up your running shoes. You'll know exactly
-                              what the air's like outside and can decide if it's
-                              a run day or a rest day.
+                              lacing up your running shoes. You&apos;ll know
+                              exactly what the air&apos;s like outside and can
+                              decide if it&apos;s a run day or a rest day.
                            </p>
                         </div>
                      </div>
 
-                     <div className="border-b border-b-white mb-[40px]" />
+                     <div className="border-b border-b-theme-good mb-[40px]" />
 
                      <div
                         className={
-                           "flex flex-col justify-between items-center w-full mb-[40px] border-l border-l-transparent md:border-l-white " +
+                           "flex flex-col justify-between items-center w-full mb-[40px] border-l border-l-transparent md:border-l-theme-good " +
                            "md:flex-row md:items-start"
                         }
                      >
@@ -249,10 +267,10 @@ const Page = () => {
                                  "text-center px-5 md:px-0 md:text-left md:pr-10 md:w-auto lg:w-[540px]"
                               }
                            >
-                              It's just you and your running journal. Log your
-                              miles, times, routes, and how you felt with simple
-                              manual entry that puts you in complete control of
-                              your running data.
+                              It&apos;s just you and your running journal. Log
+                              your miles, times, routes, and how you felt with
+                              simple manual entry that puts you in complete
+                              control of your running data.
                            </p>
                         </div>
                         <div
@@ -270,7 +288,7 @@ const Page = () => {
                         </div>
                      </div>
 
-                     <div className="border-b border-b-white mb-[40px]" />
+                     <div className="border-b border-b-theme-good mb-[40px]" />
 
                      {/* Post Run Pic */}
                      <div
@@ -311,7 +329,7 @@ const Page = () => {
                         </p>
                      </div>
 
-                     <div className="border-b border-b-white mb-[40px]" />
+                     <div className="border-b border-b-theme-good mb-[40px]" />
                   </div>
 
                   {/* Tech Stack Section */}
@@ -398,7 +416,14 @@ const Page = () => {
                            "flex items-center bg-white/5 h-[34px] text-md text-white mx-auto px-2 pr-3 gap-2 rounded-full " +
                            "focus:outline-none focus:ring-2 focus:ring-primary/40 focus:ring-offset-[2.5px] ring-offset-black"
                         }
-                        onClick={(e) => e.currentTarget.focus()}
+                        onClick={(e) => {
+                           e.currentTarget.focus();
+                           window.open(
+                              "https://github.com/zoodtinx/runningman",
+                              "_blank",
+                              "noopener,noreferrer"
+                           );
+                        }}
                      >
                         <GithubLogo className="size-[20px]" />
                         <span className="text-[16px] font-headline uppercase font-semibold">
@@ -407,7 +432,7 @@ const Page = () => {
                      </button>
                   </div>
 
-                  <div className="border-b border-b-white mb-[70px]" />
+                  <div className="border-b border-b-theme-good mb-[70px]" />
 
                   {/* Full Features CTA */}
                   <div className="mb-[70px]">
@@ -440,17 +465,22 @@ const Page = () => {
                            their session.
                         </p>
                         <p className="font-semibold">
-                           All data will be automatically deleted 1 hour after
+                           All data will be automatically deleted 2 hour after
                            creation.
                         </p>
                      </div>
                   </div>
 
                   <div className="flex justify-between items-center text-[14px] px-3 w-full h-[33px] text-foreground bg-theme-good font-medium">
-                     <button className="flex gap-1 items-center">
+                     <a
+                        href="https://www.peerapol.dev/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex gap-1 items-center"
+                     >
                         <ArrowUpLeft className="size-4" />
                         <p>See More Of My Portfolio Projects</p>
-                     </button>
+                     </a>
                      <p className="hidden md:block">
                         © 2025 Peerapol Glaajing, All Rights Reserved.
                      </p>

@@ -15,8 +15,6 @@ const RouteBar = ({ routeData }: { routeData: Route }) => {
 
    const unit = userData.unit === "metric" ? "km" : "mi";
 
-   console.log("routeData", routeData);
-
    return (
       <div
          className={cn(

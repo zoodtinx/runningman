@@ -1,80 +1,62 @@
-# RunningMan
+<p align="center">
+    <img src="https://ik.imagekit.io/freelanceman/github/rnm-readme-header.png?updatedAt=1756222221846" alt="RunningMan - Great Runs Begin With Great Conditions" />
+</p>
 
-_A running readiness tracker for people without GPS watches._
+**RunningMan** is a running tool that helps runners make smart decisions by checking outdoor conditions and tracking personal data. The app features custom post-run stats pics, manual logging for distance and time, and helps runners prepare better based on current outdoor vibes.
 
----
+## ✨ Features
 
-## Overview
+### • Running Readiness Insights
 
-Many runners don’t use smartwatches or mobile tracking apps, yet still need to plan their runs effectively. **RunningMan** helps users check daily running conditions based on air quality, weather, and sun cycle—plus lets them manually track laps, times, and routes.
+View daily running readiness score and summary based on air quality, weather conditions, and sunrise/sunset times to plan safer and optimal runs.
 
----
+### • Save Favorite Routes
 
-## Features
+Select from previously saved routes in popular parks, specify lap counts, and manually log start and finish times to track performance.
 
-### 🌤 Run Readiness Conditions
+### • Stunning Post Run Pics
 
-Visual indicators for air quality, temperature, humidity, and sunlight so users know if it's a good day to run.
+Create and customize beautiful post-run statistics images with your distance, time, and route details to share your running achievements.
 
-### 🏞️ Predefined Park Routes
+## 📱 Live Demo
 
-Choose from curated running routes in popular parks across Thailand. Set laps, distances, and durations manually.
+-  **Live Demo**: [runningman.peerapol.dev/](https://runningman.peerapol.dev/)
 
-### 📝 Manual Run Tracking
+## ⚙️ Tech Stack
 
-Log your start/finish time, laps, and estimated distance—perfect for users without GPS or wearables.
+### Architecture
 
-### 🧹 Demo Data Auto-Cleanup (Cron Job)
+-  **App**: Next.js, Tailwind, React Hook Form, Shadcn (Radix UI), Phosphor Icons
 
-Scheduled job that clears demo user data daily to keep the app clean.
+   -  Auth.js with JWT authentication
+   -  Get real-time weather and air quality data from 3rd Party API
+   -  Update weather data hourly with cron job implement via github action
 
----
+-  **Database**: PostgreSQL
+   -  Relational design with Prisma ORM
 
-## Demo
+### Infrastructure
 
--  **Live Demo**: [Insert Live URL]
--  **Screenshots**: [Insert images or links]
+-  **Deployment**:
 
----
+   -  App & Managed Database on Railway
 
-## Tech Stack
+-  **3rd Party API**:
+   -  Tomorrow.io for weather data
+   -  IQAir for air quality index
 
-### 🧠 Language
+## 💡 What I Learned
 
--  TypeScript
+### 3rd Party API Integration
 
-### 💻 Frontend
+-  **Multiple APIs**:
+   -  Standardizing data from different sources into a consistent format
+-  **Data Processing**:
+   -  Converting raw API responses into scores and translating them into clear, actionable insights
 
--  Framework: Next.js (App Router)
--  UI: Tailwind CSS, Shadcn
--  State Management: Zustand
--  API Client: React Query
+### Data Visualization
 
-### 🛠 Backend
-
--  Framework: Nest.js
--  Database: PostgreSQL (via Prisma ORM)
--  Background Jobs: cron + node-cron
-
-### ☁ Services
-
--  Weather & AQI API: Tomorrow.io
-
----
-
-## What I learned
-
----
-
-## Challenges & Solutions
-
----
-
-## How to Run Locally
-
-```bash
-git clone https://github.com/yourusername/runningman.git
-cd runningman
-npm install
-npm run dev
-```
+-  **Stat-to-Image Conversion**:
+   -  Generating PNG images from user running stats for easy sharing or download
+-  **UI Mapping**:
+   -  Presenting running metrics in a visually clear and engaging way

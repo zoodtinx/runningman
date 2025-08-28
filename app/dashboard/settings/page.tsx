@@ -3,6 +3,7 @@ import SettingsPageContent from "@/dashboard/settings/content";
 import { prisma } from "@/lib/prisma";
 import { cn } from "@/lib/utils";
 import { User } from "@/lib/zod/user.zod.schema";
+import { SessionProvider } from "next-auth/react";
 
 const SettingsPage = async () => {
    const session = await auth();
@@ -22,7 +23,9 @@ const SettingsPage = async () => {
             "lg:p-[20px] lg:pt-0"
          )}
       >
-         <SettingsPageContent userData={user as unknown as User} />
+         <SessionProvider>
+            <SettingsPageContent userData={user as unknown as User} />
+         </SessionProvider>
       </div>
    );
 };

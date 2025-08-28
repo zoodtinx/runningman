@@ -19,12 +19,10 @@ export const DayBar = ({
 }) => {
    const handleRouteChange = async (value: string) => {
       await editScheduleItem({ id: schedulesData.id, routeId: value });
-      console.log("changed");
    };
 
    const handleDiscardRoute = async () => {
       await editScheduleItem({ id: schedulesData.id, routeId: null });
-      console.log("changed");
    };
 
    const { dayOfWeek, route } = schedulesData;

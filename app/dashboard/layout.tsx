@@ -10,6 +10,7 @@ import { getRunSummary } from "@/lib/run-conditions/calculate-readiness";
 import RunningManLogo from "@/components/icons/RunningManLogo";
 import ViewConditionButton from "@/components/main-layout/ViewConditionButton";
 import MobileNav from "@/components/main-layout/MobileNav";
+import { User } from "@prisma/client";
 
 const Layout = async ({
    children,
@@ -40,14 +41,10 @@ const Layout = async ({
       return [user, conditions];
    });
 
-   if (!user) {
-      return <div className="text-red-500 p-4">User not found.</div>;
-   }
-
    const runConditions = await prisma.runCondition.findMany({
       where: {
          userId: "master",
-         location: user.location || "bangkok",
+         location: user?.location || "bangkok",
       },
    });
 
@@ -87,7 +84,7 @@ const Layout = async ({
                <RunningManLogo className="w-[160px]" />
                <ViewConditionButton
                   conditionsData={conditions}
-                  userData={user}
+                  userData={user as User}
                />
             </div>
             <section
