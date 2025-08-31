@@ -44,15 +44,15 @@ export default function MobileNav() {
 
    return (
       <div
-         className="absolute bottom-5 w-full flex justify-center z-50 lg:hidden"
+         className="flex justify-center z-50 lg:hidden"
          onClick={(e) => {
             e.stopPropagation();
          }}
       >
          <DropdownMenu>
             <DropdownMenuTrigger>
-               <div className="aspect-square bg-white rounded-full p-2 shadow-md">
-                  <Menu className="mx-auto size-5 md:size-7 stroke-[2.5px]" />
+               <div className="aspect-square rounded-full p-2 shadow-md bg-background">
+                  <Menu className="mx-auto size-3 md:size-3 stroke-[2.5px] text-white" />
                </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-white border-transparent rounded-xl">

@@ -69,15 +69,16 @@ const Page = () => {
                <div className="flex flex-col gap-2 w-full xl:w-[1200px]">
                   <div
                      className={
-                        "pt-3 h-screen w-full flex flex-col justify-between " +
-                        "xl:pt-[61px]"
+                        "h-screen w-full flex flex-col justify-between lg:px-6 "
                      }
                   >
                      <div className="grow flex flex-col">
-                        <div className="flex justify-between grow px-3">
+                        <div className="flex items-center justify-between px-3 pt-[12px] xl:pt-[35px] lg:pt-[18px] lg:px-0 ">
                            <RunningManLogo
                               className={
-                                 "w-[170px] " + "md:w-[200px] " + "lg:w-[300px]"
+                                 "h-auto w-[170px] " +
+                                 "md:w-[200px] " +
+                                 "lg:w-[260px]"
                               }
                            />
                            <button
@@ -98,30 +99,25 @@ const Page = () => {
                         </div>
                         <div
                            className={
-                              "grow px-3 md:px-4 lg:px-0 md:pt-0 animate-slide-up"
+                              "grow px-3 md:px-4 lg:px-0 md:pt-0 animate-slide-up flex flex-col justify-center "
                            }
                         >
                            <div
                               className={
-                                 "flex flex-col mb-3 " +
+                                 "flex flex-col mb-3 lg:mt-6 " +
                                  "md:flex-row " +
                                  "lg:mb-6"
                               }
                            >
-                              <div>
+                              <div className="mb-4 lg:mb-0">
                                  <div
                                     className={
-                                       "flex flex-col leading-tight font-headline text-[30px] mb-4 " +
+                                       "flex flex-col leading-tight font-headline text-[30px] mb-0 " +
                                        "md:text-[40px] " +
                                        "lg:text-[50px]"
                                     }
                                  >
-                                    <div
-                                       className="
-        flex flex-col leading-tight font-headline text-[30px] mb-4
-        md:text-[40px] lg:text-[50px]
-      "
-                                    >
+                                    <div className=" flex flex-col leading-tight font-headline text-[30px] mb-4  lg:text-[40px] xl:text-[50px]">
                                        {headlines.map((text, i) => (
                                           <p key={i}>
                                              {text}&nbsp;
@@ -148,7 +144,7 @@ const Page = () => {
                               <div
                                  className={
                                     "hidden bg-white/10 relative overflow-hidden rounded-[12px] shrink-0 " +
-                                    "md:block md:h-[300px] md:w-[430px]"
+                                    "lg:block md:h-[300px] md:w-[430px]"
                                  }
                               >
                                  <Image
@@ -161,15 +157,15 @@ const Page = () => {
                            </div>
                            <div
                               className={
-                                 "h-fit w-full mb-[20px] rounded-[7px] overflow-hidden " +
+                                 "h-fit w-full mb-[20px] rounded-[7px] overflow-hidden lg:mb-6 " +
                                  "md:h-[320px] " +
-                                 "lg:h-[440px] md:rounded-[12px]"
+                                 "lg:h-[370px] md:rounded-[12px]"
                               }
                            >
                               <Image
                                  src="https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm-hero1-2.webp?updatedAt=1755578775229"
                                  alt=""
-                                 className="object-contain"
+                                 className="object-cover w-full h-full"
                                  height={0}
                                  width={1200}
                               />
@@ -193,7 +189,10 @@ const Page = () => {
                   </div>
 
                   {/* Features Section */}
-                  <div ref={featuresRef} className="w-full pt-[60px] md:px-8">
+                  <div
+                     ref={featuresRef}
+                     className="w-full pt-[60px] px-5 md:px-8"
+                  >
                      <div
                         className={
                            "flex flex-col justify-between items-center w-full mb-[40px] border-r border-r-transparent md:border-r-theme-good " +
@@ -432,7 +431,7 @@ const Page = () => {
                      </button>
                   </div>
 
-                  <div className="border-b border-b-theme-good mb-[70px]" />
+                  <div className="border-b border-b-theme-good mb-[70px] mx-5" />
 
                   {/* Full Features CTA */}
                   <div className="mb-[70px]">

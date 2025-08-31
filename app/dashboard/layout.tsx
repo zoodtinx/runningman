@@ -86,6 +86,9 @@ const Layout = async ({
                   conditionsData={conditions}
                   userData={user as User}
                />
+               <Suspense>
+                  <MobileNav />
+               </Suspense>
             </div>
             <section
                className={cn(
@@ -121,9 +124,6 @@ const Layout = async ({
                {children}
             </section>
          </main>
-         <Suspense>
-            <MobileNav />
-         </Suspense>
       </div>
    );
 };
