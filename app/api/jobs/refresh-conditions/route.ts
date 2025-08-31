@@ -1,8 +1,14 @@
 // app/api/hello/route.ts
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { refreshAllConditions } from "@/lib/run-conditions/update-conditions";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+   const apiKey = req.headers.get("x-api-key");
+   const expectedKey = process.env.CRON_SECRET;
+
+   if (apiKey !== expectedKey) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+   }
    try {
       await refreshAllConditions();
    } catch (error) {
