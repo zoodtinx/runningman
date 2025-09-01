@@ -34,7 +34,7 @@ const Layout = async ({
       if (!user) return [null, []];
 
       const conditions = await tx.runCondition.findMany({
-         where: { userId: "master", location: user.location ?? "bangkok" },
+         where: { location: user.location ?? "bangkok" },
          orderBy: { range: "desc" },
       });
 
@@ -43,7 +43,6 @@ const Layout = async ({
 
    const runConditions = await prisma.runCondition.findMany({
       where: {
-         userId: "master",
          location: user?.location || "bangkok",
       },
    });

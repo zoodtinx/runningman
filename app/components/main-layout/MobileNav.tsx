@@ -50,8 +50,8 @@ export default function MobileNav() {
          }}
       >
          <DropdownMenu>
-            <DropdownMenuTrigger>
-               <div className="aspect-square rounded-full p-2 shadow-md bg-background">
+            <DropdownMenuTrigger className="focus:outline-none">
+               <div className="aspect-square rounded-full p-2 shadow-md bg-background active:bg-secondary">
                   <Menu className="mx-auto size-3 md:size-3 stroke-[2.5px] text-white" />
                </div>
             </DropdownMenuTrigger>
@@ -60,7 +60,10 @@ export default function MobileNav() {
                   <ViewConditionButton />
                </DropdownMenuItem>
                {nav.map(({ href, label, key, Icon }) => (
-                  <DropdownMenuItem key={key}>
+                  <DropdownMenuItem
+                     key={key}
+                     className="active:bg-secondary/25 transition-colors duration-75"
+                  >
                      <button
                         className={cn(
                            "flex gap-1 font-medium"

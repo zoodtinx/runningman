@@ -72,7 +72,7 @@ export const DayBar = ({
                />
                <XmarkCircle
                   onClick={handleDiscardRoute}
-                  className="size-5 text-primary opacity-15 shrink-0 mt-1 ml-1 hover:opacity-100 cursor-default transition-opacity"
+                  className="size-5 text-primary opacity-15 shrink-0 mt-1 ml-1 hover:opacity-100 cursor-default transition-opacity z-10"
                />
             </div>
             <div className="grow flex flex-col justify-between items-end p-1">

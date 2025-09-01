@@ -31,7 +31,6 @@ model User {
   runs                Run[]             @relation("UserRuns")
   routes              Route[]           @relation("UserRoutes")
   schedules           ScheduleItem[]    @relation("UserScheduleItems")
-  runConditions       RunCondition[]    @relation("UserRunConditions")
 }
 
 model Run {
@@ -93,8 +92,6 @@ model RunCondition {
   unit        String
   summary     String
   futureValue String?
-  userId      String
-  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade, name: "UserRunConditions")
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
 }

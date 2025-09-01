@@ -52,7 +52,6 @@ const RunSummarySection = async () => {
 
    const runConditions = await prisma.runCondition.findMany({
       where: {
-         userId: "master",
          location: user.location || "bangkok",
       },
    });

@@ -137,7 +137,7 @@ function SelectItem({
       <SelectPrimitive.Item
          data-slot="select-item"
          className={cn(
-            "focus:bg-foreground",
+            "focus:bg-foreground active:bg-secondary",
             "[&_svg:not([class*='text-'])]:text-secondary",
             "relative flex w-full cursor-default items-center gap-2",
             "rounded-lg py-1 pr-8 pl-2 text-base outline-hidden select-none",

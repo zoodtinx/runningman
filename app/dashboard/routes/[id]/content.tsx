@@ -54,6 +54,11 @@ const RoutePageContent = ({
    const [lapsValue, setLapsValue] = useState<number>(routeData.laps ?? 1);
 
    useEffect(() => {
+      setMode(routeData.duration ? "time" : "distance");
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, []);
+
+   useEffect(() => {
       if (mode === "distance") {
          setValue("distance", distanceValue);
          setValue("duration", null);

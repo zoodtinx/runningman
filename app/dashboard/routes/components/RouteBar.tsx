@@ -18,8 +18,8 @@ const RouteBar = ({ routeData }: { routeData: Route }) => {
    return (
       <div
          className={cn(
-            "flex flex-col gap-1 justify-between h-[100px] rounded-base bg-background p-[10px] pt-1 text-primary",
-            "border-2 border-transparent hover:border-primary transition-colors cursor-default"
+            "flex flex-col gap-1 justify-between h-[100px] rounded-base bg-background p-[10px] pt-1 text-primary active:bg-secondary",
+            "border-2 border-transparent hover:border-primary transition-colors cursor-default duration-75"
          )}
       >
          <div className="flex items-starts justify-between">

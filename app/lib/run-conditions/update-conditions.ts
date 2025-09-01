@@ -140,7 +140,7 @@ export async function mapWeatherToRunConditionsWithFuture(config: {
             summary: description,
             location: locationName,
             futureValue: futureValue,
-            userId: "master",
+            // userId: "master",
          };
       }
    );
