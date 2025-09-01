@@ -19,31 +19,28 @@ export function getRunSummary(
    importanceWeights: Record<string, number>,
    conditions: RunCondition[]
 ): ReadinessResult {
-   // assign importance score to each data point
-   const weightedConditions = conditions.map((condition) => {
-      const weight = importanceWeights[condition.type] ?? 0;
-      const shouldIgnore = weight < 0.2 && condition.range === 1;
-      if (shouldIgnore) return { ...condition, weight: 0, weightedScore: 0 };
+   // normalize range 1–3 to 0–1, apply weights
+   let totalWeight = 0;
+   let weightedSum = 0;
 
-      const boost = condition.range === 3 ? 1.05 : 1;
-      const weightedScore = condition.range * weight * boost;
+   conditions.map((c) => {
+      const weight = importanceWeights[c.type] ?? 0;
+      if (weight === 0) return { ...c, weight: 0, weightedScore: 0 };
 
-      return { ...condition, weight, weightedScore };
+      const normalized = (c.range - 1) / 2; // 1–3 → 0–1
+      const weightedScore = normalized * weight;
+
+      totalWeight += weight;
+      weightedSum += weightedScore;
+
+      return { ...c, weight, weightedScore };
    });
 
-   const totalWeight = weightedConditions.reduce((sum, c) => sum + c.weight, 0);
-   const totalWeightedScore = weightedConditions.reduce(
-      (sum, c) => sum + c.weightedScore,
-      0
-   );
-   const averageScore =
-      totalWeight === 0 ? 0 : totalWeightedScore / totalWeight;
+   const averageScore = totalWeight ? weightedSum / totalWeight : 0;
+   // map normalized 0–1 → 1–5 score (or 1–5 headline index)
    const readinessScore = mapScore(averageScore);
 
-   const topConditions = weightedConditions
-      .filter((c) => c.type !== "sunset-time" && c.type !== "sunrise-time")
-      .filter((c) => (readinessScore < 3 ? c.range === 1 : c.range === 3))
-      .slice(0, 3);
+   const topConditions = getTopConditions(conditions, averageScore);
 
    const keyCondition = topConditions.map((c) => c.type);
    const detail = topConditions.map((c) => `${c.summary}.`).join(" ");
@@ -56,10 +53,15 @@ export function getRunSummary(
    };
 }
 
+function getTopConditions(conditions: RunCondition[], averageScore: number) {
+   const isBadMode = averageScore < 3;
+
+   return conditions
+      .filter((c) => c.type !== "sunset-time" && c.type !== "sunrise-time")
+      .sort((a, b) => (isBadMode ? a.range - b.range : b.range - a.range))
+      .slice(0, 3);
+}
+
 function mapScore(avg: number) {
-   if (avg < 1) return 1;
-   if (avg < 1.5) return 2;
-   if (avg < 2.4) return 3;
-   if (avg < 2.9) return 4;
-   return 5;
+   return Math.min(5, Math.max(1, Math.round(avg + 1)));
 }

@@ -24,7 +24,6 @@ export async function refreshAllConditions() {
    const locations = ["bangkok", "chiangmai", "phuket", "khonkaen", "hatyai"];
    for (const loc of locations) {
       await refreshConditions(loc);
-      await delay(1000); // deplay to prevent rate limit
    }
 }
 
@@ -39,7 +38,6 @@ export async function refreshConditions(location: string) {
       try {
          // fetch current weather data
          newCurrentData = await fetchRealtimeWeatherData(location);
-         await delay(400);
          // fetch future weather data
          newfutureData = await fetchFutureWeatherData(location);
          // fetch aqi data
@@ -146,8 +144,4 @@ export async function mapWeatherToRunConditionsWithFuture(config: {
    );
 
    return conditions;
-}
-
-function delay(ms: number) {
-   return new Promise((resolve) => setTimeout(resolve, ms));
 }

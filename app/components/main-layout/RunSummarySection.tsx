@@ -15,6 +15,7 @@ import {
    Check,
    HeatingSquare,
    CircleSpark,
+   Xmark,
 } from "iconoir-react";
 import RunningManLogo from "@/components/icons/RunningManLogo";
 import React, { JSX } from "react";
@@ -100,7 +101,10 @@ const RunSummarySection = async () => {
             </div>
          </div>
          <div className="flex justify-between p-3">
-            <HighlightedStats data={runSummary.keyCondition} />
+            <HighlightedStats
+               data={runSummary.keyCondition}
+               score={runSummary.readinessScore}
+            />
             <div className="flex gap-2">
                <span className="flex gap-1 items-center">
                   <Calendar className="stroke-[1.7px]" />
@@ -113,7 +117,13 @@ const RunSummarySection = async () => {
    );
 };
 
-const HighlightedStats = ({ data }: { data: string[] }) => {
+const HighlightedStats = ({
+   data,
+   score,
+}: {
+   data: string[];
+   score: number;
+}) => {
    const iconClass = "stroke-[1.7px]";
 
    const icon: Record<string, JSX.Element> = {
@@ -141,12 +151,11 @@ const HighlightedStats = ({ data }: { data: string[] }) => {
    return (
       <div className="flex gap-[5px]">
          {icons}
-         <Check className={iconClass} />
-         {/* {isOk ? (
+         {score > 3 ? (
             <Check className={iconClass} />
          ) : (
             <Xmark className={iconClass} />
-         )} */}
+         )}
       </div>
    );
 };

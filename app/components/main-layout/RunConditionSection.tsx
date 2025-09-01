@@ -3,6 +3,7 @@ import NiceSettings from "@/components/icons/Settings";
 import { RunConditionCard } from "@/components/main-layout/RunConditionCard";
 import { ScrollArea } from "@/components/primitives/ScrollArea";
 import { prisma } from "@/lib/prisma";
+import { getRunSummary } from "@/lib/run-conditions/calculate-readiness";
 import { format } from "date-fns";
 import Link from "next/link";
 
@@ -40,6 +41,24 @@ export const RunConditionSection = async () => {
          range: "desc",
       },
    });
+
+   let conditionPriority = user!.conditionPriority;
+   if (typeof conditionPriority === "string") {
+      try {
+         conditionPriority = JSON.parse(conditionPriority);
+      } catch {
+         conditionPriority = {};
+      }
+   }
+
+   const runSummary = getRunSummary(
+      conditionPriority as Record<string, number>,
+      conditionsData
+   );
+
+   if (runSummary.readinessScore < 3) {
+      conditionsData.reverse();
+   }
 
    const statChunks = [];
    const statsList = conditionsData;

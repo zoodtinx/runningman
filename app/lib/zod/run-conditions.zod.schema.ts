@@ -12,7 +12,6 @@ export const runConditionSchema = z.object({
    unit: z.string(),
    summary: z.string(),
    futureValue: nullableStringField().optional(),
-   userId: z.string().uuid(),
 });
 
 export type RunCondition = z.infer<typeof runConditionSchema>;
