@@ -26,20 +26,20 @@ const RunBar = ({ runData }: { runData: Run }) => {
    return (
       <div
          className={cn(
-            "flex flex-col justify-between h-[84px] rounded-base bg-background active:bg-secondary p-[10px]",
+            "flex flex-col justify-between h-[73px] rounded-base bg-background active:bg-secondary p-2",
             "border-2 border-transparent hover:border-primary transition-colors duration-75 cursor-default"
          )}
       >
-         <div className="flex justify-between items-baseline font-headline px-1">
-            <div className="flex items-baseline gap-2 leading-9">
-               <p className="text-[36px] font-bold">{runData.distance}</p>
+         <div className="flex justify-between items-baseline font-headline leading-none">
+            <div className="flex items-baseline gap-2">
+               <p className="text-[28px] font-bold">{runData.distance}</p>
                <p className="text-[22px]">{unit}</p>
             </div>
             <div className="flex gap-5">
-               <span className="text-[30px]">{formattedPace}</span>
+               <span className="text-[25px]">{formattedPace}</span>
                <span className="hidden md:flex gap-2 items-baseline">
-                  <p className="text-[30px]">{runData.duration}</p>
-                  <p className="text-[22px]">min</p>
+                  <p className="text-[25px]">{runData.duration}</p>
+                  <p className="text-[18px]">min</p>
                </span>
             </div>
          </div>

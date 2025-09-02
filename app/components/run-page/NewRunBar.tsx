@@ -176,7 +176,7 @@ const NewRunBar = ({
          {/* Collapsed button */}
          <div
             className={cn(
-               "flex gap-2 items-center justify-center font-headline text-[25px] font-bold h-[84px] rounded-base bg-background cursor-pointer w-full",
+               "flex gap-2 items-center justify-center font-headline text-[25px] font-bold h-[73px] rounded-base bg-background cursor-pointer w-full",
                "border border-transparent hover:bg-primary hover:text-background transition-colors"
             )}
             onClick={() => setMode("add")}
@@ -189,7 +189,7 @@ const NewRunBar = ({
          <form
             onSubmit={handleSubmit(onSubmit)}
             className={cn(
-               "flex absolute w-full flex-col justify-between rounded-base bg-primary p-[15px] box-border overflow-hidden origin-top",
+               "flex absolute w-full flex-col justify-between rounded-base bg-primary p-3 box-border overflow-hidden origin-top",
                "transition-all duration-170 ease-in-out z-10",
                mode === "add"
                   ? "scale-y-100 opacity-100"
@@ -198,12 +198,21 @@ const NewRunBar = ({
          >
             {/* Header: Title + Date/Time + Route */}
             <div>
-               <div className="flex flex-col md:flex-row justify-between">
-                  <div className="flex gap-[4px] text-background h-fit items-center shrink-0">
-                     <PlusSquare className="size-6" />
-                     <span className="font-headline font-semibold text-[26px]">
+               <div className="flex flex-col md:flex-row justify-between mb-1">
+                  <div className="flex gap-1 h-fit items-center shrink-0">
+                     <PlusSquare className="size-5 text-background " />
+                     <span className="font-headline font-semibold text-[20px] text-background ">
                         NEW RUN
                      </span>
+                     <div className="w-[120px] md:w-[150px] ml-1">
+                        <SelectWithLabel
+                           options={routeOptions}
+                           onValueChange={handleRouteSelect}
+                           value={selectedRoute}
+                           placeholder="Select from route"
+                           className="text-background"
+                        />
+                     </div>
                   </div>
                   <div className="flex items-center gap-4 pb-3 pt-1 md:pb-0 md:pt-0 justify-between">
                      <div className="flex gap-2 shrink-0 w-fit">
@@ -216,20 +225,11 @@ const NewRunBar = ({
                            fieldName="dateTime"
                         />
                      </div>
-                     <div className="w-[120px] md:w-[150px]">
-                        <SelectWithLabel
-                           options={routeOptions}
-                           onValueChange={handleRouteSelect}
-                           value={selectedRoute}
-                           placeholder="Select route"
-                           className="text-background"
-                        />
-                     </div>
                   </div>
                </div>
 
                {/* Input: Title, Distance, Duration, Laps, Pace */}
-               <div className="flex flex-col gap-3">
+               <div className="flex flex-col gap-3 ">
                   <ControlledInput
                      fieldName="title"
                      control={control}
@@ -278,7 +278,7 @@ const NewRunBar = ({
                   </div>
                   <div className="w-[245px] flex flex-col">
                      <p className="text-sm text-secondary">Pace</p>
-                     <p className="font-headline text-[35px] md:text-2xl leading-10 md:leading-16 text-secondary h-fit pb-2 md:pb-0 md:h-[110px]">
+                     <p className="font-headline text-[35px] md:text-[46px] leading-none pt-2 text-secondary h-fit pb-2 md:pb-0 md:h-[70px]">
                         {pace}
                      </p>
                   </div>

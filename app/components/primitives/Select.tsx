@@ -87,7 +87,7 @@ function SelectContent({
                "min-w-[8rem]",
                "origin-[--radix-select-content-transform-origin]",
                "overflow-x-hidden overflow-y-auto",
-               "rounded-xl shadow-md",
+               "rounded-lg shadow-md",
                position === "popper" && [
                   "data-[side=bottom]:translate-y-1",
                   "data-[side=left]:-translate-x-1",
@@ -140,7 +140,7 @@ function SelectItem({
             "focus:bg-foreground active:bg-secondary",
             "[&_svg:not([class*='text-'])]:text-secondary",
             "relative flex w-full cursor-default items-center gap-2",
-            "rounded-lg py-1 pr-8 pl-2 text-base outline-hidden select-none",
+            "rounded-md py-1 pr-8 pl-2 text-base outline-hidden select-none",
             "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
             "[&_svg]:pointer-events-none [&_svg]:shrink-0",
             "[&_svg:not([class*='size-'])]:size-4",

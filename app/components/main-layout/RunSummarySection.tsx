@@ -89,28 +89,30 @@ const RunSummarySection = async () => {
    return (
       <div className="h-1/2 w-full flex flex-1  flex-col justify-between text-background">
          <div>
-            <div className="sm:hidden md:flex justify-between p-3 items-center">
-               <RunningManLogo className="" />
+            <div className="sm:hidden md:flex justify-between p-2 items-center">
+               <RunningManLogo
+                  className={"h-auto w-[150px] " + "md:w-[170px] "}
+               />
                <LocationSelect user={user as any} />
             </div>
-            <div className="pl-7 pr-9 pt-7">
-               <p className="text-[70px] font-headline leading-18">
+            <div className="pr-9 pt-4 pl-2">
+               <p className="text-[55px] font-headline leading-15">
                   {runSummary.headline}
                </p>
-               <p className="text-[23px] pt-1 w-4/5">{runSummary.detail}</p>
+               <p className="text-md pt-3 w-4/5">{runSummary.detail}</p>
             </div>
          </div>
-         <div className="flex justify-between p-3">
+         <div className="flex justify-between pb-1 pr-4 pl-2">
             <HighlightedStats
                data={runSummary.keyCondition}
                score={runSummary.readinessScore}
             />
-            <div className="flex gap-2">
+            <div className="flex gap-2 text-base">
                <span className="flex gap-1 items-center">
                   <Calendar className="stroke-[1.7px]" />
-                  <p>Scheduled Run:</p>
+                  <span>Scheduled Run: </span>
+                  <span className="font-bold">{scheduledRun()}</span>
                </span>
-               <span className="font-bold">{scheduledRun()}</span>
             </div>
          </div>
       </div>
@@ -124,7 +126,7 @@ const HighlightedStats = ({
    data: string[];
    score: number;
 }) => {
-   const iconClass = "stroke-[1.7px]";
+   const iconClass = "stroke-[1.7px] size-4";
 
    const icon: Record<string, JSX.Element> = {
       temperature: <TemperatureHigh className={iconClass} />,
@@ -149,13 +151,16 @@ const HighlightedStats = ({
    );
 
    return (
-      <div className="flex gap-[5px]">
-         {icons}
-         {score > 3 ? (
-            <Check className={iconClass} />
-         ) : (
-            <Xmark className={iconClass} />
-         )}
+      <div className="flex border border-background rounded-full">
+         <div className="flex gap-1 py-1 px-2 ">{icons}</div>
+         <div className="h-full border-r border-r-background" />
+         <div className="p-1">
+            {score > 3 ? (
+               <Check className={iconClass} />
+            ) : (
+               <Xmark className={iconClass} />
+            )}
+         </div>
       </div>
    );
 };

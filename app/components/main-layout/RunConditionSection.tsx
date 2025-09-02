@@ -77,20 +77,22 @@ export const RunConditionSection = async () => {
    ).toUpperCase();
 
    return (
-      <div className="flex flex-col gap-3 w-full p-[12px] overflow-hidden h-full">
-         <div className="flex justify-between shrink-0 text-primary px-1 items-center">
-            <p className="font-headline font-bold">RUNNING CONDITIONS</p>
-            <div className="flex items-center gap-3">
+      <div className="flex flex-col w-full p-[12px] pt-0 overflow-hidden h-full">
+         <div className="flex justify-between shrink-0 text-primary px-0 items-center py-2">
+            <p className="font-headline font-bold text-base">
+               RUNNING CONDITIONS
+            </p>
+            <div className="flex items-center gap-2">
                <div className="w-fit text-primary rounded-full text-sm font-medium opacity-30">
                   <span>Updated: </span>
                   <span>{updatedAt}</span>
                </div>
                <Link href="/dashboard/settings">
-                  <NiceSettings className="size-5 cursor-pointer" />
+                  <NiceSettings className="size-4 cursor-pointer" />
                </Link>
             </div>
          </div>
-         <ScrollArea className="w-full h-full overflow-hidden rounded-2xl">
+         <ScrollArea className="w-full h-full overflow-hidden rounded-2xl lg:rounded-[10px]">
             <div className="flex flex-col gap-2 pb-[100px]">
                {statChunks.map((pair, index) => (
                   <div key={index} className="flex gap-2">

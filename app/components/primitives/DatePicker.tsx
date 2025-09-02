@@ -38,7 +38,7 @@ export function ControlledDatePicker<T extends FieldValues>({
                            "text-background flex gap-1 items-center justify-end font-medium"
                         )}
                      >
-                        <CalendarIcon />
+                        <CalendarIcon className="size-5" />
                         {field.value ? (
                            format(field.value as Date, "MMM d").toUpperCase()
                         ) : (

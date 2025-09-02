@@ -10,8 +10,8 @@ export default function Nav() {
    const currentPage = pathname?.split("/").pop() || "";
 
    return (
-      <nav className="flex w-full items-center pr-5 pl-4 h-20 font-headline text-xl text-primary justify-between shrink-0">
-         <ul className="flex gap-3">
+      <nav className="flex w-full items-center p-3 font-headline text-md text-primary justify-between shrink-0">
+         <ul className="flex gap-1">
             <Link
                href="/dashboard/runs"
                className={cn(
@@ -47,7 +47,7 @@ export default function Nav() {
                   currentPage === "settings" && "bg-background"
                )}
             >
-               <NiceSettings className="size-8 stroke-[2.3px]" />
+               <NiceSettings className="size-6 stroke-[2.3px]" />
             </div>
          </Link>
       </nav>

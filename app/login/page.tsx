@@ -57,7 +57,7 @@ const Page = () => {
    return (
       <div
          className={
-            "w-full h-screen flex justify-center items-center bg-background text-primary"
+            "w-full flex justify-center items-center bg-background text-primary"
          }
       >
          <div className="w-full h-full">
@@ -66,20 +66,21 @@ const Page = () => {
                   "w-full h-full flex flex-col items-center overflow-y-auto overflow-x-hidden"
                }
             >
-               <div className="flex flex-col gap-2 w-full xl:w-[1200px]">
+               <div className="flex flex-col gap-2 w-full lg:w-[1200px]">
                   <div
                      className={
-                        "h-screen w-full flex flex-col justify-between lg:px-6 "
+                        "min-h-screen md:h-auto 2xl:min-h-screen w-full flex flex-col justify-between lg:px-6 "
                      }
                   >
                      <div className="grow flex flex-col">
-                        <div className="flex items-center justify-between px-3 pt-[12px] xl:pt-[35px] lg:pt-[18px] lg:px-0 ">
+                        <div
+                           className={
+                              "flex items-center justify-between px-3 pt-[12px] " +
+                              "lg:pt-[18px] lg:px-0 mb-4 md:mb-0 lg:mb-5 xl:mb-0 "
+                           }
+                        >
                            <RunningManLogo
-                              className={
-                                 "h-auto w-[170px] " +
-                                 "md:w-[200px] " +
-                                 "lg:w-[260px]"
-                              }
+                              className={"h-auto w-[150px] " + "md:w-[200px] "}
                            />
                            <button
                               onClick={(e) => {
@@ -87,9 +88,9 @@ const Page = () => {
                                  signInWithProvider("credentials");
                               }}
                               className={
-                                 "flex items-center text-[12px] bg-theme-good h-[23px] text-black px-2 rounded-[7px] font-headline uppercase font-semibold " +
-                                 "md:text-[14px] md:h-[26px] md:rounded-[10px] " +
-                                 "lg:text-[16px] lg:h-[30px] " +
+                                 "flex items-center text-[11px] bg-theme-good h-[20px] text-black " +
+                                 "px-2 rounded-[7px] font-headline uppercase font-semibold " +
+                                 "md:text-[14px] md:h-[26px] " +
                                  "focus:outline-none focus:ring-[1.5px] focus:ring-white focus:ring-offset-[2.5px] ring-offset-black"
                               }
                            >
@@ -106,18 +107,24 @@ const Page = () => {
                               className={
                                  "flex flex-col mb-3 lg:mt-6 " +
                                  "md:flex-row " +
-                                 "lg:mb-6"
+                                 "lg:mb-4"
                               }
                            >
                               <div className="mb-4 lg:mb-0">
                                  <div
                                     className={
-                                       "flex flex-col leading-tight font-headline text-[30px] mb-0 " +
+                                       "flex flex-col leading-tight font-headline text-[30px] mb-0 pt-2 " +
                                        "md:text-[40px] " +
                                        "lg:text-[50px]"
                                     }
                                  >
-                                    <div className=" flex flex-col leading-tight font-headline text-[30px] mb-4  lg:text-[40px] xl:text-[50px]">
+                                    <div
+                                       className={
+                                          "flex flex-col leading-tight font-headline " +
+                                          "text-[30px] mb-4 " +
+                                          "lg:text-[40px] "
+                                       }
+                                    >
                                        {headlines.map((text, i) => (
                                           <p key={i}>
                                              {text}&nbsp;
@@ -191,7 +198,7 @@ const Page = () => {
                   {/* Features Section */}
                   <div
                      ref={featuresRef}
-                     className="w-full pt-[60px] px-5 md:px-8"
+                     className="w-full pt-[20px] 2xl:pt-[60px] px-5 md:px-8"
                   >
                      <div
                         className={
@@ -220,7 +227,7 @@ const Page = () => {
                            <div
                               className={
                                  "font-headline pb-2 text-[30px] leading-tight text-center w-full " +
-                                 "md:pb-0 md:w-fir md:text-right md:text-[40px]"
+                                 "md:w-fir md:text-right"
                               }
                            >
                               <p>Know the Air</p>
@@ -255,7 +262,7 @@ const Page = () => {
                            <div
                               className={
                                  "font-headline pb-2 text-[30px] leading-tight text-center w-full " +
-                                 "md:pb-0 md:w-fir md:text-left md:text-[40px]"
+                                 "md:text-left"
                               }
                            >
                               <p>Track Your Run</p>
@@ -299,14 +306,14 @@ const Page = () => {
                         <p
                            className={
                               "text-center font-headline text-[30px] leading-tight mb-[27px] " +
-                              "md:text-[40px] md:mb-[40px]"
+                              "md:mb-[40px]"
                            }
                         >
                            Post-Run Pic Perfection
                         </p>
                         <div
                            className={
-                              "slider relative mb-[27px] " + "md:mb-[40px]"
+                              "slider relative mb-[27px] " + "md:mb-[28px]"
                            }
                         >
                            <div className="z-10 absolute h-full left-0 w-[200px] bg-gradient-to-r from-background to-transparent" />
@@ -332,11 +339,10 @@ const Page = () => {
                   </div>
 
                   {/* Tech Stack Section */}
-                  <div className="bg-background p-[33px] py-0 md:py-[33px] rounded-2xl mb-[30px]">
+                  <div className="bg-background p-[33px] py-0 md:pb-[20px] rounded-2xl mb-[30px]">
                      <p
                         className={
-                           "text-center font-headline text-[30px] leading-tight mb-[30px] " +
-                           "md:text-[40px]"
+                           "text-center font-headline text-[30px] leading-tight mb-[30px] "
                         }
                      >
                         Tech Stack
@@ -437,8 +443,7 @@ const Page = () => {
                   <div className="mb-[70px]">
                      <p
                         className={
-                           "text-center font-headline text-[30px] leading-tight mb-[15px] " +
-                           "md:text-[40px]"
+                           "text-center font-headline text-[30px] leading-tight mb-[15px] "
                         }
                      >
                         Explore Full Features
@@ -464,7 +469,7 @@ const Page = () => {
                            their session.
                         </p>
                         <p className="font-semibold">
-                           All data will be automatically deleted 2 hour after
+                           All data will be automatically deleted 2 hours after
                            creation.
                         </p>
                      </div>

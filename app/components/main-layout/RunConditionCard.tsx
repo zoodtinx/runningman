@@ -46,9 +46,9 @@ export const RunConditionCard = ({ statData }: { statData: RunCondition }) => {
    return (
       <div
          className={cn(
-            "flex flex-col w-full h-[90px] shrink-0 md:shrink rounded-base p-2 justify-between",
+            "flex flex-col w-full h-[90px] shrink-0 md:shrink rounded-base lg:rounded-[10px] p-2 justify-between",
             // "md:basis-1/2 md:w-1/2 md:h-[100px]",
-            "lg:basis-1/2 lg:w-1/2 lg:h-[100px]",
+            "lg:basis-1/2 lg:w-1/2 lg:h-[84px]",
             statData.range === 3 &&
                "bg-[linear-gradient(to_bottom,_#dcfffe_0%,_#b4f0ef_100%)]",
             statData.range === 2 &&
@@ -60,12 +60,12 @@ export const RunConditionCard = ({ statData }: { statData: RunCondition }) => {
          <div className="flex justify-between w-full items-start">
             <div className="flex gap-1 items-center">
                <StatIcon statType={statData.type} />
-               <p className="font-semibold text-[14px] text-right uppercase">
+               <p className="font-semibold text-base text-right uppercase">
                   {statData.name}
                </p>
             </div>
             <div className="flex flex-col gap-[2px] items-end w-1/2">
-               <p className="text-[13px] text-right leading-tight pt-1 pr-1">
+               <p className="text-[13px] text-right leading-tight pr-1">
                   {statData.summary}
                </p>
             </div>
@@ -74,7 +74,7 @@ export const RunConditionCard = ({ statData }: { statData: RunCondition }) => {
             <p
                className={cn(
                   "font-headline font-bold text-[24px] pl-1 leading-7",
-                  statData.valueType === "number" && "text-[40px] leading-10"
+                  statData.valueType === "number" && "text-[30px] leading-9"
                )}
             >
                <span className="leading-7">{getValue()}</span>
@@ -89,7 +89,7 @@ export const RunConditionCard = ({ statData }: { statData: RunCondition }) => {
 };
 
 const StatIcon = ({ statType }: { statType: string }) => {
-   const iconClass = "stroke-[1.7px] size-6";
+   const iconClass = "stroke-[1.7px] size-4";
 
    switch (statType.toLowerCase()) {
       case "temperature":

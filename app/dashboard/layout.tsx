@@ -75,12 +75,14 @@ const Layout = async ({
          <main
             className={cn(
                "w-full flex flex-col items-center gap-0 p-2 pb-0 pt-0",
-               "lg:p-2 lg:h-full lg:w-[1440px] lg:flex-row lg:gap-2",
+               "lg:p-2 lg:h-full lg:w-[1200px] lg:flex-row lg:gap-2",
                "xl:h-full xl:w-[1440px] xl:flex-row xl:p-4 xl:pb-4 xl:pt-4 xl:gap-4"
             )}
          >
             <div className="flex justify-between items-center text-background lg:hidden w-full px-2 h-[45px] shrink-0 z-50">
-               <RunningManLogo className="w-[160px]" />
+               <RunningManLogo
+                  className={"h-auto w-[150px] " + "md:w-[200px] "}
+               />
                <ViewConditionButton
                   conditionsData={conditions}
                   userData={user as User}
@@ -101,8 +103,7 @@ const Layout = async ({
                   className={cn(
                      "w-full bg-foreground rounded-[23px]",
                      "sm:h-auto",
-                     "lg:h-1/2 lg:rounded-[15px]",
-                     "xl:rounded-[23px]"
+                     "lg:h-1/2 lg:rounded-[14px]"
                   )}
                >
                   <RunConditionSection />
@@ -113,7 +114,7 @@ const Layout = async ({
                   "flex flex-col w-full h-[calc(100%-45px)] bg-foreground text-primary relative overflow-clip",
                   "rounded-[23px] rounded-bl-[0px] rounded-br-[0px]",
                   "max-sm:w-full",
-                  "lg:h-full lg:w-1/2",
+                  "lg:h-full lg:w-1/2 lg:rounded-[14px]",
                   "xl:rounded-[15px] xl:rounded-bl-[23px] xl:rounded-br-[23px]"
                )}
             >

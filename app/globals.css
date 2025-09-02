@@ -75,15 +75,15 @@
    --color-secondary: #767676;
    --color-tertiary: #cccccc;
 
-   --text-sm: 13px;
-   --text-base: 16px;
-   --text-md: 20px;
+   --text-sm: 11px;
+   --text-base: 13px;
+   --text-md: 17px;
    --text-2xl: 57px;
 
-   --breakpoint-sm: 0px;
-   --breakpoint-md: 821px;
-   --breakpoint-lg: 1181px;
-   --breakpoint-xl: 1280px;
+   --breakpoint-sm: 821px;
+   --breakpoint-md: 1181px;
+   --breakpoint-lg: 1280px;
+   --breakpoint-xl: 1600px;
 }
 
 @theme inline {
@@ -121,7 +121,7 @@ button {
 .slide-track {
    display: flex;
    width: calc(700%);
-   animation: scroll 200s linear infinite;
+   animation: scroll 80s linear infinite;
 }
 
 /* Mobile styles for slider */
