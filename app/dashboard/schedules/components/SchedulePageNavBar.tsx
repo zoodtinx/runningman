@@ -51,8 +51,8 @@ const SchedulePageNavBar = ({
    ));
 
    return (
-      <div className="flex justify-between items-center w-full h-[30px] bg-primary rounded-full font-headline font-semibold px-4">
-         <div className="flex gap-3">
+      <div className="flex justify-between items-center w-full h-[25px] bg-primary rounded-full font-headline font-semibold px-4">
+         <div className="flex items-center gap-3 text-[14px]">
             <div className="text-background">WEEK</div>
             {weekButtons}
             <Plus
@@ -68,7 +68,7 @@ const SchedulePageNavBar = ({
                <span className="font-sans font-medium text-background text-sm">
                   Remove Week
                </span>
-               <Trash className="text-background transition-opacity size-4" />
+               <Trash className="text-background transition-opacity size-[13px]" />
             </div>
          )}
       </div>

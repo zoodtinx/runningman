@@ -112,12 +112,12 @@ const RunPageContent = ({ runData }: { runData: RunFindOneResponse }) => {
             onSubmit={handleSubmit(onSubmit)}
          >
             <div className="flex flex-col">
-               <div className="flex gap-[18px] pt-4 pb-0 md:pb-5 lg:pb-0">
+               <div className="flex gap-[18px] pt-4 pb-0 md:pb-10 lg:pb-5">
                   <div
                      onClick={handleShare}
                      className={cn(
                         "flex flex-col items-center justify-center h-[140px] aspect-square bg-background shrink-0 gap-3 cursor-pointer",
-                        "md:h-[290px]",
+                        "md:h-[220px]",
                         "lg:bg-foreground",
                         "hover:bg-primary hover:text-background transition-colors ease-in-out"
                      )}
@@ -167,8 +167,8 @@ const RunPageContent = ({ runData }: { runData: RunFindOneResponse }) => {
                            <p className="text-sm text-secondary">Pace</p>
                            <p
                               className={cn(
-                                 "font-headline text-[35px] leading-10 text-secondary h-auto",
-                                 "md:text-2xl md:leading-16 md:h-[110px]"
+                                 "font-headline text-[35px] leading-none text-secondary h-auto font-light pt-[2px]",
+                                 "md:text-[40px]"
                               )}
                            >
                               {pace}

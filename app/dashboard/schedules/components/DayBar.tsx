@@ -29,8 +29,8 @@ export const DayBar = ({
 
    if (!route) {
       return (
-         <div className="flex w-full h-[115px] rounded-base p-[10px] bg-[#262626]">
-            <div className="pl-1 h-full w-[110px] font-headline font-semibold text-[27px] leading-tight">
+         <div className="flex w-full h-[85px] sm:h-[98px] rounded-base p-2 pb-3 pr-3 bg-[#262626]">
+            <div className="pl-1 h-full w-[85px] sm:w-[110px] font-headline font-semibold text-[20px] leading-tight">
                {getDayOfWeek(dayOfWeek)}
             </div>
             <div className="border-r border-primary" />
@@ -57,13 +57,13 @@ export const DayBar = ({
    }
 
    return (
-      <div className="flex w-full h-[115px] rounded-base p-[10px] bg-background">
-         <div className="pl-1 h-full w-[110px] font-headline font-semibold text-[27px] leading-tight">
+      <div className="flex w-full h-[85px] sm:h-[98px] rounded-base p-2 pb-3 pr-3 bg-background">
+         <div className="pl-1 h-full w-[85px] sm:w-[110px] font-headline font-semibold text-[20px] leading-tight">
             {getDayOfWeek(dayOfWeek)}
          </div>
          <div className="border-r border-primary" />
-         <div className="grow flex flex-col md:flex-row">
-            <div className="flex pl-4 w-[170px]">
+         <div className="grow flex flex-col pl-3 sm:pl-4 justify-between">
+            <div className="flex w-fit">
                <SelectWithLabel
                   options={routes}
                   placeholder="Select Route"
@@ -72,18 +72,20 @@ export const DayBar = ({
                />
                <XmarkCircle
                   onClick={handleDiscardRoute}
-                  className="size-5 text-primary opacity-15 shrink-0 mt-1 ml-1 hover:opacity-100 cursor-default transition-opacity z-10"
+                  className="size-5 text-primary opacity-15 shrink-0 ml-2 hover:opacity-100 cursor-default transition-opacity z-10"
                />
             </div>
-            <div className="grow flex flex-col justify-between items-end p-1">
-               <div className="flex gap-[4px] leading-10 md:leading-8 items-baseline font-headline">
-                  <span className="md:text-[45px] text-[30px] font-semibold">
+            <div className="flex justify-between items-end p-0">
+               <div className="flex gap-[4px] leading-none  items-baseline font-headline">
+                  <span className="md:text-[35px] text-[30px] font-semibold ">
                      {route.distance ? route.distance : route.duration}
                   </span>
-                  <span className="text-[22px]">min</span>
+                  <span className="text-[22px]">
+                     {route.distance ? "km" : "min"}
+                  </span>
                </div>
-               <div className="flex flex-col items-end gap-1">
-                  <p className="hidden md:block text-sm">{route.location}</p>
+               <div className="flex-col items-end gap-1 hidden sm:flex ">
+                  <p className="text-sm text-right">{route.location}</p>
                   <RunTypeBar runType={route.runType} />
                </div>
             </div>

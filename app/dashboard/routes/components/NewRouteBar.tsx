@@ -120,7 +120,7 @@ const NewRouteBar = () => {
          {/* Add Route Base Button */}
          <div
             className={cn(
-               "flex gap-2 items-center justify-center font-headline text-[25px] font-bold h-[100px] rounded-base bg-background cursor-pointer w-full",
+               "flex gap-2 items-center justify-center font-headline text-[22px] font-bold h-[73px] rounded-base bg-background cursor-pointer w-full",
                "border border-transparent hover:bg-primary hover:text-background transition-colors"
             )}
             onClick={() => setMode("add")}

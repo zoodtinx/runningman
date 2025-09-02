@@ -55,7 +55,7 @@ export default function MobileNav() {
                   <Menu className="mx-auto size-3 md:size-3 stroke-[2.5px] text-white" />
                </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white border-transparent rounded-xl">
+            <DropdownMenuContent className="bg-white border-transparent rounded-lg">
                <DropdownMenuItem>
                   <ViewConditionButton />
                </DropdownMenuItem>

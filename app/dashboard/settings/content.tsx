@@ -90,11 +90,11 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
       <form
          onSubmit={handleSubmit(onSubmit)}
          className={cn(
-            "flex flex-col justify-start lg:justify-between h-full overflow-y-auto md:overflow-hidden",
+            "flex flex-col justify-start lg:justify-between h-full overflow-y-auto px-2 sm:px-0",
             "pb-[200px] pt-1 lg:pt-0 lg:pb-0"
          )}
       >
-         <div className="flex flex-col px-2 lg:px-[10px]">
+         <div className="flex flex-col ">
             <p className="text-[23px] font-semibold pb-2">User Profile</p>
             <ControlledInput
                control={control}
@@ -161,8 +161,8 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
                />
             </div>
          </div>
-         <div className="flex justify-between px-2 lg:px-0 pt-7 lg:pt-0 items-start">
-            <div className="flex flex-col lg:flex-row items-start xl:items-center gap-2">
+         <div className="flex justify-between px-2 lg:px-0 pt-7 items-start">
+            <div className="flex flex-col lg:flex-row items-start lg:items-center gap-2">
                <Button
                   className="border w-[90px]"
                   disabled={loading}
@@ -171,7 +171,7 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
                   Sign Out
                </Button>
                <button
-                  className="text-secondary text-sm lg:text-base px-0 lg:px-2 cursor-pointer"
+                  className="text-secondary px-0 lg:px-2 cursor-pointer"
                   type="button"
                   onClick={handleDeleteClick}
                   disabled={deleteLoading}

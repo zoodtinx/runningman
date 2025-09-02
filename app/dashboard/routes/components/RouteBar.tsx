@@ -18,31 +18,33 @@ const RouteBar = ({ routeData }: { routeData: Route }) => {
    return (
       <div
          className={cn(
-            "flex flex-col gap-1 justify-between h-[100px] rounded-base bg-background p-[10px] pt-1 text-primary active:bg-secondary",
+            "flex justify-between h-[73px] rounded-base bg-background text-primary active:bg-secondary p-2",
             "border-2 border-transparent hover:border-primary transition-colors cursor-default duration-75"
          )}
       >
-         <div className="flex items-starts justify-between">
-            <span className="text-md font-semibold line-clamp-1">
-               {routeData.title}
-            </span>
-            {routeData.location && (
-               <div className="items-center gap-1 text-base font-medium hidden md:flex shrink-0">
-                  <MapPin className="size-4" />
-                  <span>{routeData.location}</span>
-               </div>
-            )}
-         </div>
-         <div className="flex justify-between items-end grow">
-            <div className="flex items-center px-2 border-[1.5px] border-foreground h-full w-[140px] rounded-[7px] font-headline">
-               <div className="flex items-baseline leading-none align-middle justify-between w-full">
-                  <span className="text-[35px]">
-                     {routeData.distance ? distance : routeData.duration}
-                  </span>
-                  <span>{routeData.distance ? unit : "min"}</span>
-               </div>
+         <div className="flex items-starts justify-between w-1/2 sm:w-auto">
+            <div className="flex flex-col justify-between w-full">
+               <p className="text-md font-semibold line-clamp-2 leading-tight pr-3 sm:pr-5 wrap-break-word">
+                  {routeData.title}
+               </p>
+               <span className="gap-2 w-full hidden sm:flex">
+                  <RunTypeBar runType={routeData.runType} />
+                  {routeData.location && (
+                     <div className="items-center gap-1 text-base font-medium hidden md:flex shrink-0 max-w-[160px]">
+                        <MapPin className="size-3" />
+                        <span className="truncate">{routeData.location}</span>
+                     </div>
+                  )}
+               </span>
             </div>
-            <RunTypeBar runType={routeData.runType} />
+         </div>
+         <div className="flex items-center px-2 border-[1.5px] border-foreground h-full w-[170px] rounded-[7px] font-headline shrink-0">
+            <div className="flex items-baseline leading-none align-middle justify-between w-full">
+               <span className="text-[35px]">
+                  {routeData.distance ? distance : routeData.duration}
+               </span>
+               <span>{routeData.distance ? unit : "min"}</span>
+            </div>
          </div>
       </div>
    );

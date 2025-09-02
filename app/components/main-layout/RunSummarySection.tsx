@@ -95,18 +95,18 @@ const RunSummarySection = async () => {
                />
                <LocationSelect user={user as any} />
             </div>
-            <div className="pr-9 pt-4 pl-2">
-               <p className="text-[55px] font-headline leading-15">
+            <div className="pr-9 pt-4 pl-2 w-[90%]">
+               <p className="text-[52px] xl:text-[67px] font-headline leading-14 xl:leading-18 mb-2">
                   {runSummary.headline}
                </p>
-               <p className="text-md pt-3 w-4/5">{runSummary.detail}</p>
+               <p className="text-md w-4/5 mb-2">{runSummary.detail}</p>
+               <HighlightedStats
+                  data={runSummary.keyCondition}
+                  score={runSummary.readinessScore}
+               />
             </div>
          </div>
          <div className="flex justify-between pb-1 pr-4 pl-2">
-            <HighlightedStats
-               data={runSummary.keyCondition}
-               score={runSummary.readinessScore}
-            />
             <div className="flex gap-2 text-base">
                <span className="flex gap-1 items-center">
                   <Calendar className="stroke-[1.7px]" />
@@ -126,7 +126,7 @@ const HighlightedStats = ({
    data: string[];
    score: number;
 }) => {
-   const iconClass = "stroke-[1.7px] size-4";
+   const iconClass = "stroke-[1.7px] size-5";
 
    const icon: Record<string, JSX.Element> = {
       temperature: <TemperatureHigh className={iconClass} />,
@@ -151,16 +151,14 @@ const HighlightedStats = ({
    );
 
    return (
-      <div className="flex border border-background rounded-full">
-         <div className="flex gap-1 py-1 px-2 ">{icons}</div>
-         <div className="h-full border-r border-r-background" />
-         <div className="p-1">
-            {score > 3 ? (
-               <Check className={iconClass} />
-            ) : (
-               <Xmark className={iconClass} />
-            )}
-         </div>
+      <div className="flex items-center gap-1 rounded-full w-fit">
+         {icons}
+         {score > 3 ? (
+            <Check className="stroke-[1.7px] size-6" />
+         ) : (
+            <Xmark className="stroke-[1.7px] size-6" />
+         )}
+         {/* <div className="border-r border-r-background" /> */}
       </div>
    );
 };

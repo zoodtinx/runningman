@@ -46,7 +46,7 @@ export const InputWithLabel = React.forwardRef<
                      variant === "white" && "text-primary bg-white",
                      inputSize === "md" && "text-md",
                      inputSize === "2xl" &&
-                        "font-headline text-[35px] md:text-[46px] leading-0 font-light",
+                        "font-headline text-[35px] md:text-[40px] leading-0 font-light",
                      className
                   )}
                />

@@ -177,7 +177,7 @@ const RoutePageContent = ({
                   <div className={cn("flex justify-between gap-3 grow")}>
                      {mode === "distance" ? (
                         <>
-                           <div className={cn("md:w-[250px]")}>
+                           <div>
                               <ControlledInput
                                  fieldName="distance"
                                  control={control}
