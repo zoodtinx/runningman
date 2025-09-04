@@ -76,7 +76,7 @@ const Page = () => {
                         <div
                            className={
                               "flex items-center justify-between px-3 pt-[12px] " +
-                              "lg:pt-[18px] lg:px-0 mb-4 md:mb-0 lg:mb-5 xl:mb-0 "
+                              "lg:pt-[18px] lg:px-0 mb-4 md:mb-0 xl:mb-0 "
                            }
                         >
                            <RunningManLogo
@@ -122,7 +122,7 @@ const Page = () => {
                                        className={
                                           "flex flex-col leading-tight font-headline " +
                                           "text-[30px] mb-4 " +
-                                          "lg:text-[40px] "
+                                          "lg:text-[40px] lg:mb-2"
                                        }
                                     >
                                        {headlines.map((text, i) => (
@@ -137,7 +137,7 @@ const Page = () => {
                                  </div>
                                  <p
                                     className={
-                                       "text-white/60 text-sm md:pr-28 md:text-base"
+                                       "text-white/60 text-sm md:pr-[15%] md:text-base"
                                     }
                                  >
                                     Plan your perfect run every time with
@@ -151,28 +151,28 @@ const Page = () => {
                               <div
                                  className={
                                     "hidden bg-white/10 relative overflow-hidden rounded-[12px] shrink-0 " +
-                                    "lg:block md:h-[300px] md:w-[430px]"
+                                    "lg:block md:h-[235px] md:w-[460px]"
                                  }
                               >
                                  <Image
                                     src="https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm-hero2-2.webp?updatedAt=1755578775371"
                                     alt=""
                                     fill
-                                    className="object-cover"
+                                    className="object-cover w-full h-full"
                                  />
                               </div>
                            </div>
                            <div
                               className={
-                                 "h-fit w-full mb-[20px] rounded-[7px] overflow-hidden lg:mb-6 " +
+                                 "flex items-start h-fit w-full mb-[20px] rounded-[7px] overflow-hidden lg:mb-6 " +
                                  "md:h-[320px] " +
-                                 "lg:h-[370px] md:rounded-[12px]"
+                                 "lg:h-[235px] md:rounded-[12px]"
                               }
                            >
                               <Image
                                  src="https://ik.imagekit.io/freelanceman/rnm-landingpage/rnm-hero1-2.webp?updatedAt=1755578775229"
                                  alt=""
-                                 className="object-cover w-full h-full"
+                                 className="object-cover object-[center_18%] w-full h-full"
                                  height={0}
                                  width={1200}
                               />

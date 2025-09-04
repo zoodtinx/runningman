@@ -80,8 +80,8 @@
    --text-md: 17px;
    --text-2xl: 57px;
 
-   --breakpoint-sm: 821px;
-   --breakpoint-md: 1181px;
+   --breakpoint-sm: 820px;
+   --breakpoint-md: 1024px;
    --breakpoint-lg: 1280px;
    --breakpoint-xl: 1600px;
 }

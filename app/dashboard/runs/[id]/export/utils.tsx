@@ -9,7 +9,8 @@ import {
    FlowState,
    FlyingSprint,
    Zone4,
-} from "@/dashboard/runs/[id]/export/export-cards/Templates";
+} from "@/dashboard/runs/[id]/export/helpers/export-cards/Templates";
+import React from "react";
 
 const themes = [
    "morningRun",
@@ -27,29 +28,36 @@ async function renderTheme(theme: (typeof themes)[number], runData: Run) {
 
    const root = ReactDOM.createRoot(holder);
 
-   switch (theme) {
-      case "morningRun":
-         root.render(<MorningRun runData={runData} />);
-         break;
-      case "flowState":
-         root.render(<FlowState runData={runData} />);
-         break;
-      case "dopaminization":
-         root.render(<Dopaminization runData={runData} />);
-         break;
-      case "zone4":
-         root.render(<Zone4 runData={runData} />);
-         break;
-      case "flyingSprint":
-         root.render(<FlyingSprint runData={runData} />);
-         break;
-      default:
-         root.render(<MorningRun runData={runData} />);
-         break;
-   }
+   // Render the selected component
+   const component = (() => {
+      switch (theme) {
+         case "morningRun":
+            return <MorningRun runData={runData} />;
+         case "flowState":
+            return <FlowState runData={runData} />;
+         case "dopaminization":
+            return <Dopaminization runData={runData} />;
+         case "zone4":
+            return <Zone4 runData={runData} />;
+         case "flyingSprint":
+            return <FlyingSprint runData={runData} />;
+         default:
+            return <MorningRun runData={runData} />;
+      }
+   })();
+
+   root.render(component);
+
+   // Wait until the DOM node exists
+   await new Promise<void>((resolve) => {
+      const check = () => {
+         if (holder.firstElementChild) resolve();
+         else requestAnimationFrame(check);
+      };
+      check();
+   });
 
    await document.fonts.ready;
-   await new Promise((r) => setTimeout(r, 50));
 
    const png = await toPng(holder.firstElementChild as HTMLElement, {
       quality: 0.92,

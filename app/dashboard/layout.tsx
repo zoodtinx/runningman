@@ -111,7 +111,7 @@ const Layout = async ({
             </section>
             <section
                className={cn(
-                  "flex flex-col w-full h-[calc(100%-45px)] bg-foreground text-primary relative overflow-clip",
+                  "flex flex-col w-full grow h-[calc(100%-45px)] bg-foreground text-primary relative overflow-clip",
                   "rounded-[17px] rounded-bl-[0px] rounded-br-[0px]",
                   "max-sm:w-full",
                   "lg:h-full lg:w-1/2 lg:rounded-[14px]"

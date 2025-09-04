@@ -33,7 +33,7 @@ const NewRunBar = ({
 }) => {
    const [selectedRoute, setSelectedRoute] = useState("");
    const [mode, setMode] = useState<"base" | "add">("base");
-   const { data: session } = useSession();
+   const { data: session, status } = useSession();
 
    const { control, handleSubmit, watch, setValue, reset, getValues } =
       useForm<CreateRunDtoWithPace>({
@@ -54,12 +54,9 @@ const NewRunBar = ({
          },
       });
 
-   // Populate userId when session is ready
-   useEffect(() => {
-      if (session?.user?.id) {
-         setValue("userId", session.user.id);
-      }
-   }, [session, setValue]);
+   if (status === "authenticated" && session?.user?.id) {
+      setValue("userId", session.user.id);
+   }
 
    // Calculate pace and generate title dynamically
    useEffect(() => {

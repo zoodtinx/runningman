@@ -22,7 +22,7 @@ const NewRouteBar = () => {
    const [mode, setMode] = useState<"base" | "add">("base");
    const [inputMode, setInputMode] = useState<"distance" | "time">("distance");
 
-   const { data: session } = useSession();
+   const { data: session, status } = useSession();
 
    const { handleSubmit, setValue, reset, control } =
       useForm<CreateRouteDtoWithPace>({
@@ -38,12 +38,9 @@ const NewRouteBar = () => {
          },
       });
 
-   // Set userId from session once available
-   useEffect(() => {
-      if (session?.user?.id) {
-         setValue("userId", session.user.id);
-      }
-   }, [session, setValue]);
+   if (status === "authenticated" && session?.user?.id) {
+      setValue("userId", session.user.id);
+   }
 
    // Close form on Escape key
    useEffect(() => {

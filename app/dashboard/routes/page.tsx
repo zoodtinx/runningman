@@ -15,13 +15,15 @@ const RoutesPage = async () => {
       where: {
          userId: session?.user.id,
       },
-      orderBy: [{ title: "asc" }],
+      orderBy: [{ createdAt: "desc" }],
    });
    const routeBars = routesData.map((route) => (
       <Link href={`/dashboard/routes/${route.id}`} key={route.id}>
          <RouteBar routeData={route} key={route.id} />
       </Link>
    ));
+
+   console.log("session?.user", session?.user);
 
    return (
       <div className="grow overflow-hidden">
