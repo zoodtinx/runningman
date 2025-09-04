@@ -90,8 +90,7 @@ const SettingsPageContent = ({ userData }: { userData: User }) => {
       <form
          onSubmit={handleSubmit(onSubmit)}
          className={cn(
-            "flex flex-col justify-start lg:justify-between h-full overflow-y-auto px-2 sm:px-0",
-            "pb-[200px] pt-1 lg:pt-0 lg:pb-0"
+            "flex flex-col justify-start lg:justify-between h-full overflow-y-auto p-3 pt-2 sm:p-5 sm:pt-3 lg:pt-0"
          )}
       >
          <div className="flex flex-col ">

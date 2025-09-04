@@ -60,12 +60,12 @@ export const RunConditionCard = ({ statData }: { statData: RunCondition }) => {
          <div className="flex justify-between w-full items-start">
             <div className="flex gap-1 items-center">
                <StatIcon statType={statData.type} />
-               <p className="font-semibold text-base text-right uppercase">
+               <p className="font-semibold text-left lg:text-[12px] xl:text-base uppercase">
                   {statData.name}
                </p>
             </div>
             <div className="flex flex-col gap-[2px] items-end w-1/2">
-               <p className="text-[13px] text-right leading-tight pr-1">
+               <p className="lg:text-[12px] xl:text-[13px] text-right leading-tight pr-1 line-clamp-3">
                   {statData.summary}
                </p>
             </div>
@@ -89,7 +89,7 @@ export const RunConditionCard = ({ statData }: { statData: RunCondition }) => {
 };
 
 const StatIcon = ({ statType }: { statType: string }) => {
-   const iconClass = "stroke-[1.7px] size-4";
+   const iconClass = "stroke-[1.7px] size-[13px] xl:size-4";
 
    switch (statType.toLowerCase()) {
       case "temperature":

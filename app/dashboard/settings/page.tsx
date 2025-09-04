@@ -16,13 +16,7 @@ const SettingsPage = async () => {
    });
 
    return (
-      <div
-         className={cn(
-            "grow overflow-hidden",
-            "px-2 pt-2",
-            "lg:p-[20px] lg:pt-0"
-         )}
-      >
+      <div className={cn("grow overflow-hidden")}>
          <SessionProvider>
             <SettingsPageContent userData={user as unknown as User} />
          </SessionProvider>
