@@ -10,15 +10,19 @@ export async function GET(req: NextRequest) {
    }
 
    try {
-      await prisma.user.deleteMany({});
+      const threeHoursAgo = new Date(Date.now() - 3 * 60 * 60 * 1000);
+
+      const deleted = await prisma.user.deleteMany({
+         where: {
+            createdAt: { lt: threeHoursAgo },
+         },
+      });
+
       return NextResponse.json({
          success: true,
-         message: "All users deleted.",
+         message: `${deleted.count} users deleted.`,
       });
    } catch (error) {
-      return NextResponse.json(
-         { success: false, error: error },
-         { status: 500 }
-      );
+      return NextResponse.json({ success: false, error }, { status: 500 });
    }
 }
