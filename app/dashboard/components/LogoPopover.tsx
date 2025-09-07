@@ -18,7 +18,7 @@ export const LogoPopover = () => {
       setLoading(true);
       try {
          await signOut();
-      } catch (e) {
+      } catch {
          setLoading(false);
       }
    };

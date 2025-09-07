@@ -7,7 +7,6 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { cn } from "@/lib/utils";
 import { getRunSummary } from "@/lib/run-conditions/calculate-readiness";
-import RunningManLogo from "@/components/icons/RunningManLogo";
 import ViewConditionButton from "@/components/main-layout/ViewConditionButton";
 import MobileNav from "@/components/main-layout/MobileNav";
 import { User } from "@prisma/client";

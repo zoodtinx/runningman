@@ -17,7 +17,6 @@ import {
    CircleSpark,
    Xmark,
 } from "iconoir-react";
-import RunningManLogo from "@/components/icons/RunningManLogo";
 import React, { JSX } from "react";
 import { Calendar } from "iconoir-react";
 import { prisma } from "@/lib/prisma";
