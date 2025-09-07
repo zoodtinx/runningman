@@ -140,10 +140,10 @@ const RoutePageContent = ({
                   errorMessage="Please enter route title"
                />
                <div className={cn("flex gap-3 pt-4", "md:pt-6")}>
-                  <div className={cn("h-full w-[130px]", "md:p-1")}>
+                  <div className={cn("h-full w-[130px] shrink-0 ", "md:p-1")}>
                      <div
                         className={cn(
-                           "h-full rounded-base p-2 cursor-default flex flex-col transition-colors duration-200 gap-1",
+                           "h-full rounded-base p-2 cursor-default flex flex-col transition-colors duration-200 gap-1 shrink-0",
                            "bg-background",
                            "lg:bg-foreground"
                         )}
@@ -205,7 +205,7 @@ const RoutePageContent = ({
                         </>
                      ) : (
                         <>
-                           <div className={cn("md:w-[250px]")}>
+                           <div className={cn("md:min-w-[250px]")}>
                               <ControlledInput
                                  fieldName="duration"
                                  control={control}
