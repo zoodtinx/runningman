@@ -11,6 +11,7 @@ export async function GET(req: NextRequest) {
    }
    try {
       await refreshAllConditions();
+      console.log('Condition refreshed')
    } catch (error) {
       console.error("Failed to refresh all conditions:", error);
       return NextResponse.json(

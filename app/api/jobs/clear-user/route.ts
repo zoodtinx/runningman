@@ -18,6 +18,10 @@ export async function GET(req: NextRequest) {
          },
       });
 
+      console.log(
+         `${deleted.count} users deleted at ${new Date().toISOString()}`
+      );
+
       return NextResponse.json({
          success: true,
          message: `${deleted.count} users deleted.`,

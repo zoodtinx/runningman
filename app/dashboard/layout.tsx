@@ -12,12 +12,7 @@ import ViewConditionButton from "@/components/main-layout/ViewConditionButton";
 import MobileNav from "@/components/main-layout/MobileNav";
 import { User } from "@prisma/client";
 
-const Layout = async ({
-   children,
-}: {
-   children: React.ReactNode;
-   searchParams: { mode?: string };
-}) => {
+const Layout = async ({ children }: { children: React.ReactNode }) => {
    const session = await auth();
 
    if (!session?.user?.id) {

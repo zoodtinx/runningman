@@ -1,10 +1,10 @@
 import { auth } from "@/auth";
 import NiceSettings from "@/components/icons/Settings";
+import { ConditionDate } from "@/components/main-layout/ConditionDate";
 import { RunConditionCard } from "@/components/main-layout/RunConditionCard";
 import { ScrollArea } from "@/components/primitives/ScrollArea";
 import { prisma } from "@/lib/prisma";
 import { getRunSummary } from "@/lib/run-conditions/calculate-readiness";
-import { format } from "date-fns";
 import Link from "next/link";
 
 export const RunConditionSection = async () => {
@@ -71,10 +71,7 @@ export const RunConditionSection = async () => {
       statChunks.push(statsList.slice(i, i + 2));
    }
 
-   const updatedAt = format(
-      conditionsData[0]?.updatedAt,
-      "hh.mm a, d MMM"
-   ).toUpperCase();
+   // const updatedAt =
 
    return (
       <div className="flex flex-col w-full p-[12px] pt-0 overflow-hidden h-full">
@@ -85,7 +82,9 @@ export const RunConditionSection = async () => {
             <div className="flex items-center gap-2">
                <div className="w-fit text-primary rounded-full text-sm font-medium opacity-30">
                   <span>Updated: </span>
-                  <span>{updatedAt}</span>
+                  <ConditionDate
+                     date={conditionsData[0]?.updatedAt.toISOString()}
+                  />
                </div>
                <Link href="/dashboard/settings">
                   <NiceSettings className="size-4 cursor-pointer" />
