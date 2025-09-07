@@ -23,29 +23,25 @@ export function getRunSummary(
    let totalWeight = 0;
    let weightedSum = 0;
 
-   conditions.map((c) => {
+   conditions.forEach((c) => {
       const weight = importanceWeights[c.type] ?? 0;
-      if (weight === 0) return { ...c, weight: 0, weightedScore: 0 };
-
-      const normalized = (c.range - 1) / 2; // 1–3 → 0–1
+      if (weight === 0) return;
+      //normalize
+      const normalized = (c.range - 1) / 2;
       const weightedScore = normalized * weight;
 
       totalWeight += weight;
       weightedSum += weightedScore;
-
-      return { ...c, weight, weightedScore };
    });
 
    const averageScore = totalWeight ? weightedSum / totalWeight : 0;
-   // map normalized 0–1 → 1–5 score (or 1–5 headline index)
+   // map normalized score to actual score (or 1–5 headline index)
    const readinessScore = mapScore(averageScore);
 
-   const topConditions = getTopConditions(conditions, averageScore);
+   const topConditions = getTopConditions(conditions, readinessScore);
 
    const keyCondition = topConditions.map((c) => c.type);
    const detail = topConditions.map((c) => `${c.summary}.`).join(" ");
-
-   console.log("readinessScore", readinessScore);
 
    return {
       readinessScore,
@@ -65,5 +61,5 @@ function getTopConditions(conditions: RunCondition[], averageScore: number) {
 }
 
 function mapScore(avg: number) {
-   return Math.min(5, Math.max(1, Math.round(avg + 1)));
+   return Math.min(5, Math.max(1, Math.round(avg * 4 + 1)));
 }

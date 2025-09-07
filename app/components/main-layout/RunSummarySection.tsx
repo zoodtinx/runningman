@@ -24,6 +24,7 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { getRunSummary } from "@/lib/run-conditions/calculate-readiness";
 import { LocationSelect } from "@/components/main-layout/LocationSelect";
+import { LogoPopover } from "@/dashboard/components/LogoPopover";
 
 const RunSummarySection = async () => {
    const session = await auth();
@@ -90,9 +91,7 @@ const RunSummarySection = async () => {
       <div className="h-1/2 w-full flex flex-1  flex-col justify-between text-background">
          <div>
             <div className="sm:hidden md:flex justify-between p-2 items-center">
-               <RunningManLogo
-                  className={"h-auto w-[150px] " + "md:w-[170px] "}
-               />
+               <LogoPopover />
                <LocationSelect user={user as any} />
             </div>
             <div className="pr-9 pt-4 pl-2 w-[90%]">

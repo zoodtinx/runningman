@@ -11,6 +11,7 @@ import RunningManLogo from "@/components/icons/RunningManLogo";
 import ViewConditionButton from "@/components/main-layout/ViewConditionButton";
 import MobileNav from "@/components/main-layout/MobileNav";
 import { User } from "@prisma/client";
+import { LogoPopover } from "@/dashboard/components/LogoPopover";
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
    const session = await auth();
@@ -75,9 +76,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
             )}
          >
             <div className="flex justify-between items-center text-background lg:hidden w-full px-2 h-[45px] shrink-0 z-50">
-               <RunningManLogo
-                  className={"h-auto w-[150px] " + "md:w-[200px] "}
-               />
+               <LogoPopover />
                <ViewConditionButton
                   conditionsData={conditions}
                   userData={user as User}

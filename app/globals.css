@@ -94,7 +94,7 @@
    --color-theme-okay: #ffc665;
    --color-theme-good: #b0ffb4;
    --color-theme-great: #c2fff3;
-   --color-theme-perfect: #eef9ff;
+   --color-theme-perfect: #ffffff;
 
    --animate-shake: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
    --animate-slide: slide var(--logo-duration) var(--logo-ease) infinite;
