@@ -45,6 +45,8 @@ export function getRunSummary(
    const keyCondition = topConditions.map((c) => c.type);
    const detail = topConditions.map((c) => `${c.summary}.`).join(" ");
 
+   console.log("readinessScore", readinessScore);
+
    return {
       readinessScore,
       headline: HEADLINES[readinessScore - 1],

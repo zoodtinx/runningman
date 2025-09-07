@@ -111,6 +111,26 @@ export async function mapWeatherToRunConditionsWithFuture(config: {
             if (typeof futRaw === "number") futRaw = +(futRaw * 3.6).toFixed(1);
          }
 
+         // ensure 1 decimal place for numeric fields
+         if (
+            (key === "temperature" ||
+               key === "feels-like" ||
+               key === "wind-speed" ||
+               key === "visibility") &&
+            typeof currRaw === "number"
+         ) {
+            currRaw = +currRaw.toFixed(1);
+         }
+         if (
+            (key === "temperature" ||
+               key === "feels-like" ||
+               key === "wind-speed" ||
+               key === "visibility") &&
+            typeof futRaw === "number"
+         ) {
+            futRaw = +futRaw.toFixed(1);
+         }
+
          // fallback for undefined or null field
          const value =
             currRaw === undefined || currRaw === null
