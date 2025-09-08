@@ -68,7 +68,7 @@ const ViewConditionButton = ({
                <HighlightedStats data={runSummary.keyCondition} mode="mobile" />
                <p
                   className={cn(
-                     "text-[35px] leading-9 md:text-[50px] md:leading-12"
+                     "text-[31px] leading-9 md:text-[50px] md:leading-12"
                   )}
                >
                   {runSummary.headline}
