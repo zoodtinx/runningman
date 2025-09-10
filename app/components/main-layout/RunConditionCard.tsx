@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { RunCondition } from "@prisma/client";
 import { format } from "date-fns";
@@ -65,7 +67,7 @@ export const RunConditionCard = ({ statData }: { statData: RunCondition }) => {
                </p>
             </div>
             <div className="flex flex-col gap-[2px] items-end w-1/2">
-               <p className="lg:text-[12px] xl:text-[13px] text-right leading-tight pr-1 line-clamp-3">
+               <p className="lg:text-[12px] xl:text-[13px] text-right leading-tight pr-1 line-clamp-2">
                   {statData.summary}
                </p>
             </div>
