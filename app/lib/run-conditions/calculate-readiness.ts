@@ -19,14 +19,19 @@ export function getRunSummary(
    importanceWeights: Record<string, number>,
    conditions: RunCondition[]
 ): ReadinessResult {
-   // normalize range 1–3 to 0–1, apply weights
+   // remap weights: 1 -> 1, 2 -> 5, 3 -> 10
+   const remappedWeights: Record<string, number> = {};
+   for (const key in importanceWeights) {
+      const w = importanceWeights[key];
+      remappedWeights[key] = w === 1 ? 1 : w === 2 ? 5 : w === 3 ? 10 : 0;
+   }
+
    let totalWeight = 0;
    let weightedSum = 0;
 
    conditions.forEach((c) => {
-      const weight = importanceWeights[c.type] ?? 0;
+      const weight = remappedWeights[c.type] ?? 0;
       if (weight === 0) return;
-      //normalize
       const normalized = (c.range - 1) / 2;
       const weightedScore = normalized * weight;
 
@@ -35,7 +40,6 @@ export function getRunSummary(
    });
 
    const averageScore = totalWeight ? weightedSum / totalWeight : 0;
-   // map normalized score to actual score (or 1–5 headline index)
    const readinessScore = mapScore(averageScore);
 
    const topConditions = getTopConditions(conditions, readinessScore);
@@ -61,5 +65,5 @@ function getTopConditions(conditions: RunCondition[], averageScore: number) {
 }
 
 function mapScore(avg: number) {
-   return Math.min(5, Math.max(1, Math.round(avg * 4 + 1)));
+   return Math.min(5, Math.max(1, Math.round(avg * 4)));
 }

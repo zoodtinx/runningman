@@ -164,8 +164,8 @@ const NewRouteBar = () => {
 
                   {/* Toggle: Distance / Time */}
                   <div className="flex gap-3 pt-1">
-                     <div className="pl-0 p-1 w-[130px]">
-                        <div className="h-full bg-tertiary rounded-base p-2 cursor-default flex flex-col transition-colors duration-200">
+                     <div className="p-1 w-[130px] shrink-0">
+                        <div className="h-full bg-tertiary rounded-base p-2 cursor-default flex flex-col transition-colors duration-200 w-full">
                            <button
                               type="button"
                               className={`flex items-center px-2 font-medium h-1/2 w-full rounded-sm transition-colors duration-200 ${
@@ -179,7 +179,7 @@ const NewRouteBar = () => {
                            </button>
                            <button
                               type="button"
-                              className={`flex items-center px-2 font-medium h-1/2 w-full rounded-sm transition-colors duration-200 ${
+                              className={`flex items-center px-2 font-medium h-1/2 rounded-sm transition-colors duration-200 ${
                                  inputMode === "time"
                                     ? "bg-primary text-background"
                                     : "bg-transparent text-secondary hover:text-background"
@@ -195,7 +195,7 @@ const NewRouteBar = () => {
                      <div className="flex justify-between gap-3 grow">
                         {inputMode === "distance" ? (
                            <>
-                              <div className="w-[250px]">
+                              <div className="max-w-[250px]">
                                  <ControlledInput
                                     fieldName="distance"
                                     control={control}
